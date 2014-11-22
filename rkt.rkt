@@ -40,7 +40,7 @@
   (map (lambda ([neighbour : route]) 
          (if (not (vector-ref visited (route-dest neighbour)))
              (let ([dist (+ (route-cost neighbour) (get-longest-path nodes (route-dest neighbour) visited))])
-               (if (< dist (unbox max))
+               (if (> dist (unbox max))
                    (set-box! max dist)
                    void))
              void)) 

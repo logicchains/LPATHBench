@@ -1,6 +1,9 @@
 NUM_NODES = 10
 WORLD_SIZE = 1000
 
+csharp: cs.cs
+	mcs cs.exe
+
 java: jv.java
 	javac jv.java
 

@@ -2,6 +2,7 @@
 {-# LANGUAGE BangPatterns #-}
 import Data.Vector as V
 import Data.Vector.Mutable as MV
+import Data.Vector.Unboxed.Mutable as UMV
 import Data.List as L
 import Data.Int
 import Data.IORef
@@ -28,12 +29,12 @@ readPlaces (x:xs) =
     in
       (L.foldl' accumRoutes nodes xs, fromIntegral numNodes)
           
-getLongestPath :: V.Vector Node -> Int32 -> MV.IOVector Bool -> IO (Int32)
+getLongestPath :: V.Vector Node -> Int32 -> UMV.IOVector Bool -> IO (Int32)
 getLongestPath !nodes !nodeID !visited = do
-  ({-# SCC "writevisited" #-} MV.unsafeWrite visited (fromIntegral nodeID) True)
+  ({-# SCC "writevisited" #-} UMV.unsafeWrite visited (fromIntegral nodeID) True)
   max <- {-# SCC "newioref" #-} newIORef 0
   Prelude.mapM_  (\ Route{dest, cost} -> do
-             isVisited <- {-# SCC "readvisited" #-} MV.unsafeRead visited (fromIntegral dest)
+             isVisited <- {-# SCC "readvisited" #-} UMV.unsafeRead visited (fromIntegral dest)
              case isVisited of
                True -> return ()
                False -> do
@@ -41,12 +42,12 @@ getLongestPath !nodes !nodeID !visited = do
                    maxVal <- {-# SCC "readmaxagain" #-} readIORef max
                    ( {-# SCC "changedist" #-} if dist > maxVal then writeIORef max dist else return ()))
          (nodes ! (fromIntegral nodeID))
-  ({-# SCC "writeunvisited" #-}  MV.write visited (fromIntegral nodeID) False)
+  ({-# SCC "writeunvisited" #-}  UMV.write visited (fromIntegral nodeID) False)
   ({-# SCC "returnmax" #-} readIORef max)
 
 main :: IO()
 main = do   
   content <- readFile "agraph"
   let (nodes, numNodes) = readPlaces $ lines content
-  visited <- MV.replicate (fromIntegral numNodes) False
+  visited <- UMV.replicate (fromIntegral numNodes) False
   getLongestPath nodes 0 visited >>= print

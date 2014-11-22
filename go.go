@@ -13,7 +13,6 @@ type route struct{
 }
 
 type node struct {
-	index int32
 	neighbours []route
 }
 
@@ -31,7 +30,6 @@ func readPlaces()([]node, int){
 	nodes := make([]node, numNodes)
 	for i := range nodes{
 		nodes[i].neighbours = make([]route, 0, numNodes/2)
-		nodes[i].index = int32(i)
 	}
 	for _,ln := range lines{
 		nums := strings.Split(ln," ")

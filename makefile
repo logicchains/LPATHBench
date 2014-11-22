@@ -1,6 +1,9 @@
 NUM_NODES = 10
 WORLD_SIZE = 1000
 
+java: jv.java
+	javac jv.java
+
 haskell: hs.hs
 	ghc hs.hs -O3
 

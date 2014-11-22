@@ -19,10 +19,7 @@ node[] readPlaces(ref int numNodes){
   auto lines = splitLines(text);
   numNodes = to!int(lines[0]);
   lines = lines[1..$];
-  node[] nodes = uninitializedArray!(node[])(numNodes);
-  foreach(ref node n; nodes){
-    n.neighbours = uninitializedArray!(route[])(0);
-  }
+  node[] nodes =  minimallyInitializedArray!(node[])(numNodes);
   foreach(string ln; lines){
     auto nums = ln.split(" ");
     if(nums.length < 3){

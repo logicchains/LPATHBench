@@ -1,6 +1,9 @@
 NUM_NODES = 10
 WORLD_SIZE = 1000
 
+racket: rkt.rkt
+	raco exe rkt.rkt
+
 csharp: cs.cs
 	mcs cs.exe
 

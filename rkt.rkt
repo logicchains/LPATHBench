@@ -30,7 +30,7 @@
                        (loop (+ i 1))
                        #f)
                      '#f)))
-  (loop 1)
+  (loop 0)
   nodes)
 
 (: get-longest-path ((Vectorof node) Integer (Vectorof Boolean) -> Integer))

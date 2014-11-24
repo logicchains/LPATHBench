@@ -1,6 +1,9 @@
 NUM_NODES = 10
 WORLD_SIZE = 1000
 
+cpp: cpp.cpp
+	g++ cpp.cpp -std=c++11 -Wall -O3 -o cpp
+
 racket: rkt.rkt
 	raco exe rkt.rkt
 

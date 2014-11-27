@@ -1,4 +1,5 @@
-(ns lpath
+(ns lpath.core
+  (:use lpath.core)
   (:gen-class)
   (:use clojure.pprint))
 (require '[clojure.string :as str])
@@ -38,8 +39,8 @@
     (let [max (atom (long 0))]
       (dorun (map (fn [#^route neighbour]
                     (if (not (aget visited (.dest neighbour)))
-                      (let [dist (+ (.cost neighbour) (get-longest-path nodes (.dest neighbour) visited))]
-                        (if (> dist @max)
+                       (let [dist (+ (.cost neighbour) (long (get-longest-path nodes (.dest neighbour) visited)))]
+                        (if (> dist (long @max))
                           (reset! max dist)
                           nil))
                       nil))
@@ -47,6 +48,9 @@
       (aset visited node-id false)
       @max)))
 
-(def nodes (to-array (read-places)))
-(def visited (make-array Boolean/TYPE (count nodes)))
-(print (get-longest-path nodes 0 visited))
+(defn -main []
+  (let [nodes (to-array (read-places))
+        visited (make-array Boolean/TYPE (count nodes))]
+    (print (get-longest-path nodes 0 visited))))
+
+(time (-main))

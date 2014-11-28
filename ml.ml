@@ -4,6 +4,8 @@ type route = {dest: int; cost: int}
 
 type node = route list
 
+type node2 = route array
+		  
 let readPlaces () =
   let f = open_in "agraph" in
   let n = int_of_string (input_line f) in
@@ -34,7 +36,27 @@ let rec getLongestPath nodes nodeID visited =
   visited.(nodeID) <- false;
   !max
 
+let rec getLongestPath2 (nodes: node2 array) nodeID visited =
+  visited.(nodeID) <- true;
+  let rec loop i maxDist =
+    if i < 0 then maxDist
+    else
+      let neighbour = nodes.(nodeID).(i) in
+      if (not visited.(neighbour.dest))
+      then
+	let dist = neighbour.cost + getLongestPath2 nodes neighbour.dest visited in
+	let newMax = if dist > maxDist then dist else maxDist in
+        loop (i-1) newMax
+      else
+	loop (i-1) maxDist in
+  let (max: int) = loop (Array.length nodes.(nodeID) - 1) 0 in
+  visited.(nodeID) <- false;
+  max;;
+   
+
 let () =
   let (nodes, numNodes) = readPlaces() in
   let visited = Array.init numNodes (fun x -> false) in
-  print_int @@ getLongestPath nodes 0 visited;
+  let fstNodes = Array.map (fun n1 -> Array.of_list n1) nodes in
+  print_int @@ getLongestPath2 fstNodes 0 visited;
+  (*  print_int @@ getLongestPath nodes 0 visited;*)

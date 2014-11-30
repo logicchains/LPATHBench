@@ -1,16 +1,30 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+import Control.Monad as CM
 import Data.Vector as V
 import Data.Vector.Mutable as MV
+import Data.Vector.Generic as GV
 import Data.Vector.Unboxed.Mutable as UMV
+import Data.Vector.Unboxed as UV
+import qualified Data.Vector.Unboxed.Deriving as DU
 import Data.List as L
 import Data.Int
 import Data.IORef
 
 data Route = Route {dest:: !Int32, cost:: !Int32}
              deriving Show
-           
+
+DU.derivingUnbox "Route"
+      [t| Route -> (Int32, Int32)|]
+      [| \Route{dest,cost} -> (dest,cost)|]
+      [| \(dest,cost) -> Route{dest,cost}|]
+                      
 type Node = [Route]
+
+type Node2 = UV.Vector Route
 
 accumRoutes :: V.Vector Node -> String -> V.Vector Node
 accumRoutes nodes ln =
@@ -41,13 +55,101 @@ getLongestPath !nodes !nodeID !visited = do
                    dist <- {-# SCC "getNwPath" #-} fmap (+ cost) $ getLongestPath nodes dest visited
                    maxVal <- {-# SCC "readmaxagain" #-} readIORef max
                    ( {-# SCC "changedist" #-} if dist > maxVal then writeIORef max dist else return ()))
-         (nodes ! (fromIntegral nodeID))
+         (nodes V.! (fromIntegral nodeID))
   ({-# SCC "writeunvisited" #-}  UMV.write visited (fromIntegral nodeID) False)
   ({-# SCC "returnmax" #-} readIORef max)
 
+getLongestPathImperative :: V.Vector Node -> Int32 -> UMV.IOVector Bool -> IO (Int32)
+getLongestPathImperative !nodes !nodeID !visited = do
+  UMV.write visited (fromIntegral nodeID) True
+  max <- newIORef 0
+  Prelude.mapM_  (\ Route{dest, cost} -> do
+             isVisited <- UMV.read visited (fromIntegral dest)
+             case isVisited of
+               True -> return ()
+               False -> do
+                   dist <- fmap (+ cost) $ getLongestPath nodes dest visited
+                   maxVal <- readIORef max
+                   if dist > maxVal then writeIORef max dist else return ())
+         (nodes V.! (fromIntegral nodeID))
+  UMV.write visited (fromIntegral nodeID) False
+  readIORef max
+  
+getLongestPath2 :: V.Vector Node2 -> Int32 -> UMV.IOVector Bool -> IO (Int32)
+getLongestPath2 !nodes !nodeID !visited = do
+  UMV.unsafeWrite visited (fromIntegral nodeID) True
+  max <- loop (fromIntegral (UV.length (nodes V.! (fromIntegral nodeID)) - 1)) (0::Int32)
+  UMV.write visited (fromIntegral nodeID) False
+  return max
+    where
+      loop :: Int32 -> Int32 -> IO (Int32)
+      loop !i !maxDist = if i < 0 then return maxDist
+                         else do
+                             let route = (nodes V.! (fromIntegral nodeID)) UV.! (fromIntegral i)
+                             isVisited <- UMV.unsafeRead visited (fromIntegral (dest route))
+                             case isVisited of
+                               True -> loop (i-1) maxDist
+                               False -> do
+                                 dist <- fmap (+ (cost route)) $ getLongestPath2 nodes (dest route) visited
+                                 let newMax = if dist > maxDist then dist else maxDist
+                                 loop (i-1) newMax
+
+getLongestPath3 :: V.Vector Node -> Int32 -> UMV.IOVector Bool -> IO (Int32)
+getLongestPath3 !nodes !nodeID !visited = do
+  UMV.unsafeWrite visited (fromIntegral nodeID) True
+  max <- loop (nodes V.! (fromIntegral nodeID)) (0::Int32)
+  UMV.write visited (fromIntegral nodeID) False
+  return max
+    where
+      loop :: [Route] -> Int32 -> IO (Int32)
+      loop [] !maxDist = return maxDist
+      loop !(Route{dest,cost}:neighbours) !maxDist = do
+          isVisited <- UMV.unsafeRead visited (fromIntegral dest)
+          newMax <- case isVisited of
+                         True -> return maxDist
+                         False -> do
+                           dist <- fmap (+ cost) $ getLongestPath3 nodes dest visited
+                           return $ if dist > maxDist then dist else maxDist
+          loop neighbours newMax
+
+getLongestPath4 :: V.Vector Node2 -> Int32 -> UMV.IOVector Bool -> IO (Int32)
+getLongestPath4 !nodes !nodeID !visited = do
+  UMV.write visited (fromIntegral nodeID) True
+  max <- GV.foldM' acc (0::Int32) (nodes V.! (fromIntegral nodeID))
+  UMV.write visited (fromIntegral nodeID) False
+  return max
+    where
+      acc :: Int32 -> Route -> IO (Int32)
+      acc maxDist Route{dest,cost}  = do
+          isVisited <- UMV.read visited (fromIntegral dest)
+          case isVisited of
+            True -> return maxDist
+            False -> do
+              dist <- fmap (+ cost) $ getLongestPath4 nodes dest visited
+              return $ if dist > maxDist then dist else maxDist
+
+lPathFun :: V.Vector Node -> Int32 -> UMV.IOVector Bool -> IO (Int32)
+lPathFun !nodes !nodeID !visited = do
+  UMV.write visited (fromIntegral nodeID) True
+  max <- CM.foldM acc (0::Int32) (nodes V.! (fromIntegral nodeID))
+  UMV.write visited (fromIntegral nodeID) False
+  return max
+    where
+      acc :: Int32 -> Route -> IO (Int32)
+      acc maxDist Route{dest,cost}  = do
+          isVisited <- UMV.read visited (fromIntegral dest)
+          case isVisited of
+            True -> return maxDist
+            False -> do
+              dist <- fmap (+ cost) $ lPathFun nodes dest visited
+              return $ if dist > maxDist then dist else maxDist
+              
 main :: IO()
 main = do   
   content <- readFile "agraph"
   let (nodes, numNodes) = readPlaces $ lines content
   visited <- UMV.replicate (fromIntegral numNodes) False
-  getLongestPath nodes 0 visited >>= print
+  let !nodes2 = V.map UV.fromList nodes
+  --lPathFun nodes 0 visited >>= print
+  getLongestPath4 nodes2 0 visited >>= print
+  --getLongestPath nodes 0 visited >>= print

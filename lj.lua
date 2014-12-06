@@ -52,5 +52,8 @@ local visited = {}
 for i=1, #nodes do
   visited[i] = false
 end
-print(getLongestPath(nodes, 1, visited))
+local start = os.clock()
+local length = getLongestPath(nodes, 1, visited)
+local duration = os.clock() - start
+io.stdout:write(length .. " LANGUAGE LuaJit " .. math.floor(duration*1000) .. "\n")
 

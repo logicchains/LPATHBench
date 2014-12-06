@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System;
 
 class longestPathFinder{
    public List<node> readPlaces(out int numNodes) {
@@ -26,10 +27,10 @@ class longestPathFinder{
 
     public int getLongestPath(List<node> nodes, int nodeID, bool[] visited){
 	visited[nodeID] = true;
-	int dist, max=0;
+	int max=0;
 	foreach(route neighbour in nodes[nodeID].neighbours){
 	    if (!visited[neighbour.dest]){
-		dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
+		int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
 		if (dist > max){
 		    max = dist;
 		}
@@ -53,7 +54,7 @@ class node {
     public List<route> neighbours;
 }
 
-public class jv{
+public class cs{
     public static void Main(string[] args){
 	int numNodes = 0;
 	longestPathFinder p = new longestPathFinder();
@@ -62,6 +63,9 @@ public class jv{
 	for(int i = 0; i < numNodes; i++){
 	    visited[i] = false;
 	}
-	System.Console.WriteLine(p.getLongestPath(nodes, 0, visited)); 
+	long start= DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+	int result = p.getLongestPath(nodes, 0, visited);
+	long duration = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - start;
+	System.Console.WriteLine(result + " LANGUAGE C# "+ duration);
     }
 }

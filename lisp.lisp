@@ -60,6 +60,12 @@
     (setf (elt visited node-id) nil)
     (the fixnum max)))
 
-(defparameter nodes (parse-places))
-(defparameter visited (make-array (length nodes) :initial-element nil))
-(print (get-longest-path nodes 0 visited))
+(defun run ()
+  (defparameter nodes (parse-places))
+  (defparameter visited (make-array (length nodes) :initial-element nil))
+  (defparameter start (get-internal-real-time))
+  (defparameter len (get-longest-path nodes 0 visited))
+  (defparameter duration (- (get-internal-real-time) start))
+  (format t "~d LANGUAGE Lisp ~d ~%" len duration))
+
+(sb-ext:save-lisp-and-die "lisp" :toplevel #'run :executable t)

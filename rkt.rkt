@@ -50,4 +50,7 @@
 
 (define nodes (read-places))
 (define visited : (Vectorof Boolean) (build-vector (vector-length nodes) (lambda (n) #f)))
-(print (get-longest-path nodes 0 visited))
+(define start (current-inexact-milliseconds))
+(define len (get-longest-path nodes 0 visited))
+(define duration (- (current-inexact-milliseconds) start))
+(printf "~a LANGUAGE Racket ~a\n" len (inexact->exact (floor duration)))

@@ -1,5 +1,7 @@
 open List
-
+open Unix
+open Printf
+       
 type route = {dest: int; cost: int}
 
 type node = route list
@@ -58,5 +60,7 @@ let () =
   let (nodes, numNodes) = readPlaces() in
   let visited = Array.init numNodes (fun x -> false) in
   let fstNodes = Array.map (fun n1 -> Array.of_list n1) nodes in
-  print_int @@ getLongestPath2 fstNodes 0 visited;
+  let start = Unix.gettimeofday() in
+  let len = getLongestPath2 fstNodes 0 visited in
+  printf "%d LANGUAGE Ocaml %d\n" len (int_of_float @@ 1000. *. (Unix.gettimeofday() -. start))
   (*  print_int @@ getLongestPath nodes 0 visited;*)

@@ -29,7 +29,11 @@ readPlacesAndFindPath() {
       nodes[node].neighbours.add(new Route(neighbour,cost));
     }
     var visited = new List<Bool>.generate(numNodes, (int index) => false);
-    print(getLongestPath(nodes, 0, visited));
+    var start = new DateTime.now();
+    int len = getLongestPath(nodes, 0, visited);
+    var duration = new DateTime.now().difference(start);
+    duration = duration.inMilliseconds;
+    print("$len LANGUAGE Dart $duration");
   });
   return nodes;
 }

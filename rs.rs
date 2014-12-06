@@ -1,5 +1,8 @@
+extern crate time;
+
 use std::io::File;
 use std::io::BufferedReader;
+use time::precise_time_ns;
 
 #[deriving(Clone, Show)]
 struct Route{
@@ -47,7 +50,7 @@ fn get_longest_path(nodes: &Vec<Node>, nodeID: i32, visited: *const bool) -> i32
   let mut dist: i32;
   let mut max: i32 = 0;
   for neighbour in nodes[uintID].neighbours.iter(){
-    let udest = neighbour.dest.to_uint().expect("Tired of writing these..");
+    let udest = neighbour.dest.to_uint().expect("Almost done..");
     let isVisited: bool;
     unsafe{
       let newAddr: uint = udest + (visited as uint);
@@ -72,7 +75,9 @@ fn get_longest_path(nodes: &Vec<Node>, nodeID: i32, visited: *const bool) -> i32
 fn main(){
    let mut num_nodes = 0;
    let nodes = read_places(&mut num_nodes);
-   let visited: Vec<bool> = Vec::from_fn(num_nodes, |_| false);
+   let mut visited: Vec<bool> = Vec::from_fn(num_nodes, |_| false);
+   let startTime = precise_time_ns();
    let path = get_longest_path(&nodes, 0, &visited[0] as *const bool);
-   println!("{}", path);
+   let duration = (precise_time_ns() - startTime) / 1000000;
+   println!("{} Language Rust {}", path, duration);
 }

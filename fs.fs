@@ -2,6 +2,7 @@ module lpath
 
 open System
 open System.IO
+open Printf
 
 type route = {dest: int; cost: int}
 
@@ -39,4 +40,7 @@ let rec getLongestPath (nodes: node array) nodeID (visited: bool array) =
 let () =
   let nodes = readPlaces()
   let visited = Array.init (Array.length nodes) (fun x -> false)
-  Console.WriteLine(getLongestPath nodes 0 visited);
+  let start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond
+  let len = getLongestPath nodes 0 visited
+  let duration = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - start
+  printf "%d LANGUAGE F# %d" len duration

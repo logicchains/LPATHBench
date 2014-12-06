@@ -70,6 +70,9 @@ public class jv{
 	for(boolean b: visited){
 	    b = false;
 	}
-	System.out.println(p.getLongestPath(nodes, 0, visited)); 
+	long start = System.currentTimeMillis();
+        int len = p.getLongestPath(nodes, 0, visited);
+	long duration = System.currentTimeMillis() - start;
+	System.out.printf("%d LANGUAGE Java %d\n", len, duration);	
     }
 }

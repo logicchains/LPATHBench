@@ -11,7 +11,7 @@ racket: rkt.rkt
 	raco exe rkt.rkt
 
 csharp: cs.cs
-	mcs cs.exe
+	mcs cs.cs
 
 java: jv.java
 	javac jv.java
@@ -23,7 +23,10 @@ haskellprof: hs.hs
 	ghc hs.hs -O3 -prof -fprof-auto -caf-all -fforce-recomp -rtsopts
 
 ocaml: ml.ml
-	ocamlfind ocamlopt -linkpkg -package str -noassert -unsafe -fno-PIC -nodynlink -inline 100 -o ml ml.ml
+	ocamlfind ocamlopt -linkpkg -package str,unix -noassert -unsafe -fno-PIC -nodynlink -inline 100 -o ml ml.ml
+
+lisp: lisp.lisp
+	sbcl --load lisp.lisp --non-interactive
 
 rust: rs.rs
 	rustc rs.rs --opt-level=3

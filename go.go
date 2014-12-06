@@ -4,6 +4,7 @@ import(
 	"io/ioutil"
 	"strconv"
 	"strings"
+	"time"
 	"fmt"
 )
 
@@ -49,11 +50,10 @@ func readPlaces()([]node, int){
 
 func getLongestPath(nodes []node, nodeID int32, visited []bool) int32{
 	visited[nodeID] = true
-	var dist int32
 	var max int32
 	for _, neighbour := range nodes[nodeID].neighbours{
 		if !visited[neighbour.to]{
-			dist = neighbour.cost + getLongestPath(nodes, neighbour.to, visited)
+			dist := neighbour.cost + getLongestPath(nodes, neighbour.to, visited)
 			if dist > max{
 				max = dist
 			}
@@ -67,7 +67,9 @@ func getLongestPath(nodes []node, nodeID int32, visited []bool) int32{
 func main(){
 	nodes, nNodes := readPlaces()
 	visited := make([]bool, nNodes)
+	start := time.Now()
 	len := getLongestPath(nodes, 0, visited)
-	fmt.Println(len)
+	duration := time.Now().Sub(start).Nanoseconds() / 1000000
+	fmt.Printf("%v LANGUAGE Go %v\n", len, duration)
 
 }

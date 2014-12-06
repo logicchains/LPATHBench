@@ -57,5 +57,5 @@ int main(int argc, char** argv){
   double start = getTime();
   int len = getLongestPath(nodes, 0, visited);
   double duration = getTime() - start;
-  cout << len << " LANGUAGE C " << (int)duration;
+  cout << len << " LANGUAGE C++ " << (int)duration << "\n";
 }

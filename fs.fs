@@ -43,4 +43,4 @@ let () =
   let start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond
   let len = getLongestPath nodes 0 visited
   let duration = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - start
-  printf "%d LANGUAGE F# %d" len duration
+  printf "%d LANGUAGE F# %d\n" len duration

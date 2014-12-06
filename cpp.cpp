@@ -1,7 +1,17 @@
+#define _POSIX_C_SOURCE 200809L
+#include <ctime>
 #include <vector>
 #include <fstream>
 #include <iostream>
 #include <string>
+
+double getTime(){
+  timespec spec;
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &spec);
+  double s = spec.tv_sec;
+  double ms = spec.tv_nsec;
+  return (s*1000 + ms / 1000000);
+}
 
 using namespace std;
 
@@ -44,5 +54,8 @@ int getLongestPath(vector<node> &nodes, int nodeID, vector<bool> &visited){
 int main(int argc, char** argv){
   auto nodes = readPlaces();
   vector<bool> visited(nodes.size(), false);
-  cout << getLongestPath(nodes, 0, visited);
+  double start = getTime();
+  int len = getLongestPath(nodes, 0, visited);
+  double duration = getTime() - start;
+  cout << len << " LANGUAGE C " << (int)duration;
 }

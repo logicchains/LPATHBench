@@ -3,7 +3,7 @@ import std.stdio;
 import std.array;
 import std.conv;
 import std.string;
-import std.typecons;
+import std.datetime;
 
 struct route{
   int dest, cost;
@@ -56,5 +56,9 @@ void main(){
   foreach(ref bool b; visited){
     b = false;
   }
-  getLongestPath(nodes, 0, visited).writeln; 
+  StopWatch sw;
+  sw.start;  
+  int len = getLongestPath(nodes, 0, visited);
+  sw.stop;
+  "%d LANGUAGE D %d".writef(len, sw.peek().msecs);
 }

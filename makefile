@@ -1,6 +1,22 @@
 NUM_NODES = 10
 WORLD_SIZE = 1000
 
+runall:	
+	./fs.exe
+	./cpp
+	./rkt
+	mono ./cs.exe
+	java jv
+	./hs
+	./ml
+	./lisp
+	./rs
+	./go
+	./d
+	luajit lj.lua
+
+buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go d
+
 fsharp: fs.fs
 	fsharpc fs.fs
 
@@ -34,8 +50,8 @@ rust: rs.rs
 go: go.go
 	go build go.go
 
-dmd: d.d
-	dmd d.d -ofdmdd -O -release -inline
+d: d.d
+	ldc2 d.d -ofd -O3 -release -inline
 
 graphbuilder: mkgraph.go
 	go build mkgraph.go

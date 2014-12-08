@@ -13,6 +13,7 @@ runall:
 	./rs
 	./go
 	./d
+	./nim
 	luajit lj.lua
 
 buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go d
@@ -52,6 +53,9 @@ go: go.go
 
 d: d.d
 	ldc2 d.d -ofd -O3 -release -inline
+	
+nim: nim.nim
+	nim c -d:release nim.nim
 
 graphbuilder: mkgraph.go
 	go build mkgraph.go

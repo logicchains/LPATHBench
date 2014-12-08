@@ -2,30 +2,30 @@ import strutils, sequtils, times
 
 type
     Route = object
-        dest, cost: int
+        dest, cost: int32
     Node = object
         neighbours: seq[Route]
 
-proc readPlaces(numNodes: var int): seq[Node] =
-    # Read places...
-    var lines = toSeq("agraph".lines)
-    numNodes  = lines[0].parseInt
-    result    = newSeqWith(numNodes, Node(neighbours: newSeq[Route]()))
+proc readPlaces: tuple[nodes: seq[Node], num: int32] =
+    let lines    = toSeq("agraph".lines)
+    let numNodes = int32(lines[0].parseInt)
+    var nodes    = newSeqWith(numNodes, Node(neighbours: newSeq[Route]()))
 
     for i in 1.. < lines.len:
         let nums = lines[i].split(' ')
         if nums.len < 3:
             break
 
-        let node      = nums[0].parseInt
-        let neighbour = nums[1].parseInt
-        let cost      = nums[2].parseInt
+        let node      = int32(nums[0].parseInt)
+        let neighbour = int32(nums[1].parseInt)
+        let cost      = int32(nums[2].parseInt)
 
-        result[node].neighbours.add(
-            Route(dest: neighbour, cost: cost));
+        nodes[node].neighbours.add(
+            Route(dest: neighbour, cost: cost))
 
-proc getLongestPath(nodes: seq[Node], nodeId: int, visited: var seq[bool]): int =
-    # Get longest path
+    return (nodes, numNodes)
+
+proc getLongestPath(nodes: seq[Node], nodeId: int32, visited: var seq[bool]): int32 =
     visited[nodeId] = true
     for neighbour in nodes[nodeId].neighbours:
         if not visited[neighbour.dest]:
@@ -36,10 +36,8 @@ proc getLongestPath(nodes: seq[Node], nodeId: int, visited: var seq[bool]): int 
     visited[nodeId] = false
 
 proc main =
-    var numNodes = 0
-    let nodes    = readPlaces(numNodes)
+    let (nodes, numNodes) = readPlaces()
     var visited  = newSeqWith(numNodes, false)
-
     let start    = cpuTime()
     let result   = getLongestPath(nodes, 0, visited)
     let duration = cpuTime() - start

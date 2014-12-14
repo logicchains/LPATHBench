@@ -17,7 +17,7 @@ csharp: cs.cs
 	mcs cs.cs
 
 oraclejava: ojv.java
-	ojavac ojv.java
+	oraclejavac ojv.java
 
 java: jv.java
 	javac jv.java

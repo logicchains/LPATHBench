@@ -6,7 +6,7 @@ echo "starting build" > isbuilding
 echo "Compiling..."
 make buildall
 
-runners=( "./fs.exe"\
+runners=( "mono fs.exe"\
 	"./cpp"\
 	"./rkt"\
 	"mono ./cs.exe"\
@@ -20,7 +20,7 @@ runners=( "./fs.exe"\
 	"./d"\
 	"./nim"\
 	"luajit lj.lua"\
-	"ojava ojv")
+	"oraclejava ojv")
 
 echo "Running..."
 

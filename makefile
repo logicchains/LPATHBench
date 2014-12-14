@@ -16,7 +16,7 @@ runall:
 	./nim
 	luajit lj.lua
 
-buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go d
+buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go d oraclejava
 
 fsharp: fs.fs
 	fsharpc fs.fs
@@ -29,6 +29,9 @@ racket: rkt.rkt
 
 csharp: cs.cs
 	mcs cs.cs
+
+oraclejava: jv.java
+	home/jonathan/projects/LPATHBench/jdk1.8.0_06/bin/javac jv.java
 
 java: jv.java
 	javac jv.java
@@ -52,8 +55,7 @@ go: go.go
 	go build go.go
 
 d: d.d
-	ldc2 d.d -ofd -O3 -release -inline
-	
+	ldc2 d.d -ofd -O3 -release -inline	
 nim: nim.nim
 	nim c -d:release nim.nim
 

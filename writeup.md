@@ -103,3 +103,55 @@ Java
 Really not much to say here. Verbose, but fairly simple to write, and reasonably fast, although not comparable to the compiled languages.
 
 Haskell
+
+The Haskell implementation was generally pleasant to write; the Vector.modify function proved to be extremely convenient for building the node vector. It takes a vector-mutating function and returns either a copy of the vector with that function applied or the same vector mutated by that function, depending on whether or not it is safe to do the latter. This allows a vector to be mutated in pure code, via the ST monad, which is much quicker than having to allocate a new vector.
+
+Interestingly, when I was attempting to modify the code to be more functional (passing max along in a fold rather than mutating it as an ioref), I realised I didn't understand do notation as well as I thought I did.
+
+Can you spot the mistake in the following code? I didn't.
+
+do
+  UMV.write visited nodeID True
+  let max = GV.foldM' acc 0 (nodes V.! nodeID)
+  UMV.write visited nodeID False
+  return max
+
+This lead to the program using all the memory and dying, leading me to think there was a memory leak in acc, although I checked it thoroughly and couldn't find one. Turns out, the above code is actually the equivalent of
+
+do
+  UMV.write visited nodeID True
+  UMV.write visited nodeID False
+  return $ GV.foldM' acc 0 (nodes V.! nodeID)
+
+To fix it, I needed to change
+
+let max = GV.foldM' acc 0 (nodes V.! nodeID)
+
+to:
+
+max <- GV.foldM' acc 0 (nodes V.! nodeID)
+
+One thing I found less pleasant than in OCaml was the autoindentation support. This is not the fault of the plugin itself, but rather the fact that indentation in Haskell affects meaning: whenever the semantics of code could depend on the indentation level, the autoindenter doesn't have one true indentation to select as the indentation depends on what you want the code to do. In a language without significant indentation, like a Lisp or a curly braces language, 'one true indentation' is possible.
+
+
+Dart
+
+Similar to Java, the Dart implementation was generally quite simple to write... apart from the Async nature of IO, which initially caught me off guard.
+
+readPlacesAndFindPath() {
+  var nodes;
+  new File('agraph').readAsLines().then((List<String> lines) {
+    final int numNodes = int.parse(lines[0]);
+    final nodes = new List<Node>.generate(numNodes, (int index) => new Node()); 
+    for(int i = 1; i < lines.length; i++){
+      final nums = lines[i].split(' ');
+      int node = int.parse(nums[0]);
+      int neighbour = int.parse(nums[1]);      
+      int cost = int.parse(nums[2]);
+      nodes[node].neighbours.add(new Route(neighbour,cost));
+    }
+  });
+  return nodes;
+}
+
+What does the above do? Answer: it returns null, as the .then is asynchronous, meaning the function will not wait for nodes to be populared before returning. A stronger type system (or a read of the dart::io documentation) would have caught this.

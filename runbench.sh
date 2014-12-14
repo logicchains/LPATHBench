@@ -9,6 +9,7 @@ runners=( "./fs.exe"\
 	"./rkt"\
 	"mono ./cs.exe"\
 	"java jv"\
+	"dart dart.dart"\
 	"./hs"\
 	"./ml"\
 	"./lisp"\
@@ -17,7 +18,7 @@ runners=( "./fs.exe"\
 	"./d"\
 	"./nim"\
 	"luajit lj.lua"\
-	"home/jonathan/projects/LPATHBench/jdk1.8.0_06/bin/java jv")
+	"/ojava ojv")
 
 echo "Running..."
 

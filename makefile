@@ -16,8 +16,8 @@ racket: rkt.rkt
 csharp: cs.cs
 	mcs cs.cs
 
-oraclejava: jv.java
-	/home/jonathan/projects/LPATHBench/jdk1.8.0_06/bin/javac jv.java
+oraclejava: ojv.java
+	ojavac ojv.java
 
 java: jv.java
 	javac jv.java

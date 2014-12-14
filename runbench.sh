@@ -20,7 +20,7 @@ runners=( "mono fs.exe"\
 	"./d"\
 	"./nim"\
 	"luajit lj.lua"\
-	"oraclejava ojv")
+	"/usr/bin/oraclejava ojv")
 
 echo "Running..."
 

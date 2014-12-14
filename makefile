@@ -17,7 +17,7 @@ csharp: cs.cs
 	mcs cs.cs
 
 oraclejava: ojv.java
-	oraclejavac ojv.java
+	/usr/bin/oraclejavac ojv.java
 
 java: jv.java
 	javac jv.java

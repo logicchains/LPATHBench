@@ -4,7 +4,7 @@ In this benchmark I thought it would be interesting to explore a less common pat
 
 One way is to create a graph with the nodes representing different intersections and the connections between these nodes representing the distance of the roads between these intersections. One can then solve it with the relatively simple approach of iterating through all possible routes to find the longest. You may be thinking this sounds incredibly slow, and it is, something like O(n!). Unfortunately however there are no known "fast" algorithms that can find this path; the problem is considered NP complete, meaning if you can solve it in O(n^b) time, where b is a constant, then you get a [million dollar prize](http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP).
 
-
+Really weird thing: when I made a simlink 'oraclejava' which linked to my local Oracle jvm install, for some reason it created an 'oraclejava' in /sbin, which pointed to the openjdk!
 
 
 Go

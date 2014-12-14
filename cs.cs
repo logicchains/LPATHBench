@@ -66,6 +66,6 @@ public class cs{
 	long start= DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 	int result = p.getLongestPath(nodes, 0, visited);
 	long duration = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - start;
-	System.Console.WriteLine(result + " LANGUAGE C# "+ duration);
+	System.Console.WriteLine(result + " LANGUAGE CSharp "+ duration);
     }
 }

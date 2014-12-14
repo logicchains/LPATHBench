@@ -42,6 +42,6 @@ proc main =
     let result   = getLongestPath(nodes, 0, visited)
     let duration = cpuTime() - start
 
-    echo result, " LANGUAGE NIM ", duration
+    echo result, " LANGUAGE NIM ", int(duration * 1000)
 
 main()

@@ -60,5 +60,5 @@ void main(){
   sw.start;  
   int len = getLongestPath(nodes, 0, visited);
   sw.stop;
-  "%d LANGUAGE D %d\n".writef(len, sw.peek().msecs);
+  printf("%d LANGUAGE D %d\n", len, sw.peek().msecs);
 }

@@ -79,5 +79,5 @@ fn main(){
    let startTime = precise_time_ns();
    let path = get_longest_path(&nodes, 0, &visited[0] as *const bool);
    let duration = (precise_time_ns() - startTime) / 1000000;
-   println!("{} Language Rust {}", path, duration);
+   println!("{} LANGUAGE Rust {}", path, duration);
 }

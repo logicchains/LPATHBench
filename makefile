@@ -1,22 +1,8 @@
 NUM_NODES = 10
 WORLD_SIZE = 1000
 
-runall:	
-	./fs.exe
-	./cpp
-	./rkt
-	mono ./cs.exe
-	java jv
-	./hs
-	./ml
-	./lisp
-	./rs
-	./go
-	./d
-	./nim
-	luajit lj.lua
 
-buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go d oraclejava
+buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go d nim oraclejava
 
 fsharp: fs.fs
 	fsharpc fs.fs
@@ -31,7 +17,7 @@ csharp: cs.cs
 	mcs cs.cs
 
 oraclejava: jv.java
-	home/jonathan/projects/LPATHBench/jdk1.8.0_06/bin/javac jv.java
+	/home/jonathan/projects/LPATHBench/jdk1.8.0_06/bin/javac jv.java
 
 java: jv.java
 	javac jv.java
@@ -56,6 +42,7 @@ go: go.go
 
 d: d.d
 	ldc2 d.d -ofd -O3 -release -inline	
+
 nim: nim.nim
 	nim c -d:release nim.nim
 

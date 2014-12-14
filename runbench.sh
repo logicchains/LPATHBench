@@ -2,7 +2,7 @@
 if [ $# -ne 1 ]; then echo -e "Usage is sh $0 <correctresult>"; exit 1; fi
 
 echo "Compiling..."
-#make buildall
+make buildall
 
 runners=( "./fs.exe"\
 	"./cpp"\
@@ -22,11 +22,11 @@ runners=( "./fs.exe"\
 echo "Running..."
 
 start=""
-#${start} > rawRes
+${start} > rawRes
 for((i=0; i < ${#runners[@]}; i++));
 do
-    echo 'yolo'
-#    ${runners[i]} >> rawRes
+#    echo 'yolo'
+    ${runners[i]} >> rawRes
 done
 
 filterStringPartOne='$2 == "LANGUAGE" && $1 == '

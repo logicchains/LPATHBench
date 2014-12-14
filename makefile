@@ -32,7 +32,7 @@ ocaml: ml.ml
 	ocamlfind ocamlopt -linkpkg -package str,unix -noassert -unsafe -fno-PIC -nodynlink -inline 100 -o ml ml.ml
 
 lisp: lisp.lisp
-	sbcl --load lisp.lisp --non-interactive
+	sbcl --core /usr/local/lib/sbcl/sbcl.core --load lisp.lisp --non-interactive
 
 rust: rs.rs
 	rustc rs.rs --opt-level=3

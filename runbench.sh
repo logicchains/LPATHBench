@@ -17,6 +17,7 @@ runners=( "mono fs.exe"\
 	"./lisp"\
 	"./rs"\
 	"./go"\
+	"./gccgo"\
 	"./d"\
 	"./nim"\
 	"luajit lj.lua"\

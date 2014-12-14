@@ -19,7 +19,7 @@ fn read_places(num_nodes: &mut uint) ->Vec<Node>{
   let path = Path::new("agraph");
   let mut file = BufferedReader::new(File::open(&path));
   let lines: Vec<String> = file.lines().map(|x| x.unwrap()).collect();
-  *num_nodes = from_str(*lines.get(0).as_slice().trim()).expect("Error, first line of file should describe the amount of nodes");
+  *num_nodes = from_str(lines.get(0).as_slice().trim()).expect("Error, first line of file should describe the amount of nodes");
   let mut nodes: Vec<Node> = Vec::from_fn(*num_nodes, |_| Node{neighbours: vec![]});
   for ln in lines.slice(1,lines.len()).iter(){
     let nums: Vec<&str> = ln.as_slice().split(' ').collect();

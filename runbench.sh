@@ -1,5 +1,5 @@
 
-if [ $# -ne 1 ]; then echo -e "Usage is sh $0 <correctresult>"; exit 1; fi
+if [ $# -ne 2 ]; then echo -e "Usage is sh $0 <correctresult> <resultfile>"; exit 1; fi
 
 echo "Compiling..."
 make buildall
@@ -18,7 +18,7 @@ runners=( "./fs.exe"\
 	"./d"\
 	"./nim"\
 	"luajit lj.lua"\
-	"/ojava ojv")
+	"./ojava ojv")
 
 echo "Running..."
 
@@ -41,8 +41,8 @@ awk -f filterString.awk ./rawRes > ./filteredRes
 
 sort -k 2 -n ./filteredRes > ./sortedRes
 
-echo '<html><head></head><body><table style="width: 100%" border="1" cellspacing="1" cellpadding="1">'
-echo '<th style="width: 60%">Language</th><th style="width: 40%">Runtime (ms)</th>'
-echo '{print "<tr><td>"$1"</td><td>"$2"</td></tr>"}' > ./tmp.awk
-awk -E tmp.awk ./sortedRes
-echo '</table></body></html>'
+echo '<html><head></head><body><table style="width: 100%" border="1" cellspacing="1" cellpadding="1">' > $2
+echo '<th style="width: 60%">Language</th><th style="width: 40%">Runtime (ms)</th>' >> $2
+echo '{print "<tr><td>"$1"</td><td>"$2"</td></tr>"}' > ./printtable.awk
+awk -E printtable.awk ./sortedRes >> $2
+echo '</table></body></html>' $2

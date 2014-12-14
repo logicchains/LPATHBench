@@ -19,21 +19,21 @@ fn read_places(num_nodes: &mut uint) ->Vec<Node>{
   let path = Path::new("agraph");
   let mut file = BufferedReader::new(File::open(&path));
   let lines: Vec<String> = file.lines().map(|x| x.unwrap()).collect();
-  *num_nodes = from_str(lines[0].as_slice().trim()).expect("Error, first line of file should describe the amount of nodes");
+  *num_nodes = from_str(lines.get(0).as_slice().trim()).expect("Error, first line of file should describe the amount of nodes");
   let mut nodes: Vec<Node> = Vec::from_fn(*num_nodes, |_| Node{neighbours: vec![]});
   for ln in lines.slice(1,lines.len()).iter(){
     let nums: Vec<&str> = ln.as_slice().split(' ').collect();
     if nums.len() < 3{
       break;
     }
-    let node: uint = from_str(nums[0]).expect("Error: node id was not a uint");
-    let neighbour: i32 = from_str(nums[1]).expect("Error: neighbour id was not an int");
-    let cost: i32 = from_str(nums[2]).expect("Error: route cost was not an int");
-    let mut newnode = nodes[node].clone();
+    let node: uint = from_str(nums.get(0)).expect("Error: node id was not a uint");
+    let neighbour: i32 = from_str(nums.get(1)).expect("Error: neighbour id was not an int");
+    let cost: i32 = from_str(nums.get(2)).expect("Error: route cost was not an int");
+    let mut newnode = nodes.get(node).clone();
     newnode.neighbours.push(Route{dest: neighbour, cost: cost});
     let mut newnodes = Vec::with_capacity(*num_nodes);
     for i in range(0u, *num_nodes){
-      newnodes.push(if i == node{ newnode.clone()} else {nodes[i].clone()});
+      newnodes.push(if i == node{ newnode.clone()} else {nodes.get(i).clone()});
     }
     nodes = newnodes;
   }

@@ -1,46 +1,50 @@
-module lpath
+module LongestPath
 
 open System
 open System.IO
-open Printf
 
-type route = {dest: int; cost: int}
+type Route = 
+    struct 
+        val Dest : int
+        val Cost : int
+        new (dest : int, cost : int) = { Dest = dest; Cost = cost}
+    end
+          
+type Node = Route array
 
-type node = route list
+let readPlaces () =    
+  let lines = 
+    use stream = File.OpenRead(@"agraph")
+    use reader = new StreamReader(stream)
+    (reader.ReadToEnd()).Split ([|"\n"|], System.StringSplitOptions.None)
+  let numNodes = lines.[0] |> int
+  let nodes = Array.create numNodes [||]
+  lines.[1..]
+        |> Array.map(fun l -> l.Split ([|" "|], System.StringSplitOptions.None)) 
+        |> Array.filter (fun l -> l.Length > 2) 
+        |> Array.fold(fun (acc : Node[]) v ->
+            let node, neighbour, cost = (int v.[0], int v.[1], int v.[2])
+            acc.[node] <- Array.append [| Route(neighbour, cost) |] acc.[node]
+            acc) nodes
 
-let readPlaces () =
-  use stream = File.OpenRead(@"agraph")
-  use reader = new StreamReader(stream)
-  let lines = (reader.ReadToEnd()).Split ([|"\n"|], System.StringSplitOptions.None)
-  let numNodes = int <| Seq.head lines
-  let nodes = Array.init numNodes (fun a -> [])
-  let rec loop i =
-    let nums = lines.[i].Split ([|" "|], System.StringSplitOptions.None)
-    let len = Array.length nums 
-    if len > 2 then
-      let node, neighbour, cost = (int nums.[0], int nums.[1], int nums.[2])
-      nodes.[node] <- ({dest= neighbour; cost=cost} :: nodes.[node]);
-      loop (i + 1)
-    else ();
-  loop 1;
-  nodes
-
-let rec getLongestPath (nodes: node array) nodeID (visited: bool array) =
-  visited.[nodeID] <- true;
+let rec getLongestPath (nodes : Node array) nodeId (visited : bool array) =
+  visited.[nodeId] <- true;
   let max = ref 0
-  List.iter (fun neighbour -> if (not visited.[neighbour.dest])
-                                  then (
-                                        let dist = neighbour.cost + getLongestPath nodes neighbour.dest visited;
-                                        if dist > !max then max := dist;)
-                                  else ();)
-      nodes.[nodeID]
-  visited.[nodeID] <- false;
+  nodes.[nodeId] |> Array.iter (fun neighbour-> 
+                                  if (not visited.[neighbour.Dest])
+                                  then 
+                                        let dist = neighbour.Cost + getLongestPath nodes neighbour.Dest visited
+                                        if dist > !max then max := dist)
+  visited.[nodeId] <- false;
   !max
-
-let () =
+  
+[<EntryPoint>]
+let main argv = 
   let nodes = readPlaces()
-  let visited = Array.init (Array.length nodes) (fun x -> false)
-  let start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond
+  let visited = Array.zeroCreate nodes.Length
+  let sw = System.Diagnostics.Stopwatch.StartNew()
   let len = getLongestPath nodes 0 visited
-  let duration = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - start
+  sw.Stop()
+  let duration = sw.ElapsedMilliseconds
   printf "%d LANGUAGE FSharp %d\n" len duration
+  0

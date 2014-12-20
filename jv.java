@@ -1,79 +1,76 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
 import java.util.Arrays;
+import java.util.Scanner;
 
-public class jv{
-
-	static int numNodes = -1;
-	static final int[][] nodes;
-	static final boolean[] visited;
-
+public class jv {
+	private static int numNodes = -1;
+	private static final int[][] nodes;
+	private static final boolean[] visited;
+	
 	static {
 		nodes = readPlaces();
 		visited = new boolean[numNodes];
 	}
-
-	public static void main(final String[] args) throws Exception{
-		final long start = System.currentTimeMillis();
-		final int len = getLongestPath(0);
-		final long duration = System.currentTimeMillis() - start;
+	
+	public static void main(final String[] args) {
+		// warm up a bit
+		for (int i = 0; i < 10; i++) {
+			getLongestPath(0, visited);
+		}
+		
+		final long start = System.nanoTime();
+		final int len = getLongestPath(0, visited);
+		final long duration = (System.nanoTime() - start) / 1000000; // ns -> ms
 		System.out.printf("%d LANGUAGE Java %d\n", len, duration);
 	}
-
+	
 	/**
 	 * int[node][dest|cost|...]
 	 */
-	static int[][] readPlaces() {
-		try (BufferedReader in = new BufferedReader(new FileReader("agraph"))) {
-			final String s = in.readLine();
-			numNodes = Integer.parseInt(s);
-			final int[][] nodes = new int[numNodes][];
-			for(int i = 0; i < numNodes; i++){
-				nodes[i]= new int[0];
+	private static int[][] readPlaces() {
+		try (Scanner in = new Scanner(new File("agraph"))) {
+			numNodes = in.nextInt();
+			int[][] nodes = new int[numNodes][];
+			for (int i = 0; i < numNodes; i++) {
+				nodes[i] = new int[0];
 			}
-			while (in.ready()) {
-				final String ln = in.readLine();
-				final String[] nums = ln.split("[ \t]+");
-				if(nums.length != 3){
-					break;
-				}
-				final int node = Integer.parseInt(nums[0]);
-				final int neighbour = Integer.parseInt(nums[1]);
-				final int cost = Integer.parseInt(nums[2]);
-
-				final int index = nodes[node].length;
-				final int[] replacement = Arrays.copyOf(nodes[node], index + 2);
+			while (in.hasNextInt()) {
+				int node = in.nextInt();
+				int neighbour = in.nextInt();
+				int cost = in.nextInt();
+				int index = nodes[node].length;
+				int[] replacement = Arrays.copyOf(nodes[node], index + 2);
 				replacement[index] = neighbour;
-				replacement[index+1] = cost;
-
+				replacement[index + 1] = cost;
 				nodes[node] = replacement;
 			}
-			return nodes;
+			// reduce any fragmentation
+			int[][] newNodes = new int[numNodes][];
+			for (int i = 0; i < numNodes; i++) {
+				newNodes[i] = Arrays.copyOf(nodes[i], nodes[i].length);
+			}
+			return newNodes;
 		} catch (Exception e) {
 			return null;
 		}
 	}
-
-	static int getLongestPath(final int nodeID){
+	
+	private static int getLongestPath(final int nodeID, boolean[] visited) {
 		visited[nodeID] = true;
-		int dist, max=0;
-
-		final int length = nodes[nodeID].length;
-
-		for (int i = 0; i < length; i+=2) {
-
-			final int dest = nodes[nodeID][i];
-
+		int max = 0;
+		
+		final int[] row = nodes[nodeID];
+		for (int i = 0; i < row.length; i += 2) {
+			final int dest = row[i];
 			if (!visited[dest]) {
-				dist = nodes[nodeID][i + 1] + getLongestPath(dest);
+				final int dist = row[i + 1] + getLongestPath(dest, visited);
 				if (dist > max) {
 					max = dist;
 				}
 			}
 		}
-
+		
 		visited[nodeID] = false;
 		return max;
 	}
-
 }

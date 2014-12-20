@@ -188,7 +188,7 @@ First, it calls string->number, which returns a (U Integer nil), a union type. T
 
 *Common Lisp*
 
-This was a bit more tricky to write than the Racket implementation. Common Lisp doesn't come with a string split algorithm in its standard library, so I borrowed one I found online. It also doesn't allow recursive function definitions in let bindings, instead requiring the use of `labels`. The biggest inconvenience I found, however, was the apparently lack of the equivalent of Racket's "build vector", which builds a vector from a function. Common Lisp has `make-array`, but if that is used with a struct initial element then it just fills every element of the vector with a reference to the same struct instance, causing a modification of one element to effect the rest. I hence had to populate the vector manually:
+This was a bit more tricky to write than the Racket implementation. Common Lisp doesn't come with a string split algorithm in its standard library, so I borrowed one I found online. It also doesn't allow recursive function definitions in let bindings, instead requiring the use of `labels`. The biggest inconvenience I found, however, was the apparent lack of the equivalent of Racket's "build vector", which builds a vector from a function. Common Lisp has `make-array`, but if that is used with a struct initial element then it just fills every element of the vector with a reference to the same struct instance, causing a modification of one element to effect the rest. I hence had to populate the vector manually:
 
 ```lisp
 (dotimes (i num-nodes)

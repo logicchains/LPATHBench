@@ -2,29 +2,31 @@
 
 In this benchmark I thought it would be interesting to explore a less common pathfinding algorithm. Imagine you've just been "invited" to visit your in-laws (if you don't have inlaws, imagine you're driving a married friend), and want to find the longest possible route to the in-laws' house, in order to minimise the time spent with them. Now, you don't want your spouse (or your friend's spouse) to know you're stalling, so you can't visit the same place twice, can't just spend infinity hours driving in a circle. How would you find this longest path?
 
-One way is to create a graph with the nodes representing different intersections and the connections between these nodes representing the distances of the roads between these intersections. One can then solve it with the relatively simple approach of iterating through all possible routes to find the longest. You may be thinking this sounds incredibly slow, and it is, something like O(n!). Unfortunately however there are no known "fast" algorithms that can find this path; the problem is considered NP complete, meaning if you can solve it in O(n^b) time, where b is a constant, then you get a [million dollar prize](http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP).
+One way is to create a graph with the nodes representing different intersections and the connections between these nodes representing the distances of the roads between these intersections. One can then solve it with the relatively simple approach of iterating through all possible routes to find the longest. You may be thinking this sounds incredibly slow, and it is, something like O(n!). Unfortunately however there are no known "fast" algorithms that can find this path; the problem has been proven to be NP complete, meaning if you can solve it in O(n^b) time, where b is a constant, then you get a [million dollar prize](http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP).
 
 The following table contains the most useful results for the benchmark, comparing each language against itself on ARMv7 and x86-64. 32 bit integers are used where possible, rather than machine-sized ones, to ensure both implementations use the same sized datatypes. OCaml is an exception, as non-machine-sized ints are boxed, so machine-sized ints are faster.
 
 Note that the algorithm finds the length of the longest path in the graph, but doesn't actually find all the steps in that path; this is purely laziness on my part, as the latter requires more effort to write. In my defence, most results for "longest path algorithm" on Google also seem to only give the length of the longest path, not the path itself.
 
+Just to clarify: I'm not comparing ARM and x86, I'm comparing language implementations on two common ARM and x86 platforms.
+
 **Results:**
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 60.3085 |
-| D | 54.1867 |
-| NIM | 52.8029 |
-| LuaJit | 52.294 |
-| CSharp | 49.9358 |
-| GCCGo | 45.9409 |
-| FSharp | 45.0653 |
-| Go | 38.2085 |
-| OracleJava | 37.3034 |
-| Racket | 34.7584 |
-| Ocaml | 33.5409 |
-| Lisp | 24.1812 |
-| Java | 4.2908 |
+| D | 67.7271 |
+| C++ | 62.8221 |
+| LuaJit | 61.0972 |
+| NIM | 58.1357 |
+| GCCGo | 52.9275 |
+| CSharp | 51.5181 |
+| FSharp | 47.2425 |
+| Go | 45.6611 |
+| Racket | 39.0075 |
+| Ocaml | 36.8604 |
+| Lisp | 27.9963 |
+| OracleJava | 21.9543 |
+| Java | 19.0366 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -89,41 +91,41 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 3177 |
-| D | 3320 |
-| NIM | 4763 |
-| GCCGo | 6393 |
-| Go | 7569 |
-| Ocaml | 8992 |
-| CSharp | 9340 |
-| LuaJit | 10353 |
-| OracleJava | 13736 |
-| FSharp | 18218 |
-| Racket | 37775 |
-| Lisp | 38133 |
-| Java | 124732 |
+| C++ | 3182 |
+| D | 3269 |
+| NIM | 4849 |
+| GCCGo | 6439 |
+| Go | 7571 |
+| Ocaml | 8912 |
+| CSharp | 9354 |
+| LuaJit | 10354 |
+| OracleJava | 13519 |
+| Java | 14325 |
+| FSharp | 18060 |
+| Racket | 37803 |
+| Lisp | 38130 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| D | 1799 |
-| C++ | 1916 |
-| Rust | 2152 |
-| NIM | 2515 |
-| Go | 2892 |
-| GCCGo | 2937 |
-| Ocaml | 3016 |
-| Haskell | 4592 |
-| CSharp | 4664 |
-| OracleJava | 5124 |
-| Java | 5352 |
-| LuaJit | 5414 |
-| FSharp | 8210 |
-| Dart | 8488 |
-| Lisp | 9221 |
-| Racket | 13130 |
+| C++ | 1999 |
+| D | 2214 |
+| Rust | 2413 |
+| Java | 2727 |
+| NIM | 2819 |
+| OracleJava | 2968 |
+| Ocaml | 3285 |
+| GCCGo | 3408 |
+| Go | 3457 |
+| CSharp | 4819 |
+| Haskell | 5399 |
+| LuaJit | 6326 |
+| FSharp | 8532 |
+| Dart | 10418 |
+| Lisp | 10675 |
+| Racket | 14746 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.
@@ -133,7 +135,7 @@ Feel free to submit improvements to the implementations! Just one rule: the grap
 
 *Lua*
 
-Damn is it fast; I wouldn't have thought a dynamic language would run almost faster than Java and C#. Mike Pall: the Einstein of just-in-time-compiler-writing.
+Damn is it fast; I wouldn't have thought a dynamic language would run almost faster than C# and Haskell. Mike Pall: the Einstein of just-in-time-compiler-writing.
 
 *Go*
 
@@ -270,6 +272,8 @@ It was pretty simple to translate the OCaml implementation into F#, apart from a
 *Java*
 
 Really not much to say here. Verbose, but fairly simple to write, and reasonably fast, although not comparable to the compiled languages.
+
+And wow: someone update it to use arrays instead of classes for nodes (effectively unboxing them), and it's incredibly fast. I'm really looking forward to unboxed classes in Java 9 (or 10 :/).
 
 *Haskell*
 

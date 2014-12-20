@@ -28,12 +28,14 @@ class longestPathFinder{
     public int getLongestPath(List<node> nodes, int nodeID, bool[] visited){
 	visited[nodeID] = true;
 	int max=0;
-	foreach(route neighbour in nodes[nodeID].neighbours){
+	var neighboursOfID = nodes[nodeID].neighbours;
+	for(int i = 0; i < neighboursOfID.Count; i++){
+		var neighbour = neighboursOfID[i];
 	    if (!visited[neighbour.dest]){
-		int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
-		if (dist > max){
-		    max = dist;
-		}
+			int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
+			if (dist > max){
+			    max = dist;
+			}
 	    }    
 	}
 	visited[nodeID] = false;

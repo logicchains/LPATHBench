@@ -354,4 +354,4 @@ There's no algorith for finding the longest path to one's inlaws that doesn't ta
 
 Comments:
 
-Make pull requests with your comments here. Or, more sensibly, use the [Reddit thread]()
+Make pull requests with your comments here. Or, more sensibly, use the [Reddit thread](http://www.reddit.com/r/programming/comments/2pvf68/armv7_vs_x8664_pathfinding_benchmark_of_c_d_go/)

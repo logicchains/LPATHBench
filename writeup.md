@@ -187,7 +187,7 @@ Needless to say, being the lazy sod that I am, I turned to a simpler solution.
 
 Problem solvered! This led me to the somewhat frightening discovery that unsafe is not transitive: when I put the above code in the findPlaces function, that function doesn't need to be marked as unsafe and the code calling it doesn't need to be in an unsafe block. This is probably necessary, in the sense that the standard library uses unsafe code for performance and it wouldn't make sense for all stdlib calls to be marked unsafe, but I nevertheless find it surprising how easy it is. Maybe it could be useful to require a compiler flag for compiling code containing `unsafe`, like C# does.
 
-That being said, the version I was using is the latest available in the Arch Linux repositories, 0.12, and it's quite possible that the newest version makes mutating an element in a vector much easier.
+That being said, the version I was using is the latest available in the Arch Linux repositories, 0.12, and it's quite possible that the current trunk version makes mutating an element in a vector much easier.
 
 I found it slightly disappointing that Rust has chosen to forbid top-level function type inference, of the kind possible in F#, OCaml and Haskell. The argument is that this prevents the interface-breaking that could occur if a change within an exported function altered its signature, but this wouldn't be a problem with a proper module system like OCaml. With Ocaml, the module interface must be specified explicitly, and if function signatures within the module don't match this then there's a compilation error. Imagine a function that takes a channel of mutable references to atomically reference counted options of ints: in Rust I'd have to write something like:
 
@@ -199,7 +199,7 @@ in the function type signature, which is rather gangly, especially if the signat
 
 *C++*
 
-The C++ implementation was pleasant to write; I think people give modern C++ far too much credit. If you're wondering why it appeared slightly slower than the D on x86, I suspect it's because C++ stores astandard vectors of bools as bit vectors, for legacy reasons, which are generally less efficient to read and write than proper bool vectors. It could also be because of some optimisations made possible in the D compiler the immutability and purity guarantees used in the getLongestPath function.
+The C++ implementation was pleasant to write; I think people give modern C++ far too little credit. If you're wondering why it appeared slightly slower than the D on x86, I suspect it's because C++ stores a standard vectors of bools as bit vectors, for legacy reasons, which are generally less efficient to read and write than proper bool vectors. It could also be because of some optimisations made possible in the D compiler by the immutability and purity guarantees used in the getLongestPath function.
 
 Also, input streams are hilarious. I wonder people unfamiliar with C++ would think of the following while loop:
 
@@ -332,17 +332,19 @@ Although Dart performs quite well, as far as I'm aware Dart has no support for d
 I didn't write the nimbrod implementation, so can't comment on it, but from looking at the code I find it pretty neat that it's almost as concise as Python yet runs quite fast.
 
 
+
 **TLDR**
 
 * D and Nimrod both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
 * The OpenJDK's performance on ARM is a steaming pile of crap
-* C++ specialises std::vector<bool> to a bitvector by default, which hurts performance
+* C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance
 * Haskell can be faster than Java, thanks to unboxing
 * If you wanna use Haskell on ARM, you must be willing to build whatever version of LLVM it was built with
 * Luajit on ARM is friggen fast, for a dynamic language
 * Rust is hard (or, more charitably, I suck at Rust)
 * Functional code in Haskell/OCaml can be faster than imperative code using iorefs.
 
-*Moral of the story**
+
+**Moral of the story**
 
 There's no algorith for finding the longest path to one's inlaws that doesn't take exponential time, ergo the universe hates us.

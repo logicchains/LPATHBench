@@ -14,19 +14,19 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 62.8274 |
-| D | 60.0736 |
-| LuaJit | 54.5296 |
-| FSharp | 47.1754 |
-| Go | 47.1292 |
-| GCCGo | 46.2264 |
-| NIM | 45.0997 |
-| CSharp | 44.3175 |
-| Racket | 40.019 |
-| Ocaml | 34.023 |
-| Lisp | 28.1003 |
-| OracleJava | 20.5818 |
-| Java | 18.6022 |
+| C++ | 87965.4 |
+| D | 59.9083 |
+| LuaJit | 54.4768 |
+| FSharp | 47.165 |
+| Go | 46.9234 |
+| GCCGo | 46.2407 |
+| NIM | 45.2612 |
+| CSharp | 44.0332 |
+| Racket | 41.0191 |
+| Ocaml | 33.4517 |
+| Lisp | 28.0885 |
+| OracleJava | 20.8028 |
+| Java | 18.7662 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -93,41 +93,41 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 3169 |
-| D | 3261 |
-| NIM | 4765 |
-| GCCGo | 6466 |
-| Go | 7524 |
-| Ocaml | 9135 |
-| CSharp | 9450 |
-| LuaJit | 10321 |
-| OracleJava | 13648 |
-| Java | 14423 |
-| FSharp | 18109 |
-| Racket | 32687 |
-| Lisp | 38028 |
+| C++ | 2.26339 |
+| D | 3270 |
+| NIM | 4748 |
+| GCCGo | 6464 |
+| Go | 7557 |
+| Ocaml | 9291 |
+| CSharp | 9511 |
+| LuaJit | 10331 |
+| OracleJava | 13503 |
+| Java | 14297 |
+| FSharp | 18113 |
+| Racket | 31890 |
+| Lisp | 38044 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| D | 1959 |
-| C++ | 1991 |
-| NIM | 2149 |
-| Rust | 2369 |
-| Java | 2683 |
-| OracleJava | 2809 |
-| GCCGo | 2989 |
-| Ocaml | 3108 |
-| Go | 3546 |
-| CSharp | 4188 |
-| Haskell | 5110 |
-| LuaJit | 5628 |
-| FSharp | 8543 |
-| Dart | 10137 |
-| Lisp | 10686 |
-| Racket | 13081 |
+| C++ | 1.74439 |
+| D | 1828 |
+| NIM | 1982 |
+| Rust | 2217 |
+| Java | 2523 |
+| OracleJava | 2617 |
+| GCCGo | 2826 |
+| Ocaml | 2993 |
+| Go | 3006 |
+| CSharp | 4230 |
+| Haskell | 4635 |
+| LuaJit | 5861 |
+| FSharp | 8371 |
+| Dart | 8763 |
+| Lisp | 9016 |
+| Racket | 12847 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.
@@ -214,9 +214,11 @@ The C++ implementation was pleasant to write; I think people give modern C++ far
 
 Also, input streams are hilarious. I wonder people unfamiliar with C++ would think of the following while loop:
 
+**Edit:** someone updated it to use proper fixed-size bitsets, and wow is it fast!
+
 ```c
   while (text >> nodeS >> neighbourS >> costS){
-    nodes[stoi(nodeS)].neighbours.push_back(route{stoi(neighbourS), stoi(costS)});
+    nodes[nodeS].neighbours.push_back(route{neighbourS, costS});
   }
 ```
 
@@ -353,7 +355,7 @@ I didn't write the Nim implementation, so can't comment on it, but from looking 
 
 * D and Nimrod both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
 * The OpenJDK's performance on ARM is a steaming pile of crap
-* C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance
+* C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance. Using a std::bitset properly is however much faster, as it can be inlined.
 * Haskell can be faster than Java, thanks to unboxing
 * If you wanna use Haskell on ARM, you must be willing to build whatever version of LLVM it was built with
 * Luajit is friggen fast!

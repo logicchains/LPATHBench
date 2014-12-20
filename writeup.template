@@ -166,6 +166,8 @@ The C++ implementation was pleasant to write; I think people give modern C++ far
 
 Also, input streams are hilarious. I wonder people unfamiliar with C++ would think of the following while loop:
 
+**Edit:** someone updated it to use proper fixed-size bitsets, and wow is it fast!
+
 ```c
   while (text >> nodeS >> neighbourS >> costS){
     nodes[nodeS].neighbours.push_back(route{neighbourS, costS});
@@ -305,7 +307,7 @@ I didn't write the Nim implementation, so can't comment on it, but from looking 
 
 * D and Nimrod both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
 * The OpenJDK's performance on ARM is a steaming pile of crap
-* C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance
+* C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance. Using a std::bitset properly is however much faster, as it can be inlined.
 * Haskell can be faster than Java, thanks to unboxing
 * If you wanna use Haskell on ARM, you must be willing to build whatever version of LLVM it was built with
 * Luajit is friggen fast!

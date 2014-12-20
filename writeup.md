@@ -137,7 +137,7 @@ Feel free to submit improvements to the implementations! Just one rule: the grap
 
 *Lua*
 
-Damn is it fast; I wouldn't have thought a dynamic language would run almost faster than C# and Haskell. Mike Pall: the Einstein of just-in-time-compiler-writing.
+Damn is it fast; I wouldn't have thought a dynamic language would run almost faster than Haskell and faster than F#. Mike Pall: the Einstein of just-in-time-compiler-writing.
 
 *Go*
 

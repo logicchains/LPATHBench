@@ -18,7 +18,7 @@ An aside: D only barely works. While sudo pacman -S ldc went down without a hitc
 
 The OpenJDK's performance on ARM shows how much performance depends on the implementation, not just the language. If you're a low-level person and looking for something useful to which to contribute, consider implementing a JIT compiler for OpenJDK on ARM. Even if it was only half as good as the Oracle one, you'd still be able to put on your resume that you made the ARM JVM five times faster.
 
-Weird thing: when I made a simlink 'oraclejava' which linked to my local Oracle jvm `java` executable, for some reason it created an 'oraclejava' in /sbin, which pointed to the Openjdk java executable instead! Hence why the benchmark explicitly runs `/usr/bin/oraclejava`.
+Weird thing: when I made a symlink 'oraclejava' which linked to my local Oracle jvm `java` executable, for some reason it created an 'oraclejava' in /sbin, which pointed to the Openjdk java executable instead! Hence why the benchmark explicitly runs `/usr/bin/oraclejava`.
 
 Now, the seedy part of the benchmark: comparing different languages with each other. They ain't even using the exact same algorithms :O Amazingly, I found the more functional approach to be faster than the pure imperative approach for Haskell and OCaml, possibly because the functional approach minimises friction with their expensive write barriers.
 

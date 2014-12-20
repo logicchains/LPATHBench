@@ -27,6 +27,7 @@ echo "Running..."
 
 start=""
 ${start} > rawRes
+${start} > $3
 for((i=0; i < ${#runners[@]}; i++));
 do
 #    echo 'yolo'
@@ -45,8 +46,7 @@ awk -f filterString.awk ./rawRes > ./filteredRes
 sort -k 2 -n ./filteredRes > ./sortedRes
 cat sortedRes > $2
 
-echo '<html><head></head><body><table style="width: 100%" border="1" cellspacing="1" cellpadding="1">' > $3
-echo '<th style="width: 60%">Language</th><th style="width: 40%">Runtime (ms)</th>' >> $3
-echo '{print "<tr><td>"$1"</td><td>"$2"</td></tr>"}' > ./printtable.awk
+echo '| Language | Runtime (ms) |' >> $3
+echo '| :------- | -----------: |' >> $3
+echo '{print "| "$1" | "$2" |"}' > ./printtable.awk
 awk -E printtable.awk ./sortedRes >> $3
-echo '</table></body></html>' >> $3

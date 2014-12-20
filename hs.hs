@@ -134,7 +134,7 @@ getLongestPath4 !nodes !nodeID !visited = do
 getLongestPath5 :: V.Vector Node2 -> Int32 -> UV.Vector Bool -> (Int32, UV.Vector Bool)
 getLongestPath5 !nodes !nodeID !visited = 
   let visited' :: UV.Vector Bool = GV.modify (\v -> UMV.write v (fromIntegral nodeID) True) visited
-      (max, visited'') :: (Int32, UV.Vector Bool) = GV.foldl' acc (0::Int32, visited') (nodes V.! (fromIntegral nodeID))
+  (max, visited'') :: (Int32, UV.Vector Bool) = GV.foldl' acc (0::Int32, visited') (nodes V.! (fromIntegral nodeID))
   in (max, GV.modify (\v -> UMV.write v (fromIntegral nodeID) False) visited'')
     where
       acc :: (Int32, UV.Vector Bool) -> Route -> (Int32, UV.Vector Bool)

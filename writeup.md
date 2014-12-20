@@ -81,7 +81,7 @@ Essentially, the former has max as a single mutable variable accessed and modifi
 
 Note though that the latter is still pretty imperative, in the sense that it uses an unboxed mutable vector of bools. I attempted to write a purely functional version, creating a new, modified array of bools every iteration, but this was unfathomably slow and memory-hungry.
 
-Also note that the Rust numbers here probably aren't representive, due to my implementation being rather dodgy as a result of the issues I had with the language, as described further below. These issues are fixed in the 0.13 nightly version.
+Also note that the Rust numbers here are somewhat unrepresentive, as they use version 0.12, which is the most recent version I could find from the Arch Linux package repository. The code runs faster in the 0.13 nightly.
 
 Anyway, here's the numbers you probably came here for. The x86-64 device is an Intel dual core i5 M430 2.27GHz laptop, running the latest Arch Linux, and the ARMv7 device is a Galaxy S3 with 2GB of ram and a quad-core 1.3ghz processor, runing the latest Arch Linux in a chroot.
 

@@ -29,9 +29,9 @@ vector<node> readPlaces(){
   text >> numNodesText;
   int numNodes = stoi(numNodesText);
   vector<node> nodes(numNodes);
-  string nodeS, neighbourS, costS;
+  size_t nodeS, neighbourS, costS;
   while (text >> nodeS >> neighbourS >> costS){
-    nodes[stoi(nodeS)].neighbours.push_back(route{stoi(neighbourS), stoi(costS)});
+    nodes[nodeS].neighbours.push_back(route{neighbourS, costS});
   }
   return nodes;
 }

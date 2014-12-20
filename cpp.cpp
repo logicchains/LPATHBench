@@ -1,19 +1,13 @@
-#define _POSIX_C_SOURCE 200809L
 #include <ctime>
 #include <vector>
+#include <bitset>
 #include <fstream>
 #include <iostream>
 #include <string>
-
-double getTime(){
-  timespec spec;
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &spec);
-  double s = spec.tv_sec;
-  double ms = spec.tv_nsec;
-  return (s*1000 + ms / 1000000);
-}
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 struct route{
   int dest, cost;
@@ -29,21 +23,22 @@ vector<node> readPlaces(){
   text >> numNodesText;
   int numNodes = stoi(numNodesText);
   vector<node> nodes(numNodes);
-  size_t nodeS, neighbourS, costS;
+  string nodeS, neighbourS, costS;
   while (text >> nodeS >> neighbourS >> costS){
-    nodes[nodeS].neighbours.push_back(route{neighbourS, costS});
+    nodes[stoi(nodeS)].neighbours.push_back(route{stoi(neighbourS), stoi(costS)});
   }
   return nodes;
 }
 
-int getLongestPath(const vector<node> &nodes, const int nodeID, vector<bool> &visited){
+template <int T>
+int getLongestPath(const vector<node> &nodes, const int nodeID, bitset<T> visited){
   visited[nodeID] = true;
   int max=0;
-  for(const route& neighbour: nodes[nodeID].neighbours){
+  for(const route &neighbour: nodes[nodeID].neighbours){
     if (visited[neighbour.dest] == false){
-      const int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
+      const int dist = neighbour.cost + getLongestPath<T>(nodes, neighbour.dest, visited);
       if (dist > max){
-	max = dist;
+        max = dist;
       }
     }
   }
@@ -51,11 +46,30 @@ int getLongestPath(const vector<node> &nodes, const int nodeID, vector<bool> &vi
   return max;
 }
 
+int getLongestPath(const vector<node> &nodes)
+{
+  if (nodes.size() <= 16) {
+     return getLongestPath<16>(nodes, 0, bitset<16>());
+  } else if (nodes.size() <= 256) {
+    return getLongestPath<256>(nodes, 0, bitset<256>());
+  } else if (nodes.size() <= 4096) {
+    return getLongestPath<4096>(nodes, 0, bitset<4096>());
+  } else if (nodes.size() <= 65536) {
+    return getLongestPath<65536>(nodes, 0, bitset<65536>());
+  } else if (nodes.size() <= 1048576) {
+    return getLongestPath<1048576>(nodes, 0, bitset<1048576>());
+  } else if (nodes.size() <= 16777216) {
+    return getLongestPath<16777216>(nodes, 0, bitset<16777216>());
+  } else {
+    return -1;
+  }
+}
+
 int main(int argc, char** argv){
   auto nodes = readPlaces();
-  vector<bool> visited(nodes.size(), false);
-  double start = getTime();
-  int len = getLongestPath(nodes, 0, visited);
-  double duration = getTime() - start;
-  cout << len << " LANGUAGE C++ " << (int)duration << "\n";
+  auto start = high_resolution_clock::now();
+  int len = getLongestPath(nodes);
+  auto end = high_resolution_clock::now();
+  auto duration = 0.000001 * duration_cast<microseconds>(end - start).count();
+  cout << len << " LANGUAGE C++ " << duration << std::endl;
 }

@@ -81,7 +81,7 @@ Essentially, the former has max as a single mutable variable accessed and modifi
 
 Note though that the latter is still pretty imperative, in the sense that it uses an unboxed mutable vector of bools. I attempted to write a purely functional version, creating a new, modified array of bools every iteration, but this was unfathomably slow and memory-hungry.
 
-Also note that the Rust numbers here probably aren't representive, due to my implementation being rather dodgy as a result of the issues I had with the language, as described further below.
+Also note that the Rust numbers here probably aren't representive, due to my implementation being rather dodgy as a result of the issues I had with the language, as described further below. These issues are fixed in the 0.13 nightly version.
 
 Anyway, here's the numbers you probably came here for. The x86-64 device is an Intel dual core i5 M430 2.27GHz laptop, running the latest Arch Linux, and the ARMv7 device is a Galaxy S3 with 2GB of ram and a quad-core 1.3ghz processor, runing the latest Arch Linux in a chroot.
 
@@ -149,7 +149,9 @@ It actually enforced it less strongly than Rust, as technically I could have jus
 
 *Rust*
 
-This was by far the hardest implementation to write, due to the language having changed significantly since last I used it. Relatively simple tasks eluded me, for instance:
+**NOTE:** *The code I had trouble with is fixed in the current Rust nightly; `visited[2] = true` works fine. So consider this rust section outdated.*
+
+This was by far the hardest implementation to write, due to the language having changed significantly sincelast I used it. Relatively simple tasks eluded me, for instance:
 
 ```rust
 let mut visited: Vec<bool> = Vec::from_fn(10, |_| false);

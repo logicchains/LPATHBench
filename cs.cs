@@ -50,7 +50,7 @@ struct route{
 	}
     }
 
-class node {
+struct node {
     public List<route> neighbours;
 }
 

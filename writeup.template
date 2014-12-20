@@ -103,7 +103,7 @@ It actually enforced it less strongly than Rust, as technically I could have jus
 
 *Rust*
 
-**NOTE:** *The code I had trouble with is fixed in the current Rust nightly (which I don't have right now); `visited[2] = true` works fine. So consider this rust section outdated.*
+**NOTE:** *The code I had trouble with is fixed in the current Rust nightly; `visited[2] = true` works fine. So consider this rust section outdated.*
 
 ~~This was by far the hardest implementation to write, due to the language having changed significantly sincelast I used it. Relatively simple tasks eluded me, for instance:~~
 

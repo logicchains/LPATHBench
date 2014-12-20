@@ -3,19 +3,19 @@ using System.Text.RegularExpressions;
 using System;
 
 class longestPathFinder{
-   public List<node> readPlaces(out int numNodes) {
+   public node[] readPlaces(out int numNodes) {
 	string[] lines = System.IO.File.ReadAllLines("agraph");
 	numNodes = System.Convert.ToInt32(lines[0]);
-	List<node> nodes = new List<node>(numNodes);
+	var nodes = new node[numNodes];
 	for(int i = 0; i < numNodes; i++){
 	    node n = new node();
 	    n.neighbours = new List<route>();
-	    nodes.Add(n);
+	    nodes[i]=n;
 	}
 	for(int i = 1; i < lines.Length; i++) {
 	    string[] nums = lines[i].Split(' ');
 	    if(nums.Length < 3){
-		break;
+			break;
 	    }
 	    int node = System.Convert.ToInt32(nums[0]);
 	    int neighbour = System.Convert.ToInt32(nums[1]);
@@ -25,7 +25,7 @@ class longestPathFinder{
 	return nodes;
     }
 
-    public int getLongestPath(List<node> nodes, int nodeID, bool[] visited){
+    public int getLongestPath(node[] nodes, int nodeID, bool[] visited){
 	visited[nodeID] = true;
 	int max=0;
 	var neighboursOfID = nodes[nodeID].neighbours;
@@ -60,7 +60,7 @@ public class cs{
     public static void Main(string[] args){
 	int numNodes = 0;
 	longestPathFinder p = new longestPathFinder();
-        List<node> nodes = p.readPlaces(out numNodes);
+        var nodes = p.readPlaces(out numNodes);
 	bool[] visited = new bool[numNodes];
 	for(int i = 0; i < numNodes; i++){
 	    visited[i] = false;

@@ -9,7 +9,7 @@ make buildall
 runners=( "mono fs.exe"\
 	"./cpp"\
 	"./rkt"\
-	"mono ./cs.exe"\
+	"mono -O=all ./cs.exe"\
 	"java jv"\
 	"dart dart.dart"\
 	"./hs"\

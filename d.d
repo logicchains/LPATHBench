@@ -13,11 +13,11 @@ struct node {
   route[] neighbours;
 }
 
-node[] readPlaces(ref int numNodes){
+node[] readPlaces() {
   auto bytes = cast(byte[]) read("agraph");
   auto text = cast(string) bytes;
   auto lines = splitLines(text);
-  numNodes = to!int(lines[0]);
+  auto numNodes = to!int(lines[0]);
   lines = lines[1..$];
   node[] nodes =  minimallyInitializedArray!(node[])(numNodes);
   foreach(string ln; lines){
@@ -33,12 +33,12 @@ node[] readPlaces(ref int numNodes){
   return nodes;
 }
 
-int getLongestPath(node[] nodes, int nodeID, bool[] visited){
+int getLongestPath(immutable(node[]) nodes, immutable int nodeID, bool[] visited) pure nothrow @safe{
   visited[nodeID] = true;
-  int dist, max=0;
-  foreach(route neighbour; nodes[nodeID].neighbours){
+  int max=0;
+  foreach(immutable route neighbour; nodes[nodeID].neighbours){
     if (!visited[neighbour.dest]){
-      dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
+      immutable int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
       if (dist > max){
 	max = dist;
       }
@@ -50,9 +50,8 @@ int getLongestPath(node[] nodes, int nodeID, bool[] visited){
 
 
 void main(){
-  int numNodes = 0;
-  auto nodes = readPlaces(numNodes);
-  auto visited = uninitializedArray!(bool[])(numNodes);
+  immutable auto nodes = cast(immutable)readPlaces().dup;
+  auto visited = uninitializedArray!(bool[])(nodes.length);
   foreach(ref bool b; visited){
     b = false;
   }

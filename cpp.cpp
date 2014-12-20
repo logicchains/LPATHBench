@@ -36,12 +36,12 @@ vector<node> readPlaces(){
   return nodes;
 }
 
-int getLongestPath(vector<node> &nodes, int nodeID, vector<bool> &visited){
+int getLongestPath(const vector<node> &nodes, const int nodeID, vector<bool> &visited){
   visited[nodeID] = true;
   int max=0;
-  for(route neighbour: nodes[nodeID].neighbours){
+  for(const route neighbour: nodes[nodeID].neighbours){
     if (visited[neighbour.dest] == false){
-      int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
+      const int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
       if (dist > max){
 	max = dist;
       }

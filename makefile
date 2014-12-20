@@ -8,7 +8,7 @@ fsharp: fs.fs
 	fsharpc fs.fs
 
 cpp: cpp.cpp
-	g++ cpp.cpp -std=c++11 -Wall -O3 -o cpp
+	g++ cpp.cpp -std=c++11 -Wall -O3 -march=native -o cpp
 
 racket: rkt.rkt
 	raco exe rkt.rkt
@@ -44,7 +44,7 @@ gccgo: gccgo.go
 	go build gccgo.go
 
 d: d.d
-	ldc2 d.d -ofd -O3 -release -inline	
+	ldc2 d.d -ofd -O3 -release -inline -boundscheck=off
 
 nim: nim.nim
 	nim c -d:release nim.nim

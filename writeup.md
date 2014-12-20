@@ -133,7 +133,7 @@ Feel free to submit improvements to the implementations! Just one rule: the grap
 
 *Lua*
 
-Holy fuck it's fast; I wouldn't have thought a dynamic language would run faster than C# on Mono. Mike Pall: the Einstein of just-in-time-compiler-writing.
+Damn is it fast; I wouldn't have thought a dynamic language would run faster than C# on Mono. Mike Pall: the Einstein of just-in-time-compiler-writing.
 
 *Go*
 

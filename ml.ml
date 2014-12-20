@@ -40,7 +40,7 @@ let rec getLongestPath nodes nodeID visited =
 
 let rec getLongestPath2 (nodes: node2 array) nodeID visited =
   visited.(nodeID) <- true;
-  let rec loop i maxDist =
+  let rec loop nodes nodeID visited i maxDist =
     if i < 0 then maxDist
     else
       let neighbour = nodes.(nodeID).(i) in
@@ -48,10 +48,12 @@ let rec getLongestPath2 (nodes: node2 array) nodeID visited =
       then
 	let dist = neighbour.cost + getLongestPath2 nodes neighbour.dest visited in
 	let newMax = if dist > maxDist then dist else maxDist in
-        loop (i-1) newMax
+        loop nodes nodeID visited (i-1) newMax
       else
-	loop (i-1) maxDist in
-  let (max: int) = loop (Array.length nodes.(nodeID) - 1) 0 in
+	loop nodes nodeID visited (i-1) maxDist in
+  let (max: int) =
+    loop nodes nodeID visited (Array.length nodes.(nodeID) - 1) 0
+  in
   visited.(nodeID) <- false;
   max;;
    

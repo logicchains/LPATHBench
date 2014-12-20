@@ -14,19 +14,18 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 77.0698 |
-| LuaJit | 56.7322 |
-| D | 55.9021 |
-| FSharp | 46.2154 |
-| CSharp | 44.4748 |
-| GCCGo | 43.7191 |
-| NIM | 41.7439 |
-| Racket | 40.2854 |
-| Go | 39.7777 |
-| Ocaml | 32.214 |
-| Lisp | 23.6989 |
-| OracleJava | 19.3809 |
-| Java | 17.6471 |
+| C++ | 73.8509 |
+| LuaJit | 63.4567 |
+| CSharp | 62.638 |
+| GCCGo | 49.7576 |
+| FSharp | 45.9485 |
+| NIM | 43.4246 |
+| Go | 41.8213 |
+| Racket | 40.823 |
+| Ocaml | 36.0282 |
+| Lisp | 25.8946 |
+| OracleJava | 18.2205 |
+| Java | 17.9184 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -93,41 +92,40 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 2263 |
-| D | 3270 |
-| NIM | 4748 |
-| GCCGo | 6464 |
-| Go | 7557 |
-| Ocaml | 9291 |
-| CSharp | 9511 |
-| LuaJit | 10331 |
-| OracleJava | 13503 |
-| Java | 14297 |
-| FSharp | 18113 |
-| Racket | 31890 |
-| Lisp | 38044 |
+| C++ | 2265 |
+| NIM | 4783 |
+| CSharp | 5436 |
+| GCCGo | 6395 |
+| Go | 7544 |
+| Ocaml | 9215 |
+| LuaJit | 10322 |
+| Java | 14287 |
+| OracleJava | 14352 |
+| FSharp | 18129 |
+| Racket | 32805 |
+| Lisp | 38147 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 1744 |
-| D | 1828 |
-| NIM | 1982 |
-| Rust | 2217 |
-| Java | 2523 |
-| OracleJava | 2617 |
-| GCCGo | 2826 |
-| Ocaml | 2993 |
-| Go | 3006 |
-| CSharp | 4230 |
-| Haskell | 4635 |
-| LuaJit | 5861 |
-| FSharp | 8371 |
-| Dart | 8763 |
-| Lisp | 9016 |
-| Racket | 12847 |
+| C++ | 1673 |
+| D | 1991 |
+| NIM | 2077 |
+| Rust | 2259 |
+| Java | 2560 |
+| OracleJava | 2615 |
+| Go | 3155 |
+| GCCGo | 3182 |
+| Ocaml | 3320 |
+| CSharp | 3405 |
+| Haskell | 4816 |
+| LuaJit | 6550 |
+| FSharp | 8330 |
+| Dart | 9476 |
+| Lisp | 9878 |
+| Racket | 13392 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.

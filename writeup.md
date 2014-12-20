@@ -12,24 +12,24 @@ Note that the algorithm finds the length of the longest path in the graph, but d
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 62.8627 |
-| D | 55.2768 |
-| NIM | 51.0888 |
-| FSharp | 49.9274 |
-| CSharp | 46.2768 |
-| LuaJit | 44.0836 |
-| GCCGo | 43.2827 |
-| Go | 37.4983 |
-| OracleJava | 36.7586 |
-| Racket | 34.7208 |
-| Ocaml | 30.9325 |
-| Lisp | 28.21 |
-| Java | 3.98984 |
+| C++ | 63.5013 |
+| D | 56.319 |
+| NIM | 52.331 |
+| FSharp | 52.1281 |
+| CSharp | 49.5354 |
+| LuaJit | 46.07 |
+| GCCGo | 44.4288 |
+| Go | 39.1477 |
+| OracleJava | 37.3911 |
+| Racket | 35.5825 |
+| Ocaml | 33.776 |
+| Lisp | 31.3248 |
+| Java | 4.07961 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
 
-F#, Haskell, Rust and Dart send their apologies. F# didn't have an Arch Linux package for ARM, and when I built it myself the compiler and runtime segfaulted upon use. Haskell requires LLVM for codegen on ARM, but it doesn't package it, and doesn't properly support the version of LLVM I'm using, so couldn't compile the vector library. The Rust package on ARM is only 0.11, and I was too lazy to backport my 0.12 implementation (0.12 is so much prettier; vec[i] instead of vec.get(i), for instance). Dart seemed to have an incredibly convoluted build processes, as it requires the Chromium dependencies, and I ain't got time for that. Their x86 performance results can be seen further below.
+F#, Haskell, Rust and Dart send their apologies. F# didn't have an Arch Linux package for ARM, and when I built it myself the compiler and runtime segfaulted upon use. Haskell requires LLVM for codegen on ARM, but it doesn't package it, and doesn't properly support the version of LLVM I'm using, so couldn't compile the vector library (note that this problem may go away in future with plans to package a specific LLVM version with GHC). The Rust package on ARM is only 0.11, and I was too lazy to backport my 0.12 implementation (0.12 is so much prettier; vec[i] instead of vec.get(i), for instance). Dart seemed to have an incredibly convoluted build processes, as it requires the Chromium dependencies, and I ain't got time for that. Their x86 performance results can be seen further below.
 
 An aside: D only barely works. While sudo pacman -S ldc went down without a hitch, when I compiled and ran it the output was garbage unicode characters. Replacing D's writeln with standard C printf fixed this.
 
@@ -89,41 +89,41 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 3102 |
-| D | 3269 |
-| NIM | 4776 |
-| GCCGo | 6446 |
-| Go | 7555 |
-| Ocaml | 9469 |
-| OracleJava | 13488 |
-| CSharp | 15202 |
-| FSharp | 25485 |
-| LuaJit | 31007 |
-| Racket | 37695 |
-| Lisp | 39649 |
-| Java | 122862 |
+| C++ | 3096 |
+| D | 3260 |
+| NIM | 4762 |
+| GCCGo | 6390 |
+| Go | 7533 |
+| Ocaml | 9338 |
+| LuaJit | 12379 |
+| OracleJava | 13546 |
+| CSharp | 15175 |
+| FSharp | 25140 |
+| Racket | 37628 |
+| Lisp | 39515 |
+| Java | 124399 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| D | 1807 |
-| C++ | 1950 |
-| Rust | 2197 |
-| NIM | 2440 |
-| GCCGo | 2790 |
-| Go | 2833 |
-| Ocaml | 2929 |
-| Haskell | 4394 |
-| Java | 4902 |
-| OracleJava | 4958 |
-| CSharp | 7035 |
-| Dart | 8339 |
-| Lisp | 11185 |
-| FSharp | 12724 |
-| Racket | 13088 |
-| LuaJit | 13669 |
+| D | 1836 |
+| C++ | 1966 |
+| Rust | 2358 |
+| NIM | 2492 |
+| GCCGo | 2839 |
+| Go | 2949 |
+| Ocaml | 3154 |
+| Haskell | 4967 |
+| OracleJava | 5065 |
+| Java | 5075 |
+| LuaJit | 5703 |
+| CSharp | 7517 |
+| Dart | 8879 |
+| Lisp | 12378 |
+| FSharp | 13105 |
+| Racket | 13389 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.
@@ -131,6 +131,9 @@ Feel free to submit improvements to the implementations! Just one rule: the grap
 
 **Discussion**
 
+*Lua*
+
+Holy fuck it's fast; I wouldn't have thought a dynamic language would run faster than C# on Mono. Mike Pall: the Einstein of just-in-time-compiler-writing.
 
 *Go*
 

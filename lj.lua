@@ -1,43 +1,29 @@
--- String split function thanks to Bart Kiers on Stack overflow; http://stackoverflow.com/a/11204889/2553416
-local function splitstr(str, sep)
-        if sep == nil then
-                sep = "%s"
-        end
-        local t={} ; i=1
-        for str in string.gmatch(str, "([^"..sep.."]+)") do
-                t[i] = str
-                i = i + 1
-        end
-        return t
-end
-
 local function readPlaces()
-  local nodes = {}
+  local nodesDst, nodesCost = {}, {}
   local firstline=true
   for line in io.lines("agraph") do
     if firstline then
-      numnodes = tonumber(line)
+      local numnodes = tonumber(line)
       for i = 1, numnodes do
-        nodes[i] = {}
+        nodesDst[i], nodesCost[i] = {}, {}
       end
       firstline = false
     else
-      nums = splitstr(line)
-      node = tonumber(nums[1]) + 1
-      dest = tonumber(nums[2]) + 1
-      cost = tonumber(nums[3])
-      table.insert(nodes[node], {dest, cost})
+      local node, dest, cost = line:match("^(%d+) (%d+) (%d+) $")
+      table.insert(nodesDst[tonumber(node) + 1], tonumber(dest) + 1)
+      table.insert(nodesCost[tonumber(node) + 1], tonumber(cost))
     end
   end
-  return nodes
+  return nodesDst, nodesCost
 end
 
-local function getLongestPath(nodes, nodeid, visited)
+local function getLongestPath(nodesDst, nodesCost, nodeid, visited)
   visited[nodeid] = true
+  local neighboursDst, neighboursCost = nodesDst[nodeid], nodesCost[nodeid]
   local max = 0
-  for _,neighbour in ipairs(nodes[nodeid]) do
-    if not visited[neighbour[1]] then
-      local dist = neighbour[2] + getLongestPath(nodes, neighbour[1], visited)
+  for i = 1, #neighboursDst do
+    if not visited[neighboursDst[i]] then
+      local dist = neighboursCost[i] + getLongestPath(nodesDst, nodesCost, neighboursDst[i], visited)
       if dist > max then
         max = dist
       end
@@ -47,13 +33,12 @@ local function getLongestPath(nodes, nodeid, visited)
   return max
 end
 
-local nodes = readPlaces()
+local nodesDst, nodesCost = readPlaces()
 local visited = {}
-for i=1, #nodes do
+for i=1, #nodesDst do
   visited[i] = false
 end
 local start = os.clock()
-local length = getLongestPath(nodes, 1, visited)
+local length = getLongestPath(nodesDst, nodesCost, 1, visited)
 local duration = os.clock() - start
-io.stdout:write(length .. " LANGUAGE LuaJit " .. math.floor(duration*1000) .. "\n")
-
+io.stdout:write(length, " LANGUAGE LuaJit ", math.floor(duration*1000), "\n")

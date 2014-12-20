@@ -6,8 +6,20 @@ type route = {dest: int; cost: int}
 
 type node = route list
 
-type node2 = route array
+type node2 = int array
 		  
+
+let node2_of_route_list node =
+  let a = Array.make (2 * (List.length node)) 0 in
+  let rec fill i = function
+    | [] -> a
+    | hd::tl ->
+        Array.set a i hd.dest;
+        Array.set a (i+1) hd.cost;
+        fill (i+2) tl
+  in
+    fill 0 node
+
 let readPlaces () =
   let f = open_in "agraph" in
   let n = int_of_string (input_line f) in
@@ -43,16 +55,18 @@ let rec getLongestPath2 (nodes: node2 array) nodeID visited =
   let rec loop nodes nodeID visited i maxDist =
     if i < 0 then maxDist
     else
-      let neighbour = nodes.(nodeID).(i) in
-      if (not visited.(neighbour.dest))
+      let neighbours = nodes.(nodeID) in
+      let dest = neighbours.(i) in
+      let cost = neighbours.(i+1) in
+      if (not visited.(dest))
       then
-	let dist = neighbour.cost + getLongestPath2 nodes neighbour.dest visited in
+	let dist = cost + getLongestPath2 nodes dest visited in
 	let newMax = if dist > maxDist then dist else maxDist in
-        loop nodes nodeID visited (i-1) newMax
+        loop nodes nodeID visited (i-2) newMax
       else
-	loop nodes nodeID visited (i-1) maxDist in
+	loop nodes nodeID visited  (i-2) maxDist in
   let (max: int) =
-    loop nodes nodeID visited (Array.length nodes.(nodeID) - 1) 0
+    loop nodes nodeID visited (Array.length nodes.(nodeID) - 2) 0
   in
   visited.(nodeID) <- false;
   max;;
@@ -61,7 +75,7 @@ let rec getLongestPath2 (nodes: node2 array) nodeID visited =
 let () =
   let (nodes, numNodes) = readPlaces() in
   let visited = Array.init numNodes (fun x -> false) in
-  let fstNodes = Array.map (fun n1 -> Array.of_list n1) nodes in
+  let fstNodes = Array.map node2_of_route_list nodes in
   let start = Unix.gettimeofday() in
   let len = getLongestPath2 fstNodes 0 visited in
   printf "%d LANGUAGE Ocaml %d\n" len (int_of_float @@ 1000. *. (Unix.gettimeofday() -. start))

@@ -11,6 +11,7 @@ runners=( "mono fs.exe"\
 	"./rkt"\
 	"mono -O=all ./cs.exe"\
 	"java jv"\
+	"julia julia.jl"\
 	"dart dart.dart"\
 	"./hs"\
 	"./ml"\

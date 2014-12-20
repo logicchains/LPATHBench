@@ -33,16 +33,12 @@
 (define (get-longest-path nodes node-id visited)
   (vector-set! visited node-id #t)
   (define sum
-    (foldr
-     (lambda ([neighbour : route] [max : Integer])
-       (if (not (vector-ref visited (route-dest neighbour)))
-           (let ([dist (+ (route-cost neighbour) (get-longest-path nodes (route-dest neighbour) visited))])
-             (if (> dist max)
-                 dist
-                 max))
-           max))
-     0
-     (node-neighbours (vector-ref nodes node-id))))
+    (for/fold ([max-acc : Integer 0])
+              ;; `in-list` significantly speeds things up here
+              ([neighbour (in-list (node-neighbours (vector-ref nodes node-id)))]
+               #:unless (vector-ref visited (route-dest neighbour)))
+      (max max-acc
+           (+ (route-cost neighbour) (get-longest-path nodes (route-dest neighbour) visited)))))
   (vector-set! visited node-id #f)
   sum)
 

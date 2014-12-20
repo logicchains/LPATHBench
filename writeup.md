@@ -345,7 +345,7 @@ I didn't write the Nim implementation, so can't comment on it, but from looking 
 
 **TLDR**
 
-* D and Nimrod both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
+* D and Nim both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
 * The OpenJDK's performance on ARM is a steaming pile of crap
 * C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance
 * Haskell can be faster than Java, thanks to unboxing

@@ -15,11 +15,11 @@ public class jv {
 	public static void main(final String[] args) {
 		// warm up a bit
 		for (int i = 0; i < 10; i++) {
-			getLongestPath(0, visited);
+			getLongestPath(0, nodes[0], visited);
 		}
 		
 		final long start = System.nanoTime();
-		final int len = getLongestPath(0, visited);
+		final int len = getLongestPath(0, nodes[0], visited);
 		final long duration = (System.nanoTime() - start) / 1000000; // ns -> ms
 		System.out.printf("%d LANGUAGE Java %d\n", len, duration);
 	}
@@ -55,15 +55,14 @@ public class jv {
 		}
 	}
 	
-	private static int getLongestPath(final int nodeID, boolean[] visited) {
+	private static int getLongestPath(int nodeID, int[] row, boolean[] visited) {
 		visited[nodeID] = true;
 		int max = 0;
 		
-		final int[] row = nodes[nodeID];
 		for (int i = 0; i < row.length; i += 2) {
 			final int dest = row[i];
 			if (!visited[dest]) {
-				final int dist = row[i + 1] + getLongestPath(dest, visited);
+				final int dist = row[i + 1] + getLongestPath(dest, nodes[dest], visited);
 				if (dist > max) {
 					max = dist;
 				}

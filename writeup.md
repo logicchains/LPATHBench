@@ -37,6 +37,8 @@ An aside: D only barely works. While sudo pacman -S ldc went down without a hitc
 
 The OpenJDK's performance on ARM shows how much performance depends on the implementation, not just the language. If you're a low-level person and looking for something useful to which to contribute, consider implementing a JIT compiler for OpenJDK on ARM. Even if it was only half as good as the Oracle one, you'd still be able to put on your resume that you made the ARM JVM five times faster.
 
+**Edit**: *Okay, someone changed the Java implementation to use arrays for the data, instead of classes, effectively unboxing it, and now the OpenJDK implementation is no longer an order of magnitude slower than the Oracle JVM on ARM. Interesting.*
+
 Weird thing: when I made a symlink 'oraclejava' which linked to my local Oracle jvm `java` executable, for some reason it created an 'oraclejava' in /sbin, which pointed to the Openjdk java executable instead! Hence why the benchmark explicitly runs `/usr/bin/oraclejava`.
 
 Now, the seedy part of the benchmark: comparing different languages with each other. They ain't even using the exact same algorithms :O Surprisingly, I found the more functional approach to be faster than the pure imperative approach for Haskell and OCaml, possibly because the functional approach minimises friction with their expensive write barriers.
@@ -350,7 +352,6 @@ I didn't write the Nim implementation, so can't comment on it, but from looking 
 **TLDR**
 
 * D and Nimrod both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
-* The OpenJDK's performance on ARM is a steaming pile of crap
 * C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance
 * Haskell can be faster than Java, thanks to unboxing
 * If you wanna use Haskell on ARM, you must be willing to build whatever version of LLVM it was built with

@@ -2,7 +2,7 @@ NUM_NODES = 10
 WORLD_SIZE = 1000
 
 
-buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go gccgo d nim oraclejava
+buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go gccgo d nim oraclejava crystal
 
 fsharp: fs.fs
 	fsharpc fs.fs
@@ -48,6 +48,9 @@ d: d.d
 
 nim: nim.nim
 	nim c --cc:clang -d:release nim.nim
+
+crystal: crystal.cr
+	crystal build crystal.cr --release
 
 graphbuilder: mkgraph.go
 	go build mkgraph.go

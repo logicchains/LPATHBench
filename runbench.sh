@@ -20,6 +20,7 @@ runners=( "mono fs.exe"\
 	"./gccgo"\
 	"./d"\
 	"./nim"\
+	"./crystal"\
 	"luajit lj.lua"\
 	"/usr/bin/oraclejava ojv")
 

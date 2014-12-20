@@ -29,7 +29,7 @@ haskellprof: hs.hs
 	ghc hs.hs -O3 -prof -fprof-auto -caf-all -fforce-recomp -rtsopts
 
 ocaml: ml.ml
-	ocamlfind ocamlopt -linkpkg -package str,unix -noassert -unsafe -fno-PIC -nodynlink -inline 100 -o ml ml.ml
+	ocamlfind ocamlopt -linkpkg -package unix -noassert -unsafe -fno-PIC -nodynlink -inline 100 -o ml ml.ml
 
 lisp: lisp.lisp
 	sbcl --core /usr/local/lib/sbcl/sbcl.core --load lisp.lisp --non-interactive

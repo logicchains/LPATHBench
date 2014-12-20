@@ -36,7 +36,7 @@ F#, Haskell, Rust and Dart send their apologies. F# didn't have an Arch Linux pa
 
 An aside: D only barely works. While sudo pacman -S ldc went down without a hitch, when I compiled and ran it the output was garbage unicode characters. Replacing D's writeln with standard C printf fixed this.
 
-**Edit:** Okay, I updated the ldc compiler earlier today (incidentally, as part of upgrading my system with pacman -Syu), and now it doesn't compile at all. It was previously compiling, and ran at around 90% the speed of C++ on ARM.
+**Edit:** Okay, I updated the ldc D compiler earlier today (incidentally, as part of upgrading my system with pacman -Syu), and now it doesn't compile at all. It was previously compiling, and ran at around 90% the speed of C++ on ARM.
 
 The OpenJDK's performance on ARM shows how much performance depends on the implementation, not just the language. If you're a low-level person and looking for something useful to which to contribute, consider implementing a JIT compiler for OpenJDK on ARM. Even if it was only half as good as the Oracle one, you'd still be able to put on your resume that you made the ARM JVM five times faster.
 

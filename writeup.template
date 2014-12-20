@@ -168,7 +168,7 @@ Also, input streams are hilarious. I wonder people unfamiliar with C++ would thi
 
 ```c
   while (text >> nodeS >> neighbourS >> costS){
-    nodes[stoi(nodeS)].neighbours.push_back(route{stoi(neighbourS), stoi(costS)});
+    nodes[nodeS].neighbours.push_back(route{neighbourS, costS});
   }
 ```
 

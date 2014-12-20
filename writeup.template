@@ -103,7 +103,7 @@ It actually enforced it less strongly than Rust, as technically I could have jus
 
 **NOTE:** *The code I had trouble with is fixed in the current Rust nightly; `visited[2] = true` works fine. So consider this rust section outdated.*
 
-This was by far the hardest implementation to write, due to the language having changed significantly sincelast I used it. Relatively simple tasks eluded me, for instance:
+~~This was by far the hardest implementation to write, due to the language having changed significantly sincelast I used it. Relatively simple tasks eluded me, for instance:
 
 ```rust
 let mut visited: Vec<bool> = Vec::from_fn(10, |_| false);
@@ -143,7 +143,7 @@ Needless to say, being the lazy sod that I am, I turned to a simpler solution.
 
 Problem solvered! This led me to the somewhat frightening discovery that unsafe is not transitive: when I put the above code in the findPlaces function, that function doesn't need to be marked as unsafe and the code calling it doesn't need to be in an unsafe block. This is probably necessary, in the sense that the standard library uses unsafe code for performance and it wouldn't make sense for all stdlib calls to be marked unsafe, but I nevertheless find it surprising how easy it is. Maybe it could be useful to require a compiler flag for compiling code containing `unsafe`, like C# does.
 
-That being said, the version I was using is the latest available in the Arch Linux repositories, 0.12, and it's quite possible that the current trunk version makes mutating an element in a vector much easier.
+That being said, the version I was using is the latest available in the Arch Linux repositories, 0.12, and it's quite possible that the current trunk version makes mutating an element in a vector much easier.~~
 
 I found it slightly disappointing that Rust has chosen to forbid top-level function type inference, of the kind possible in F#, OCaml and Haskell. The argument is that this prevents the interface-breaking that could occur if a change within an exported function altered its signature, but this wouldn't be a problem with a proper module system like OCaml. With Ocaml, the module interface must be specified explicitly, and if function signatures within the module don't match this then there's a compilation error. Imagine a function that takes a channel of mutable references to atomically reference counted options of ints: in Rust I'd have to write something like:
 

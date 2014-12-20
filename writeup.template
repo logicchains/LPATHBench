@@ -4,7 +4,7 @@ In this benchmark I thought it would be interesting to explore a less common pat
 
 One way is to create a graph with the nodes representing different intersections and the connections between these nodes representing the distances of the roads between these intersections. One can then solve it with the relatively simple approach of iterating through all possible routes to find the longest. You may be thinking this sounds incredibly slow, and it is, something like O(n!). Unfortunately however there are no known "fast" algorithms that can find this path; the problem is considered NP complete, meaning if you can solve it in O(n^b) time, where b is a constant, then you get a [million dollar prize](http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP).
 
-The following table contains the most useful results for the benchmark, comparing each language against itself on ARMv7 and x86-64. 32 bit integers are used where possible, rather than machine-sized ones, to ensure both implementations use the same sized datatypes. OCaml is an exception, as non-machine-sized ints are boxed, so machine-sized ints are faster.
+The following table contains the most useful results for the benchmark, comparing each language against itself on ARMv7 and x86-64. 32 bit integers are used where possible, rather than machine-sized ones, to ensure both implementations use the same sized datatypes. OCaml is an exception, as non-machine-sized ints are boxed, so machine-sized ints are faster. Note that the algorithm finds the length of the longest path in the graph, but doesn't actually find all the steps in that path; this is purely laziness on my part, as the latter requires more effort to write. In my defence, most results for "longest path algorithm" on Google also seem to only give the length of the longest path, not the path itself.
 
 F#, Haskell, Rust and Dart send their apologies. F# didn't have an Arch Linux package for ARM, and when I built it myself the compiler and runtime segfaulted upon use. Haskell requires LLVM for codegen on ARM, but it doesn't package it, and doesn't properly support the version of LLVM I'm using, so couldn't compile the vector library. The Rust package on ARM is only 0.11, and I was too lazy to backport my 0.12 implementation (0.12 is so much prettier; vec[i] instead of vec.get(i), for instance). Dart seemed to have an incredibly convoluted build processes, as it requires the Chromium dependencies, and I ain't got time for that. Their x86 performance results can be seen further below.
 
@@ -16,7 +16,7 @@ $comparisonresults
 
 The OpenJDK's performance on ARM shows how much performance depends on the implementation, not just the language. If you're a low-level person and looking for something useful to which to contribute, consider implementing a JIT compiler for OpenJDK on ARM. Even if it was only half as good as the Oracle one, you'd still be able to put on your resume that you made the ARM JVM five times faster.
 
-Really weird thing: when I made a simlink 'oraclejava' which linked to my local Oracle jvm install, for some reason it created an 'oraclejava' in /sbin, which pointed to the openjdk java executable! Hence why the benchmark explicitly runs /usr/bin/oraclejava.
+Weird thing: when I made a simlink 'oraclejava' which linked to my local Oracle jvm `java` executable, for some reason it created an 'oraclejava' in /sbin, which pointed to the Openjdk java executable instead! Hence why the benchmark explicitly runs `/usr/bin/oraclejava`.
 
 Now, the seedy part of the benchmark: comparing different languages with each other. They ain't even using the exact same algorithms :O Amazingly, I found the more functional approach to be faster than the pure imperative approach for Haskell and OCaml, possibly because the functional approach minimises friction with their expensive write barriers.
 
@@ -66,15 +66,17 @@ Note though that the latter is still pretty imperative, in the sense that it use
 
 Also note that the Rust numbers here probably aren't representive, due to my implementation being rather dodgy as a result of the issues I had with the language, as described further below.
 
-Anyway, here's the numbers you probably came here for:
+Anyway, here's the numbers you probably came here for. The x86-64 device is an Intel dual core i5 M430 2.27GHz laptop, running the latest Arch Linux, and the ARMv7 device is a Galaxy S3 with 2GB of ram and a quad-core 1.3ghz processor, runing the latest Arch Linux in a chroot.
 
 **ARMv7**
 
 $armresults
 
-**x86-64***
+**x86-64**
 
 $x86results
+
+Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.
 
 
 **Discussion**
@@ -284,8 +286,15 @@ I didn't write the nimbrod implementation, so can't comment on it, but from look
 
 **TLDR**
 
-* D and Nimrod both work on ARM and can generate fast code, but the D stdlib is buggy
+* D and Nimrod both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
 * The OpenJDK's performance on ARM is a steaming pile of crap
 * C++ specialises std::vector<bool> to a bitvector by default, which hurts performance
 * Haskell can be faster than Java, thanks to unboxing
 * If you wanna use Haskell on ARM, you must be willing to build whatever version of LLVM it was built with
+* Luajit on ARM is friggen fast, for a dynamic language
+* Rust is hard (or, more charitably, I suck at Rust)
+* Functional code in Haskell/OCaml can be faster than imperative code using iorefs.
+
+*Moral of the story**
+
+There's no algorith for finding the longest path to one's inlaws that doesn't take exponential time, ergo the universe hates us.

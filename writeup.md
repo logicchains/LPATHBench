@@ -1,3 +1,7 @@
+---
+title: ARM vs x86: Pathfinding benchmark of C++, D, Go, Nim, Ocaml, Common Lisp, Racket, C#, Java, Haskell, F#, Rust and Dart
+---
+
 **ARM vs x86: Pathfinding benchmark of C++, D, Go, Nim, Ocaml, Common Lisp, Racket, C#, Java, Haskell, F#, Rust and Dart**
 
 In this benchmark I thought it would be interesting to explore a less common pathfinding algorithm. Imagine you've just been "invited" to visit your in-laws (if you don't have inlaws, imagine you're driving a married friend), and want to find the longest possible route to the in-laws' house, in order to minimise the time spent with them. Now, you don't want your spouse (or your friend's spouse) to know you're stalling, so you can't visit the same place twice, can't just spend infinity hours driving in a circle. How would you find this longest path?

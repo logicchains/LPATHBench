@@ -8,7 +8,7 @@ fsharp: fs.fs
 	fsharpc fs.fs
 
 cpp: cpp.cpp
-	g++ cpp.cpp -std=c++11 -Wall -O3 -march=native -o cpp
+	g++ cpp.cpp -std=c++11 -Wall -O2 -march=native -o cpp
 
 racket: rkt.rkt
 	raco exe rkt.rkt

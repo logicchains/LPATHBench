@@ -68,7 +68,6 @@ func main() {
 	visited := make([]bool, nNodes)
 	start := time.Now()
 	len := getLongestPath(nodes, 0, visited)
-	duration := time.Now().Sub(start).Nanoseconds() / 1000000
+	duration := time.Since(start).Nanoseconds() / 1000000
 	fmt.Printf("%v LANGUAGE Go %v\n", len, duration)
-
 }

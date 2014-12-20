@@ -40,36 +40,20 @@ fn read_places(num_nodes: &mut uint) ->Vec<Node>{
   nodes
 }
 
-fn get_longest_path(nodes: &Vec<Node>, nodeID: i32, visited: *const bool) -> i32{
-  let uintID = nodeID.to_uint().expect("Error, something had a negative node id");
-  unsafe{  
-    let newAddr: uint = (visited as uint) + (uintID as uint);
-    let newAddrP: *mut bool = newAddr as *mut bool;
-    *newAddrP = true;
-  }
-  let mut dist: i32;
-  let mut max: i32 = 0;
-  for neighbour in nodes[uintID].neighbours.iter(){
-    let udest = neighbour.dest.to_uint().expect("Almost done..");
-    let isVisited: bool;
-    unsafe{
-      let newAddr: uint = udest + (visited as uint);
-      let newAddrP: *mut bool = newAddr as *mut bool;
-      isVisited = *newAddrP
+fn get_longest_path(nodes: &Vec<Node>, node_id: uint, visited: &mut [bool]) -> i32 {
+    visited[node_id] = true;
+    let mut max: i32 = 0;
+    for neighbour in nodes[node_id].neighbours.iter() {
+        let is_visited = visited[neighbour.dest as uint];
+        if !is_visited {
+            let dist = neighbour.cost + get_longest_path(nodes, neighbour.dest as uint, visited);
+            if dist > max{
+                max = dist;
+            }
+        }
     }
-    if !isVisited{
-      dist = neighbour.cost + get_longest_path(nodes, neighbour.dest, visited);
-      if dist > max{
-	max = dist;
-      }
-    }    
-  }
-  unsafe{  
-    let newAddr: uint = (visited as uint) + (uintID as uint);
-    let newAddrP: *mut bool = newAddr as *mut bool;
-    *newAddrP = false;
-  }
-  max
+    visited[node_id] = false;
+    max
 }
 
 fn main(){
@@ -77,7 +61,7 @@ fn main(){
    let nodes = read_places(&mut num_nodes);
    let mut visited: Vec<bool> = Vec::from_fn(num_nodes, |_| false);
    let startTime = precise_time_ns();
-   let path = get_longest_path(&nodes, 0, &visited[0] as *const bool);
+   let path = get_longest_path(&nodes, 0, visited.as_mut_slice());
    let duration = (precise_time_ns() - startTime) / 1000000;
    println!("{} LANGUAGE Rust {}", path, duration);
 }

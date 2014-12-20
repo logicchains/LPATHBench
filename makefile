@@ -14,7 +14,7 @@ racket: rkt.rkt
 	raco exe rkt.rkt
 
 csharp: cs.cs
-	mcs cs.cs; mono -O=all --aot ./cs.exe
+	mcs -unsafe cs.cs; mono -O=all --aot ./cs.exe
 
 oraclejava: ojv.java
 	/usr/bin/oraclejavac ojv.java

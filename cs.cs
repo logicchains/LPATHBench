@@ -1,73 +1,107 @@
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System;
+using System.Collections.Generic;
 
-class longestPathFinder{
-   public node[] readPlaces(out int numNodes) {
-	string[] lines = System.IO.File.ReadAllLines("agraph");
-	numNodes = System.Convert.ToInt32(lines[0]);
-	var nodes = new node[numNodes];
-	for(int i = 0; i < numNodes; i++){
-	    node n = new node();
-	    n.neighbours = new List<route>();
-	    nodes[i]=n;
-	}
-	for(int i = 1; i < lines.Length; i++) {
-	    string[] nums = lines[i].Split(' ');
-	    if(nums.Length < 3){
-			break;
-	    }
-	    int node = System.Convert.ToInt32(nums[0]);
-	    int neighbour = System.Convert.ToInt32(nums[1]);
-	    int cost = System.Convert.ToInt32(nums[2]);
-	    nodes[node].neighbours.Add(new route(neighbour, cost));
-	}
-	return nodes;
-    }
+class longestPathFinder
+{
+	public node[] ReadPlaces(string path)
+	{
+		string[] lines = System.IO.File.ReadAllLines(path);
+		int numNodes = Int32.Parse(lines[0]);
 
-    public int getLongestPath(node[] nodes, int nodeID, bool[] visited){
-	visited[nodeID] = true;
-	int max=0;
-	var neighboursOfID = nodes[nodeID].neighbours;
-	for(int i = 0; i < neighboursOfID.Count; i++){
-		var neighbour = neighboursOfID[i];
-	    if (!visited[neighbour.dest]){
-			int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
-			if (dist > max){
-			    max = dist;
+		node[] nodes = new node[numNodes];
+		List<route>[] routes = new List<route>[numNodes];
+		for (int i = 0; i < numNodes; i++)
+		{
+			nodes[i] = new node();
+			routes[i] = new List<route>();
+		}
+
+		for (int i = 1; i < lines.Length; i++)
+		{
+			string[] nums = lines[i].Split(' ');
+			if (nums.Length < 3)
+			{
+				break;
 			}
-	    }    
+			int node = Int32.Parse(nums[0]);
+			int neighbour = Int32.Parse(nums[1]);
+			int cost = Int32.Parse(nums[2]);
+			routes[node].Add(new route(neighbour, cost));
+		}
+
+		for (int i = 0; i < routes.Length; i++)
+		{
+			nodes[i].neighbours = routes[i].ToArray();
+		}
+
+		return nodes;
 	}
-	visited[nodeID] = false;
-	return max;
-    }
-    
+
+	public unsafe int getLongestPath(node[] nodes, int nodeIndex, bool[] visited)
+	{
+		fixed (bool* pVisited = visited)
+		{
+			return getLongestPath(nodes, 0, pVisited);
+		}
+	}
+
+	[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+	private unsafe int getLongestPath(node[] nodes, int nodeIndex, bool* visited)
+	{
+		int max = 0;
+		visited[nodeIndex] = true;
+
+		route[] neighbours = nodes[nodeIndex].neighbours;
+		fixed (route* pNeighbours = neighbours)
+		{
+			route* pLength = pNeighbours + neighbours.Length;
+			for (route* neighbour = pNeighbours; neighbour < pLength; neighbour++)
+			{
+				if (!visited[neighbour->dest])
+				{
+					int dist = neighbour->cost + getLongestPath(nodes, neighbour->dest, visited);
+					if (dist > max)
+					{
+						max = dist;
+					}
+				}
+			}
+		}
+
+		visited[nodeIndex] = false;
+		return max;
+	}
 }
 
-struct route{
+struct route
+{
 	public int dest, cost;
-	public route(int dest, int cost){
-	    this.dest =dest;
-	    this.cost =cost;
+	public route(int dest, int cost)
+	{
+		this.dest = dest;
+		this.cost = cost;
 	}
-    }
-
-struct node {
-    public List<route> neighbours;
 }
 
-public class cs{
-    public static void Main(string[] args){
-	int numNodes = 0;
-	longestPathFinder p = new longestPathFinder();
-        var nodes = p.readPlaces(out numNodes);
-	bool[] visited = new bool[numNodes];
-	for(int i = 0; i < numNodes; i++){
-	    visited[i] = false;
+struct node
+{
+	public route[] neighbours;
+}
+
+class cs
+{
+	static void Main(string[] args)
+	{
+		longestPathFinder p = new longestPathFinder();
+		node[] nodes = p.ReadPlaces("agraph");
+		bool[] visited = new bool[nodes.Length];
+
+		System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
+		timer.Start();
+
+		int result = p.getLongestPath(nodes, 0, visited);
+
+		timer.Stop();
+		Console.WriteLine("{0} LANGUAGE CSharp {1} ms", result, Math.Round(timer.Elapsed.TotalMilliseconds));
 	}
-	long start= DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-	int result = p.getLongestPath(nodes, 0, visited);
-	long duration = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - start;
-	System.Console.WriteLine(result + " LANGUAGE CSharp "+ duration);
-    }
 }

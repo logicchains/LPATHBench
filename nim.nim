@@ -1,3 +1,4 @@
+# Set cc = clang in compiler's config/nim.cfg for better performance
 import strutils, sequtils, times
 
 type

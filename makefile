@@ -47,7 +47,7 @@ d: d.d
 	ldc2 d.d -ofd -O3 -release -inline -boundscheck=off
 
 nim: nim.nim
-	nim c -d:release nim.nim
+	nim c --cc:clang -d:release nim.nim
 
 graphbuilder: mkgraph.go
 	go build mkgraph.go

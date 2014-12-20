@@ -12,19 +12,19 @@ Note that the algorithm finds the length of the longest path in the graph, but d
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 64.5463 |
-| D | 56.8928 |
-| NIM | 53.2997 |
-| LuaJit | 47.9867 |
-| GCCGo | 47.4686 |
-| FSharp | 44.3341 |
-| CSharp | 44.1368 |
-| OracleJava | 44.0319 |
-| Go | 39.8103 |
-| Racket | 37.4342 |
-| Ocaml | 32.471 |
-| Lisp | 29.5536 |
-| Java | 4.30607 |
+| C++ | 61.3459 |
+| D | 58.0447 |
+| NIM | 53.9471 |
+| LuaJit | 51.6425 |
+| CSharp | 48.4341 |
+| GCCGo | 47.677 |
+| FSharp | 45.5306 |
+| Go | 39.8048 |
+| OracleJava | 38.3674 |
+| Racket | 38.0156 |
+| Ocaml | 34.0433 |
+| Lisp | 22.5941 |
+| Java | 4.78899 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -89,41 +89,41 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 3097 |
-| D | 3257 |
-| NIM | 4758 |
-| GCCGo | 6360 |
-| Go | 7591 |
-| Ocaml | 9239 |
-| LuaJit | 12368 |
-| OracleJava | 13547 |
-| CSharp | 15998 |
-| FSharp | 18126 |
-| Racket | 37642 |
-| Lisp | 39491 |
-| Java | 123709 |
+| C++ | 3195 |
+| D | 3263 |
+| NIM | 4877 |
+| GCCGo | 6414 |
+| Go | 7582 |
+| Ocaml | 8921 |
+| CSharp | 9324 |
+| LuaJit | 10563 |
+| OracleJava | 13561 |
+| FSharp | 18179 |
+| Racket | 37724 |
+| Lisp | 40630 |
+| Java | 125371 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| D | 1853 |
-| C++ | 1999 |
-| Rust | 2360 |
-| NIM | 2536 |
-| Ocaml | 3000 |
-| GCCGo | 3019 |
-| Go | 3022 |
-| Haskell | 4609 |
-| Java | 5327 |
-| LuaJit | 5935 |
-| OracleJava | 5965 |
-| CSharp | 7061 |
-| FSharp | 8036 |
-| Dart | 8640 |
-| Lisp | 11671 |
-| Racket | 14091 |
+| D | 1894 |
+| C++ | 1960 |
+| Rust | 2306 |
+| NIM | 2631 |
+| Go | 3018 |
+| Ocaml | 3037 |
+| GCCGo | 3058 |
+| CSharp | 4516 |
+| Haskell | 4764 |
+| OracleJava | 5203 |
+| LuaJit | 5455 |
+| Java | 6004 |
+| FSharp | 8277 |
+| Dart | 8564 |
+| Lisp | 9180 |
+| Racket | 14341 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.
@@ -133,7 +133,7 @@ Feel free to submit improvements to the implementations! Just one rule: the grap
 
 *Lua*
 
-Damn is it fast; I wouldn't have thought a dynamic language would run faster than C# on Mono. Mike Pall: the Einstein of just-in-time-compiler-writing.
+Damn is it fast; I wouldn't have thought a dynamic language would run almost faster than Java and C#. Mike Pall: the Einstein of just-in-time-compiler-writing.
 
 *Go*
 
@@ -225,6 +225,9 @@ node[] nodes =  uninitializedArray!(node[])(numNodes);
 ```
 
 Then, when I attempted to append a new neighbour to one of the nodes on the list, the program failed with an out of memory exception. Why? Turned out, the unitialised array of nodes wasn't zeroed, so the length and capacity parts of each node's neighbour array were presumably full of gibberish, causing the append function to attempt to allocate an absurd amount of memory to append to them. Changing `unitializedArray!` to `minimallyInitializedArray!` fixed this.
+
+*C Sharp*
+I learned something useful: iterators are not cost-free. Someone changed the iterator in the inner loop to a for loop, and the performance jumped by 30%!
 
 *Racket*
 
@@ -349,6 +352,7 @@ I didn't write the Nim implementation, so can't comment on it, but from looking 
 * If you wanna use Haskell on ARM, you must be willing to build whatever version of LLVM it was built with
 * Luajit is friggen fast!
 * Functional code in Haskell/OCaml can be faster than imperative code using iorefs.
+* Iterators in C# are not cost-free like in Java, C++ and many others; the C# was sped up 30% by changing the inner loop to use a for loop instead of an iterator.
 
 
 **Moral of the story**

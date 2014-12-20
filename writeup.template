@@ -85,7 +85,7 @@ Feel free to submit improvements to the implementations! Just one rule: the grap
 
 *Lua*
 
-Damn is it fast; I wouldn't have thought a dynamic language would run faster than C# on Mono. Mike Pall: the Einstein of just-in-time-compiler-writing.
+Damn is it fast; I wouldn't have thought a dynamic language would run almost faster than Java and C#. Mike Pall: the Einstein of just-in-time-compiler-writing.
 
 *Go*
 
@@ -177,6 +177,9 @@ node[] nodes =  uninitializedArray!(node[])(numNodes);
 ```
 
 Then, when I attempted to append a new neighbour to one of the nodes on the list, the program failed with an out of memory exception. Why? Turned out, the unitialised array of nodes wasn't zeroed, so the length and capacity parts of each node's neighbour array were presumably full of gibberish, causing the append function to attempt to allocate an absurd amount of memory to append to them. Changing `unitializedArray!` to `minimallyInitializedArray!` fixed this.
+
+*C Sharp*
+I learned something useful: iterators are not cost-free. Someone changed the iterator in the inner loop to a for loop, and the performance jumped by 30%!
 
 *Racket*
 
@@ -301,6 +304,7 @@ I didn't write the Nim implementation, so can't comment on it, but from looking 
 * If you wanna use Haskell on ARM, you must be willing to build whatever version of LLVM it was built with
 * Luajit is friggen fast!
 * Functional code in Haskell/OCaml can be faster than imperative code using iorefs.
+* Iterators in C# are not cost-free like in Java, C++ and many others; the C# was sped up 30% by changing the inner loop to use a for loop instead of an iterator.
 
 
 **Moral of the story**

@@ -12,19 +12,19 @@ Note that the algorithm finds the length of the longest path in the graph, but d
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 64.1125 |
-| D | 57.6687 |
-| NIM | 54.0597 |
-| GCCGo | 47.8113 |
-| CSharp | 47.1331 |
-| LuaJit | 46.5824 |
-| FSharp | 45.2986 |
-| OracleJava | 43.8631 |
-| Go | 39.3531 |
-| Racket | 37.088 |
-| Ocaml | 32.5317 |
-| Lisp | 29.7034 |
-| Java | 4.63181 |
+| C++ | 64.5463 |
+| D | 56.8928 |
+| NIM | 53.2997 |
+| LuaJit | 47.9867 |
+| GCCGo | 47.4686 |
+| FSharp | 44.3341 |
+| CSharp | 44.1368 |
+| OracleJava | 44.0319 |
+| Go | 39.8103 |
+| Racket | 37.4342 |
+| Ocaml | 32.471 |
+| Lisp | 29.5536 |
+| Java | 4.30607 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -89,41 +89,41 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 3093 |
-| D | 3260 |
-| NIM | 4791 |
-| GCCGo | 6488 |
-| Go | 7575 |
-| Ocaml | 9231 |
-| LuaJit | 12348 |
-| OracleJava | 13533 |
-| CSharp | 15208 |
-| FSharp | 18133 |
-| Racket | 37651 |
-| Lisp | 39578 |
-| Java | 124163 |
+| C++ | 3097 |
+| D | 3257 |
+| NIM | 4758 |
+| GCCGo | 6360 |
+| Go | 7591 |
+| Ocaml | 9239 |
+| LuaJit | 12368 |
+| OracleJava | 13547 |
+| CSharp | 15998 |
+| FSharp | 18126 |
+| Racket | 37642 |
+| Lisp | 39491 |
+| Java | 123709 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| D | 1880 |
-| C++ | 1983 |
-| Rust | 2317 |
-| NIM | 2590 |
-| Go | 2981 |
-| Ocaml | 3003 |
-| GCCGo | 3102 |
-| Haskell | 4602 |
-| Java | 5751 |
-| LuaJit | 5752 |
-| OracleJava | 5936 |
-| CSharp | 7168 |
-| FSharp | 8214 |
-| Dart | 8589 |
-| Lisp | 11756 |
-| Racket | 13964 |
+| D | 1853 |
+| C++ | 1999 |
+| Rust | 2360 |
+| NIM | 2536 |
+| Ocaml | 3000 |
+| GCCGo | 3019 |
+| Go | 3022 |
+| Haskell | 4609 |
+| Java | 5327 |
+| LuaJit | 5935 |
+| OracleJava | 5965 |
+| CSharp | 7061 |
+| FSharp | 8036 |
+| Dart | 8640 |
+| Lisp | 11671 |
+| Racket | 14091 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.
@@ -252,7 +252,7 @@ Which admittedly isn't much code to write.
 
 I did however find Common Lisp's type system far more useful in terms of obtaining the performance benefits of types. Unlike Typed Racket, Common Lisp uses gradual typing, so you can add type declarations for one function or variable without having to add them to others. I also found developing Common Lisp with Slime and Emacs a lot smoother than developing Racket on DrRacket, largely because SBCL compiles code far quicker.
 
-Also worth noting that I attempted to run the Common Lisp implementation in ClozureCL and it worked fine, albeit was slower. The Racket implementation, in comparison, had no chance of working on Chicken or any other Scheme, as the smaller Scheme standard library means the common api between different Schemes is smaller.
+Also worth noting that I attempted to run the Common Lisp implementation in ClozureCL and it worked fine, albeit was slower. ~~The Racket implementation, in comparison, had no chance of working on Chicken or any other Scheme, as the smaller Scheme standard library means the common api between different Schemes is smaller.~~ *Edit: it's been pointed out to me that Racket isn't actually a Scheme now, so it's not fair to expect Racket code to be portable to Schemes.*
 
 *OCaml*
 

@@ -204,7 +204,7 @@ Which admittedly isn't much code to write.
 
 I did however find Common Lisp's type system far more useful in terms of obtaining the performance benefits of types. Unlike Typed Racket, Common Lisp uses gradual typing, so you can add type declarations for one function or variable without having to add them to others. I also found developing Common Lisp with Slime and Emacs a lot smoother than developing Racket on DrRacket, largely because SBCL compiles code far quicker.
 
-Also worth noting that I attempted to run the Common Lisp implementation in ClozureCL and it worked fine, albeit was slower. The Racket implementation, in comparison, had no chance of working on Chicken or any other Scheme, as the smaller Scheme standard library means the common api between different Schemes is smaller.
+Also worth noting that I attempted to run the Common Lisp implementation in ClozureCL and it worked fine, albeit was slower. ~~The Racket implementation, in comparison, had no chance of working on Chicken or any other Scheme, as the smaller Scheme standard library means the common api between different Schemes is smaller.~~ *Edit: it's been pointed out to me that Racket isn't actually a Scheme now, so it's not fair to expect Racket code to be portable to Schemes.*
 
 *OCaml*
 

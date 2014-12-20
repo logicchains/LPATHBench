@@ -27,6 +27,8 @@ Note that the algorithm finds the length of the longest path in the graph, but d
 | Java | 3.98984 |
 
 
+The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
+
 F#, Haskell, Rust and Dart send their apologies. F# didn't have an Arch Linux package for ARM, and when I built it myself the compiler and runtime segfaulted upon use. Haskell requires LLVM for codegen on ARM, but it doesn't package it, and doesn't properly support the version of LLVM I'm using, so couldn't compile the vector library. The Rust package on ARM is only 0.11, and I was too lazy to backport my 0.12 implementation (0.12 is so much prettier; vec[i] instead of vec.get(i), for instance). Dart seemed to have an incredibly convoluted build processes, as it requires the Chromium dependencies, and I ain't got time for that. Their x86 performance results can be seen further below.
 
 An aside: D only barely works. While sudo pacman -S ldc went down without a hitch, when I compiled and ran it the output was garbage unicode characters. Replacing D's writeln with standard C printf fixed this.

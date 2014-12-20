@@ -10,7 +10,7 @@ let lines    = toSeq("agraph".lines)
 let numNodes = lines[0].parseInt
 var nodes    = newSeqWith(numNodes, Node(neighbours: newSeq[Route]()))
 
-for i in 1.. < lines.len:
+for i in 1..lines.high:
     let nums = lines[i].split(' ')
     if nums.len < 3:
         break
@@ -21,8 +21,8 @@ for i in 1.. < lines.len:
 
     nodes[node].neighbours.add(Route(dest: neighbour, cost: cost))
 
-var visited  = newSeq[bool](numNodes)
-let start    = cpuTime()
+var visited = newSeq[bool](numNodes)
+let start = cpuTime()
 
 proc getLongestPath(nodeId: int): int =
     visited[nodeId] = true
@@ -34,7 +34,7 @@ proc getLongestPath(nodeId: int): int =
 
     visited[nodeId] = false
 
-let result   = getLongestPath(0)
+let result = getLongestPath(0)
 let duration = cpuTime() - start
 
 echo result, " LANGUAGE NIM ", int(duration * 1000)

@@ -21,7 +21,7 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 | CSharp | 62.638 |
 | GCCGo | 49.7576 |
 | FSharp | 45.9485 |
-| NIM | 43.4246 |
+| Nim | 43.4246 |
 | Go | 41.8213 |
 | Racket | 40.823 |
 | Ocaml | 36.0282 |
@@ -97,7 +97,7 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 | Language | Runtime (ms) |
 | :------- | -----------: |
 | C++ | 2265 |
-| NIM | 4783 |
+| Nim | 4783 |
 | CSharp | 5436 |
 | GCCGo | 6395 |
 | Go | 7544 |
@@ -116,7 +116,7 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 | :------- | -----------: |
 | C++ | 1673 |
 | D | 1991 |
-| NIM | 2077 |
+| Nim | 2077 |
 | Rust | 2259 |
 | Java | 2560 |
 | OracleJava | 2615 |

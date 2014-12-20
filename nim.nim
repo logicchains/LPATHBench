@@ -37,4 +37,4 @@ proc getLongestPath(nodeId: int): int =
 let result = getLongestPath(0)
 let duration = cpuTime() - start
 
-echo result, " LANGUAGE NIM ", int(duration * 1000)
+echo result, " LANGUAGE Nim ", int(duration * 1000)

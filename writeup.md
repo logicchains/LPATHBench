@@ -347,7 +347,7 @@ I didn't write the Nim implementation, so can't comment on it, but from looking 
 * C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance
 * Haskell can be faster than Java, thanks to unboxing
 * If you wanna use Haskell on ARM, you must be willing to build whatever version of LLVM it was built with
-* Luajit on ARM is friggen fast, for a dynamic language
+* Luajit is friggen fast!
 * Functional code in Haskell/OCaml can be faster than imperative code using iorefs.
 
 

@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"strconv"
-	"strings"
+	"io"
+	"os"
 	"time"
 )
 
@@ -18,34 +17,34 @@ type node struct {
 }
 
 func readPlaces() ([]node, int) {
-	bytes, err := ioutil.ReadFile("agraph")
+	f, err := os.Open("agraph")
 	if err != nil {
 		panic(err)
 	}
-	lines := strings.Split(string(bytes), "\n")
-	numNodes, err := strconv.Atoi(lines[0])
-	if err != nil {
+	defer f.Close()
+
+	var numNodes int
+	if _, err := fmt.Fscanln(f, &numNodes); err != nil {
 		panic(err)
 	}
-	lines = lines[1:]
+
 	nodes := make([]node, numNodes)
 	for i := range nodes {
 		nodes[i].neighbours = make([]route, 0, numNodes/2)
 	}
-	for _, ln := range lines {
-		nums := strings.Split(ln, " ")
-		if len(nums) < 3 {
-			break
+
+	for {
+		var node int32
+		var r route
+
+		switch _, err := fmt.Fscanln(f, &node, &r.to, &r.cost); {
+		case err == io.EOF:
+			return nodes, numNodes
+		case err != nil:
+			panic(err)
 		}
-		node, err1 := strconv.Atoi(nums[0])
-		neighbour, err2 := strconv.Atoi(nums[1])
-		cost, err3 := strconv.Atoi(nums[2])
-		if err1 != nil || err2 != nil || err3 != nil {
-			panic("Error: encountered a line that wasn't three integers")
-		}
-		nodes[node].neighbours = append(nodes[node].neighbours, route{to: int32(neighbour), cost: int32(cost)})
+		nodes[node].neighbours = append(nodes[node].neighbours, r)
 	}
-	return nodes, numNodes
 }
 
 func getLongestPath(nodes []node, nodeID int32, visited []bool) int32 {

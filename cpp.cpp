@@ -68,6 +68,6 @@ int main(int argc, char** argv){
   auto start = high_resolution_clock::now();
   int len = getLongestPath(nodes);
   auto end = high_resolution_clock::now();
-  auto duration = 0.000001 * duration_cast<microseconds>(end - start).count();
+  auto duration = (int)(0.001 * duration_cast<microseconds>(end - start).count());
   cout << len << " LANGUAGE C++ " << duration << std::endl;
 }

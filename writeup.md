@@ -233,6 +233,8 @@ Then, when I attempted to append a new neighbour to one of the nodes on the list
 *C Sharp*
 I learned something useful: iterators are not cost-free. Someone changed the iterator in the inner loop to a for loop, and the performance jumped by 30%!
 
+And wow, the use of unsafe and stuff like `[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]` really sped it up. Faster than Java on ARM and almost faster than Go and OCaml on x86!
+
 *Racket*
 
 The Racket implementation was the first Lisp implementation I wrote, as the use of Typed Racket made it easier to write, with the type checker catching most of the many errors I made before runtime. I only found one instance of the type system slowing me down: trying to convert a string to an integer. The code I wound up with was:

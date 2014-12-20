@@ -325,13 +325,13 @@ readPlacesAndFindPath() {
 }
 ```
 
-What does the above do? Answer: it returns null, as the .then is asynchronous, meaning the function will not wait for nodes to be populated before returning. A stronger type system (or a read of the dart::io documentation) would have caught this.
+What does the above do? Answer: it returns null, as the `.then` is asynchronous, meaning the function will not wait for nodes to be populated before returning. A stronger type system (or a read of the dart::io documentation) would have caught this.
 
 Although Dart performs quite well, as far as I'm aware Dart has no support for dynamic code generation/modification, unlike most other dynamic and jit-compiled languages. Personally, I'd consider dynamic code generation to be one of the most useful things about dynamic languages, in the sense it's not something that can easily be done in compiled languages, so the lack of the functionality gives me little reason to use Dart (in Common Lisp, Clojure, Erlang or even Java (via JRebel), for instance, it's possible to login to a server and dynamically update its code without need for downtime).
 
-*Nimrod*
+*Nim*
 
-I didn't write the nimbrod implementation, so can't comment on it, but from looking at the code I find it pretty neat that it's almost as concise as Python yet runs quite fast.
+I didn't write the Nim implementation, so can't comment on it, but from looking at the code I find it pretty neat that it's almost as concise as Python yet runs quite fast.
 
 
 
@@ -352,6 +352,6 @@ I didn't write the nimbrod implementation, so can't comment on it, but from look
 There's no algorith for finding the longest path to one's inlaws that doesn't take exponential time, ergo the universe hates us.
 
 
-Comments:
+**Comments:**
 
 Make pull requests with your comments here. Or, more sensibly, use the [Reddit thread](http://www.reddit.com/r/programming/comments/2pvf68/armv7_vs_x8664_pathfinding_benchmark_of_c_d_go/)

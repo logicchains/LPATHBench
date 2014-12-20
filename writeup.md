@@ -35,7 +35,7 @@ The OpenJDK's performance on ARM shows how much performance depends on the imple
 
 Weird thing: when I made a symlink 'oraclejava' which linked to my local Oracle jvm `java` executable, for some reason it created an 'oraclejava' in /sbin, which pointed to the Openjdk java executable instead! Hence why the benchmark explicitly runs `/usr/bin/oraclejava`.
 
-Now, the seedy part of the benchmark: comparing different languages with each other. They ain't even using the exact same algorithms :O Amazingly, I found the more functional approach to be faster than the pure imperative approach for Haskell and OCaml, possibly because the functional approach minimises friction with their expensive write barriers.
+Now, the seedy part of the benchmark: comparing different languages with each other. They ain't even using the exact same algorithms :O Surprisingly, I found the more functional approach to be faster than the pure imperative approach for Haskell and OCaml, possibly because the functional approach minimises friction with their expensive write barriers.
 
 The imperative approach:
 

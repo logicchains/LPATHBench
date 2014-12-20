@@ -19,13 +19,11 @@ struct node {
 
 vector<node> readPlaces(){
   ifstream text("agraph");
-  string numNodesText;
-  text >> numNodesText;
-  int numNodes = stoi(numNodesText);
+  int numNodes; text >> numNodes;
   vector<node> nodes(numNodes);
-  string nodeS, neighbourS, costS;
-  while (text >> nodeS >> neighbourS >> costS){
-    nodes[stoi(nodeS)].neighbours.push_back(route{stoi(neighbourS), stoi(costS)});
+  int node, neighbour, cost;
+  while (text >> node >> neighbour >> cost){
+    nodes[node].neighbours.push_back(route{neighbour, cost});
   }
   return nodes;
 }

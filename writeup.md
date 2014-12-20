@@ -1,4 +1,5 @@
 ---
+layout: post
 title: ARM vs x86: Pathfinding benchmark of C++, D, Go, Nim, Ocaml, Common Lisp, Racket, C#, Java, Haskell, F#, Rust and Dart
 ---
 

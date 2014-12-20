@@ -42,7 +42,7 @@ class longestPathFinder{
     
 }
 
-class route{
+struct route{
 	public int dest, cost;
 	public route(int dest, int cost){
 	    this.dest =dest;

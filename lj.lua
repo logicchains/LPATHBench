@@ -35,7 +35,7 @@ end
 local function getLongestPath(nodes, nodeid, visited)
   visited[nodeid] = true
   local max = 0
-  for _,neighbour in pairs(nodes[nodeid]) do
+  for _,neighbour in ipairs(nodes[nodeid]) do
     if not visited[neighbour[1]] then
       local dist = neighbour[2] + getLongestPath(nodes, neighbour[1], visited)
       if dist > max then

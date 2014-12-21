@@ -17,6 +17,7 @@ runners=( "mono fs.exe"\
 	"./ml"\
 	"./lisp"\
 	"./rs"\
+	"./rs_unsafe"\
 	"./go"\
 	"./gccgo"\
 	"./d"\

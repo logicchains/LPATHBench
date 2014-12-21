@@ -6,10 +6,6 @@ echo "starting build" > isbuilding
 echo "Compiling..."
 make buildall
 
-runners=( "./cpp_gcc"\
-    "./cpp_clang"\
-    "./rs")
-
 runners=( "mono fs.exe"\
 	"./cpp_gcc"\
 	"./cpp_clang"\

@@ -4,6 +4,8 @@ import std.array;
 import std.conv;
 import std.string;
 import std.datetime;
+import std.exception;
+import std.algorithm;
 
 struct route{
   int dest, cost;
@@ -13,48 +15,63 @@ struct node {
   route[] neighbours;
 }
 
-node[] readPlaces() {
-  auto bytes = cast(byte[]) read("agraph");
-  auto text = cast(string) bytes;
+node[] readPlaces(string text) pure {
   auto lines = splitLines(text);
-  auto numNodes = to!int(lines[0]);
-  lines = lines[1..$];
+  auto numNodes = to!int(lines.front);
+  lines.popFront();
   node[] nodes =  minimallyInitializedArray!(node[])(numNodes);
-  foreach(string ln; lines){
-    auto nums = ln.split(" ");
-    if(nums.length < 3){
-      break;
-    }
-    auto node = to!int(nums[0]);
-    auto neighbour = to!int(nums[1]);
-    auto cost = to!int(nums[2]);
+  foreach(lineNum, string ln; lines){
+    auto nums = ln.splitter(" ").array.map!(to!int);
+    enforce(nums.length >= 3, "missing an edge on: " ~ (lineNum+1).to!string);
+    auto node = nums[0];
+    auto neighbour = nums[1];
+    auto cost = nums[2];
     nodes[node].neighbours.insertInPlace(0, route(neighbour,cost));
   }
   return nodes;
 }
 
-int getLongestPath(immutable(node[]) nodes, immutable int nodeID, bool[] visited) pure nothrow @safe{
+int getLongestPath(immutable(node[]) nodes, const int nodeID, bool[] visited) nothrow @safe{
   visited[nodeID] = true;
-  int max=0;
-  foreach(immutable route neighbour; nodes[nodeID].neighbours){
-    if (!visited[neighbour.dest]){
-      immutable int dist = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
-      if (dist > max){
-	max = dist;
-      }
-    }    
+
+  int dist(immutable route r) nothrow @safe{
+    return r.cost + getLongestPath(nodes, r.dest, visited);
   }
+
+  version(fast) {}
+  else
+    // Slight increase to runtime
+    auto list = nodes[nodeID].neighbours.filter!(x=>!visited[x.dest]).map!dist;
+
+  // Greatly increases runtime
+  version(slow){
+    auto identifiedMax = reduce!(max)(0, list);
+  }else version(fast){
+    int identifiedMax=0;
+    foreach(immutable route neighbour; nodes[nodeID].neighbours){
+      if (!visited[neighbour.dest]){
+        const int distance = neighbour.cost + getLongestPath(nodes, neighbour.dest, visited);
+        identifiedMax = max(distance, identifiedMax);
+      }
+    }
+  } else{
+    auto identifiedMax = 0;
+    foreach(immutable distance; list){
+      identifiedMax = max(distance, identifiedMax);
+    }
+  }
+
+
   visited[nodeID] = false;
-  return max;
+  return identifiedMax;
 }
 
 
 void main(){
-  immutable auto nodes = cast(immutable)readPlaces().dup;
+  immutable nodes = readPlaces(readText("agraph"));
   auto visited = uninitializedArray!(bool[])(nodes.length);
-  foreach(ref bool b; visited){
-    b = false;
-  }
+  visited[] = false;
+
   StopWatch sw;
   sw.start;  
   int len = getLongestPath(nodes, 0, visited);

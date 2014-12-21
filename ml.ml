@@ -3,11 +3,22 @@ type route = {
   cost: int;
 }
 
+let build_array node =
+  let a = Array.make (2 * (List.length node)) 0 in
+  let rec fill i = function
+    | [] -> a
+    | hd::tl ->
+        Array.set a i hd.dest;
+        Array.set a (i+1) hd.cost;
+        fill (i+2) tl
+  in
+  fill 0 node
+
 let readPlaces () =
   let f = open_in "agraph" in
   let next_int () = Scanf.fscanf f " %d" (fun n -> n) in
   let n = next_int () in
-  let nodes = Array.init n (fun a -> []) in
+  let nodes = Array.make n [] in
   begin
     try while true do
       let node = next_int () in
@@ -16,23 +27,26 @@ let readPlaces () =
       nodes.(node) <- ({dest; cost} :: nodes.(node));
     done with _ -> ()
   end;
-  (Array.map Array.of_list nodes, n)
+  let nodes = Array.map build_array nodes in
+  (nodes, n)
 
 let rec getLongestPath nodes nodeID visited =
   visited.(nodeID) <- true;
   let rec loop nodes nodeID visited i maxDist =
     if i < 0 then maxDist
     else
-      let {dest; cost} = nodes.(nodeID).(i) in
+      let neighbour = nodes.(nodeID) in
+      let dest = neighbour.(i) in
+      let cost = neighbour.(i+1) in
       if visited.(dest)
-      then loop nodes nodeID visited (i-1) maxDist
+      then loop nodes nodeID visited (i-2) maxDist
       else
         let dist = cost + getLongestPath nodes dest visited in
 	let newMax = if dist > maxDist then dist else maxDist in
-        loop nodes nodeID visited (i-1) newMax
+        loop nodes nodeID visited (i-2) newMax
   in
   let (max: int) =
-    loop nodes nodeID visited (Array.length nodes.(nodeID) - 1) 0
+    loop nodes nodeID visited (Array.length nodes.(nodeID) - 2) 0
   in
   visited.(nodeID) <- false;
   max;;

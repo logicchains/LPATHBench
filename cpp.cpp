@@ -29,7 +29,7 @@ std::pair<vector<node>, vector<route>> readPlaces(){
     nodes[node].nCount += 1;
     totalNeighbours += 1;
   }
-  // second pass: compute each node's offset in allNeighbours
+  // compute each node's offset in allNeighbours
   std::vector<route> allNeighbours(totalNeighbours);
   int cumulative = 0;
   for (auto &node : nodes) {
@@ -37,7 +37,7 @@ std::pair<vector<node>, vector<route>> readPlaces(){
     cumulative += node.nCount;
     node.nCount = 0;
   }
-  // fill in neighbours arrays
+  // second pass: fill in neighbours arrays
   text = ifstream("agraph");
   text >> numNodes;
   while (text >> node >> neighbour >> cost){

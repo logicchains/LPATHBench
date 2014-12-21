@@ -6,8 +6,13 @@ echo "starting build" > isbuilding
 echo "Compiling..."
 make buildall
 
+runners=( "./cpp_gcc"\
+    "./cpp_clang"\
+    "./rs")
+
 runners=( "mono fs.exe"\
-	"./cpp"\
+	"./cpp_gcc"\
+	"./cpp_clang"\
 	"./rkt"\
 	"mono -O=all ./cs.exe"\
 	"java jv"\

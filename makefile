@@ -44,7 +44,7 @@ go: go.go
 	go build go.go
 
 gccgo: gccgo.go
-	go build gccgo.go
+	gccgo -O3 -o gccgo gccgo.go
 
 d: d.d
 	ldc2 d.d -ofd -O3 -release -inline -boundscheck=off

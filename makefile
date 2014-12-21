@@ -38,7 +38,7 @@ rust: rs.rs
 	rustc rs.rs --opt-level=3
 
 rust_unsafe: rs_unsafe.rs
-	rustc rs_unsafe.rs --opt-level=3
+	rustc rs_unsafe.rs --opt-level=3	
 
 go: go.go
 	go build go.go

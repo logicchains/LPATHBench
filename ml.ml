@@ -14,7 +14,7 @@ let readPlaces () =
       let dest = next_int () in
       let cost = next_int () in
       nodes.(node) <- ({dest; cost} :: nodes.(node));
-    done with _ -> ()
+    done with _ -> close_in f
   end;
   (Array.map Array.of_list nodes, n)
 

@@ -29,15 +29,14 @@ let readPlaces () =
 
 let rec getLongestPath (nodes : Node array) nodeId (visited : bool array) =
   visited.[nodeId] <- true;
-  let max = ref 0
-  nodes.[nodeId] |> Array.iter (fun neighbour-> 
-                                  if (not visited.[neighbour.Dest])
-                                  then 
-                                        let dist = neighbour.Cost + getLongestPath nodes neighbour.Dest visited
-                                        if dist > !max then max := dist)
+  let mutable maxcost = 0
+  for neighbour in nodes.[nodeId] do     
+    if not visited.[neighbour.Dest] then
+      let dist = neighbour.Cost + getLongestPath nodes neighbour.Dest visited
+      if dist > maxcost then maxcost <- dist
   visited.[nodeId] <- false;
-  !max
-  
+  maxcost
+
 [<EntryPoint>]
 let main argv = 
   let nodes = readPlaces()

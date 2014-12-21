@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math' as Math;
 
 class Route {
   final int dest, cost;
@@ -39,13 +40,14 @@ void readPlacesAndFindPath() {
 int getLongestPath(List<Node> nodes, int nodeID, List<bool> visited){
   visited[nodeID] = true;
   int max = 0;
-
-  for(var i = 0; i < nodes[nodeID].neighbours.length; i++) {
-    if (!visited[nodes[nodeID].neighbours[i].dest]) {
-      final int dist = nodes[nodeID].neighbours[i].cost + getLongestPath(nodes, nodes[nodeID].neighbours[i].dest, visited);
-      if (dist > max){
-        max = dist;
-      }
+  final List<Route> neighbors = nodes[nodeID].neighbours;
+  for (var i = 0, llen = neighbors.length; i < llen; i++) {
+    final Route neighbor = neighbors[i];
+    final int dest = neighbor.dest;
+    if (!visited[dest]) {
+      final int dist = neighbor.cost +
+          getLongestPath(nodes, dest, visited);
+      max = Math.max(dist, max);
     }
   }
 

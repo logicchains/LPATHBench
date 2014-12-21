@@ -2,7 +2,10 @@ NUM_NODES = 10
 WORLD_SIZE = 1000
 
 
-buildall: fsharp cpp-gcc cpp-clang racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal c
+buildall: f03 fsharp cpp-gcc cpp-clang racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal
+
+f03:    f03.f03
+	gfortran -O2 -march=native f03.f03 -o f03
 
 fsharp: fs.fs
 	fsharpc fs.fs

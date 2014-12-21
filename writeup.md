@@ -21,7 +21,7 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 | CSharp | 62.638 |
 | GCCGo | 49.7576 |
 | FSharp | 45.9485 |
-| NIM | 43.4246 |
+| Nim | 43.4246 |
 | Go | 41.8213 |
 | Racket | 40.823 |
 | Ocaml | 36.0282 |
@@ -97,7 +97,7 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 | Language | Runtime (ms) |
 | :------- | -----------: |
 | C++ | 2265 |
-| NIM | 4783 |
+| Nim | 4783 |
 | CSharp | 5436 |
 | GCCGo | 6395 |
 | Go | 7544 |
@@ -116,7 +116,7 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 | :------- | -----------: |
 | C++ | 1673 |
 | D | 1991 |
-| NIM | 2077 |
+| Nim | 2077 |
 | Rust | 2259 |
 | Java | 2560 |
 | OracleJava | 2615 |
@@ -357,7 +357,7 @@ I didn't write the Nim implementation, so can't comment on it, but from looking 
 
 **TLDR**
 
-* D and Nimrod both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
+* D and Nim both work on ARM and can generate fast code, but the D stdlib is buggy (have to use C printf instead of D writeln)
 * The OpenJDK's performance on ARM is a steaming pile of crap
 * C++ specialises std::vector<bool> to a bitvector by default, which can hurt performance. Using a std::bitset properly is however much faster, as it can be inlined.
 * Haskell can be faster than Java, thanks to unboxing

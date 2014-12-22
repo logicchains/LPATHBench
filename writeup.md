@@ -117,7 +117,6 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 | Java | 8363 |
 | LuaJit | 10322 |
 | Racket | 11440 |
-| D | 24945 |
 
 
 **x86-64**

@@ -8,7 +8,7 @@ The following table contains the most useful results for the benchmark, comparin
 
 Note that the algorithm finds the length of the longest path in the graph, but doesn't actually find all the steps in that path; this is purely laziness on my part, as the latter requires more effort to write. In my defence, most results for "longest path algorithm" on Google also seem to only give the length of the longest path, not the path itself.
 
-**Note**: *The laptop overheated and broke down while re-running the benchmarks, so I'm currently setting up a new x86 device to run them. Apologies for the delay in updating the results.*
+**Note**: *It's 2am in my timezone (AEST) at the time of writing this edit so I'm off to bed now; any further pull requests will have to wait around 8 hours to be pulled*
 
 Just to clarify: I'm not comparing ARM and x86, I'm comparing language implementations on two common ARM and x86 platforms.
 
@@ -16,18 +16,17 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 73.8509 |
-| LuaJit | 63.4567 |
-| CSharp | 62.638 |
-| GCCGo | 49.7576 |
-| FSharp | 45.9485 |
-| Nim | 43.4246 |
-| Go | 41.8213 |
-| Racket | 40.823 |
-| Ocaml | 36.0282 |
-| Lisp | 25.8946 |
-| OracleJava | 18.2205 |
-| Java | 17.9184 |
+| C++ | 75.0789 |
+| LuaJit | 66.4262 |
+| Perl | 66.0241 |
+| CSharp | 64.4493 |
+| Racket | 58.2012 |
+| GCCGo | 51.2695 |
+| Go | 43.6286 |
+| Java | 31.8599 |
+| Ocaml | 23.0446 |
+| OracleJava | 21.2832 |
+| Lisp | 5.65094 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -96,40 +95,44 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 2265 |
-| Nim | 4783 |
-| CSharp | 5436 |
-| GCCGo | 6395 |
-| Go | 7544 |
-| Ocaml | 9215 |
-| LuaJit | 10322 |
-| Java | 14287 |
-| OracleJava | 14352 |
-| FSharp | 18129 |
-| Racket | 32805 |
-| Lisp | 38147 |
+| C++ | 2219 |
+| NIM | 4808 |
+| CSharp | 5502 |
+| GCCGo | 6538 |
+| FSharp | 6982 |
+| Go | 7722 |
+| Java | 8393 |
+| Ocaml | 9052 |
+| LuaJit | 10398 |
+| OracleJava | 13560 |
+| Racket | 15010 |
+| Lisp | 38206 |
+| Perl | 415000 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 1673 |
-| D | 1991 |
-| Nim | 2077 |
-| Rust | 2259 |
-| Java | 2560 |
-| OracleJava | 2615 |
-| Go | 3155 |
-| GCCGo | 3182 |
-| Ocaml | 3320 |
-| CSharp | 3405 |
-| Haskell | 4816 |
-| LuaJit | 6550 |
-| FSharp | 8330 |
-| Dart | 9476 |
-| Lisp | 9878 |
-| Racket | 13392 |
+| C++ | 1666 |
+| Nim | 1708 |
+| Rust | 2041 |
+| D | 2070 |
+| Ocaml | 2086 |
+| Lisp | 2159 |
+| Java | 2674 |
+| OracleJava | 2886 |
+| Julia | 2901 |
+| CRYSTAL | 3237 |
+| GCCGo | 3352 |
+| Go | 3369 |
+| CSharp | 3546 |
+| FSharp | 3579 |
+| Dart | 4919 |
+| LuaJit | 6907 |
+| Haskell | 6958 |
+| Racket | 8736 |
+| Perl | 274000 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.

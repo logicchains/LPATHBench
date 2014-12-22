@@ -8,7 +8,7 @@ The following table contains the most useful results for the benchmark, comparin
 
 Note that the algorithm finds the length of the longest path in the graph, but doesn't actually find all the steps in that path; this is purely laziness on my part, as the latter requires more effort to write. In my defence, most results for "longest path algorithm" on Google also seem to only give the length of the longest path, not the path itself.
 
-**Note**: *It's 2am in my timezone (AEST) at the time of writing this edit so I'm off to bed now; any further pull requests will have to wait around 8 hours to be pulled*
+**Note**: *The x86 laptop died while running it, so the current results are on a new machine: a quad core x86-64 Pentium n3530 at 2.16 ghz.*
 
 Just to clarify: I'm not comparing ARM and x86, I'm comparing language implementations on two common ARM and x86 platforms.
 
@@ -112,27 +112,6 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 **x86-64**
 
-| Language | Runtime (ms) |
-| :------- | -----------: |
-| C++ | 1666 |
-| Nim | 1708 |
-| Rust | 2041 |
-| D | 2070 |
-| Ocaml | 2086 |
-| Lisp | 2159 |
-| Java | 2674 |
-| OracleJava | 2886 |
-| Julia | 2901 |
-| CRYSTAL | 3237 |
-| GCCGo | 3352 |
-| Go | 3369 |
-| CSharp | 3546 |
-| FSharp | 3579 |
-| Dart | 4919 |
-| LuaJit | 6907 |
-| Haskell | 6958 |
-| Racket | 8736 |
-| Perl | 274000 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.

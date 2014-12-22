@@ -35,11 +35,9 @@ var fs = require('fs');
   function getLongestPathCached(nodes, nodeid, visited, depth) {
     var idx;
     visited |= 1 << nodeid;
-    if (depth == nodes.length - 7) {
-      idx = (visited * 32) + nodeid;
-      if (visitCache[idx]) {
-        return visitCache[idx];
-      }
+    idx = (visited * 32) + nodeid;
+    if (visitCache[idx]) {
+      return visitCache[idx];
     }
     var neighbours = nodes[nodeid];
     var max = 0
@@ -51,12 +49,7 @@ var fs = require('fs');
         }
       }
     }
-    if (idx) {
-      visitCache[idx] = max;
-    }
-    if (typeof visited != 'number') {
-      visited[nodeid] = false;
-    }
+    visitCache[idx] = max;
     return max;
   }
 

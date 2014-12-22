@@ -41,6 +41,8 @@ An aside: D only barely works. While sudo pacman -S ldc went down without a hitc
 
 **Edit:** Okay, I updated the ldc D compiler earlier today (incidentally, as part of upgrading my system with pacman -Syu), and now it doesn't compile at all. It was previously compiling, and ran at around 90% the speed of C++ on ARM.
 
+**Edit again:** I found a working D compiler, the GCC D compiler, but the executable it produces is really slow.
+
 The OpenJDK's performance on ARM shows how much performance depends on the implementation, not just the language. If you're a low-level person and looking for something useful to which to contribute, consider implementing a JIT compiler for OpenJDK on ARM. Even if it was only half as good as the Oracle one, you'd still be able to put on your resume that you made the ARM JVM five times faster.
 
 **Edit**: *Okay, someone changed the Java implementation to use arrays for the data, instead of classes, effectively unboxing it, and now the OpenJDK implementation is no longer an order of magnitude slower than the Oracle JVM on ARM. Interesting.*

@@ -7,6 +7,8 @@ import std.datetime;
 import std.exception;
 import std.algorithm;
 
+version = fast;
+
 struct route{
   int dest, cost;
 }
@@ -34,10 +36,6 @@ node[] readPlaces(string text) pure {
 int getLongestPath(immutable(node[]) nodes, const int nodeID, bool[] visited) nothrow @safe{
   visited[nodeID] = true;
 
-  int dist(immutable route r) nothrow @safe{
-    return r.cost + getLongestPath(nodes, r.dest, visited);
-  }
-
   version(fast) {
     int identifiedMax=0;
     foreach(immutable route neighbour; nodes[nodeID].neighbours){
@@ -46,10 +44,14 @@ int getLongestPath(immutable(node[]) nodes, const int nodeID, bool[] visited) no
         identifiedMax = max(distance, identifiedMax);
       }
     }
-  }
-  else {
+  } else {
     // Slight increase to runtime for LDC
     // Greater increase to runtime for DMD and GDC
+
+    int dist(immutable route r) nothrow @safe{
+      return r.cost + getLongestPath(nodes, r.dest, visited);
+    }
+
     auto list = nodes[nodeID].neighbours.filter!(x=>!visited[x.dest]).map!dist;
     auto identifiedMax = reduce!(max)(0, list);
   }

@@ -7,7 +7,8 @@ echo "Compiling..."
 make buildall
 
 runners=( "mono fs.exe"\
-	"./cpp"\
+	"./cpp_gcc"\
+	"./cpp_clang"\
 	"./rkt"\
 	"mono -O=all ./cs.exe"\
 	"java jv"\

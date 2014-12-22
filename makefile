@@ -2,7 +2,7 @@ NUM_NODES = 10
 WORLD_SIZE = 1000
 
 
-buildall: fsharp cpp racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava
+buildall: fsharp cpp racket csharp java haskell ocaml lisp rust go gccgo d nim oraclejava crystal
 
 fsharp: fs.fs
 	fsharpc fs.fs
@@ -48,6 +48,9 @@ gccgo: gccgo.go
 
 d: d.d
 	ldc2 d.d -ofd -O3 -release -inline -boundscheck=off
+
+crystal: crystal.cr
+	crystal build crystal.cr --release
 
 nim: nim.nim
 	nim c --cc:clang --passC:-march=native -d:release nim.nim

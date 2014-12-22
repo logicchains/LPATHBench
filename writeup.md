@@ -16,16 +16,21 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 74.1041 |
-| LuaJit | 72.4231 |
-| CSharp | 66.6489 |
-| Perl | 61.3583 |
-| Nim | 54.2453 |
-| Racket | 51.3128 |
-| FSharp | 48.3028 |
-| OracleJava | 40.9373 |
-| Lisp | 32.5181 |
-| Java | 29.8728 |
+| C++Cached | 115.652 |
+| C++/gcc | 74.4626 |
+| GCCGo | 72.0985 |
+| CSharp | 70.6358 |
+| LuaJit | 70.1124 |
+| C++/clang | 64.1457 |
+| Racket | 58.8287 |
+| Nim | 55.3526 |
+| Go | 54.8455 |
+| FSharp | 50.9221 |
+| OracleJava | 50.2763 |
+| Ocaml | 38.673 |
+| Lisp | 32.9466 |
+| Java | 30.5991 |
+| D | 7.94147 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -96,18 +101,21 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++Cached | 118 |
-| C++/gcc | 2297 |
-| C++/clang | 2469 |
-| Nim | 3201 |
-| OracleJava | 5267 |
-| CSharp | 5455 |
+| C++Cached | 115 |
+| C++/gcc | 2326 |
+| C++/clang | 2499 |
+| Nim | 3176 |
+| GCCGo | 4670 |
+| OracleJava | 5247 |
+| CSharp | 5442 |
 | Ocaml | 5712 |
-| Lisp | 7009 |
-| FSharp | 7010 |
-| Java | 8386 |
-| LuaJit | 10363 |
-| Racket | 12594 |
+| Go | 6181 |
+| Lisp | 6896 |
+| FSharp | 6995 |
+| Java | 8363 |
+| LuaJit | 10322 |
+| Racket | 11440 |
+| D | 24945 |
 
 
 **x86-64**

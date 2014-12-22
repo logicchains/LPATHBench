@@ -1,50 +1,38 @@
 #lang typed/racket
+(require (only-in racket/unsafe/ops [unsafe-fx+ +] [unsafe-fxmax max]))
 
-(struct route ([dest : Integer] [cost : Integer]) #:transparent)
+(struct route ([dest : node] [cost : Integer]) #:transparent)
+(struct node ([neighbours : (Listof route)] [visited? : Boolean]) #:transparent #:mutable)
 
-(struct node ([neighbours : (Listof route)]) #:transparent)
-
-(: str->int (String -> Integer))
-(define (str->int str)
-  (define n (string->number str))
-  (if n (numerator (inexact->exact (real-part n))) 0))
-
-(: read-places (-> (Vectorof node)))
+(: read-places : -> node)
 (define (read-places)
-  (define lines
-    (file->lines "agraph"))
+  (define (str->int [str : String])
+    (assert (string->number str) exact-integer?))
+  (define lines (file->lines "agraph"))
   (define num-lines (str->int (car lines)))
-  (define nodes (build-vector num-lines (lambda (n) (node `()))))
-  (let loop ([i : Integer 0])
-    (define nums (string-split (list-ref (cdr lines) i)))
-    (define len (length nums))
-    (when (and (> len 2) (> (length lines) (+ i 2)))
-      (let ([node-id (str->int (list-ref nums 0))]
-            [neighbour (str->int (list-ref nums 1))]
-            [cost (str->int (list-ref nums 2))])
-        (define new-node (node
-                          (append (node-neighbours (vector-ref nodes node-id))
-                                  (list (route neighbour cost)))))
-        (vector-set! nodes node-id new-node)
-        (loop (+ i 1)))))
-  nodes)
+  (define nodes (build-vector num-lines (λ (n) (node '() #f))))
+  (for ([3nums (in-list (rest lines))])
+    (define nums (map str->int (string-split 3nums)))
+    (define node      (vector-ref nodes (first nums)))
+    (define neighbour (vector-ref nodes (second nums)))
+    (define cost      (third nums))
+    (set-node-neighbours! node (cons (route neighbour (assert cost fixnum?))
+                                     (node-neighbours node))))
+  (vector-ref nodes 0))
 
-(: get-longest-path ((Vectorof node) Integer (Vectorof Boolean) -> Integer))
-(define (get-longest-path nodes node-id visited)
-  (vector-set! visited node-id #t)
-  (define sum
-    (for/fold ([max-acc : Integer 0])
-              ;; `in-list` significantly speeds things up here
-              ([neighbour (in-list (node-neighbours (vector-ref nodes node-id)))]
-               #:unless (vector-ref visited (route-dest neighbour)))
-      (max max-acc
-           (+ (route-cost neighbour) (get-longest-path nodes (route-dest neighbour) visited)))))
-  (vector-set! visited node-id #f)
-  sum)
+(: get-longest-path : node -> Fixnum)
+(define (get-longest-path node)
+  (set-node-visited?! node #t)
+  (begin0
+      (for/fold ([best : Fixnum 0])
+                ([neighbour (in-list (node-neighbours node))]
+                 #:unless (node-visited? (route-dest neighbour)))
+        (max best (+ (route-cost neighbour)
+                     (get-longest-path (route-dest neighbour)))))
+    (set-node-visited?! node #f)))
 
-(define nodes (read-places))
-(define visited : (Vectorof Boolean) (build-vector (vector-length nodes) (lambda (n) #f)))
+(define root (read-places))
 (define start (current-inexact-milliseconds))
-(define len (get-longest-path nodes 0 visited))
+(define len (get-longest-path root))
 (define duration (- (current-inexact-milliseconds) start))
-(printf "~a LANGUAGE Racket ~a\n" len (inexact->exact (floor duration)))	
+(printf "~a LANGUAGE Racket ~a\n" len (inexact->exact (floor duration)))

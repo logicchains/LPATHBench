@@ -38,15 +38,7 @@ int getLongestPath(immutable(node[]) nodes, const int nodeID, bool[] visited) no
     return r.cost + getLongestPath(nodes, r.dest, visited);
   }
 
-  version(fast) {}
-  else
-    // Slight increase to runtime
-    auto list = nodes[nodeID].neighbours.filter!(x=>!visited[x.dest]).map!dist;
-
-  // Greatly increases runtime
-  version(slow){
-    auto identifiedMax = reduce!(max)(0, list);
-  }else version(fast){
+  version(fast) {
     int identifiedMax=0;
     foreach(immutable route neighbour; nodes[nodeID].neighbours){
       if (!visited[neighbour.dest]){
@@ -54,13 +46,13 @@ int getLongestPath(immutable(node[]) nodes, const int nodeID, bool[] visited) no
         identifiedMax = max(distance, identifiedMax);
       }
     }
-  } else{
-    auto identifiedMax = 0;
-    foreach(immutable distance; list){
-      identifiedMax = max(distance, identifiedMax);
-    }
   }
-
+  else {
+    // Slight increase to runtime for LDC
+    // Greater increase to runtime for DMD and GDC
+    auto list = nodes[nodeID].neighbours.filter!(x=>!visited[x.dest]).map!dist;
+    auto identifiedMax = reduce!(max)(0, list);
+  }
 
   visited[nodeID] = false;
   return identifiedMax;

@@ -69,4 +69,4 @@ var fs = require('fs');
     length = getLongestPath(nodes, 0, visited);
     }*/
 length = getLongestPath(nodes, 0, visited);
-  console.log(length+' LANGUAGE Javascript: '+(Date.now() - start));
+  console.log(length+' LANGUAGE Javascript '+(Date.now() - start));

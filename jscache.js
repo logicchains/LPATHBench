@@ -68,4 +68,4 @@ var fs = require('fs');
   } else {
     length = getLongestPath(nodes, 0, visited);
   }
-  console.log(length+' LANGUAGE JavascriptWithCacheAlg: '+(Date.now() - start));
+  console.log(length+' LANGUAGE JavascriptWithCacheAlg '+(Date.now() - start));

@@ -6,7 +6,7 @@ One way is to create a graph with the nodes representing different intersections
 
 The following table contains the most useful results for the benchmark, comparing each language against itself on ARMv7 and x86-64. 32 bit integers are used where possible, rather than machine-sized ones, to ensure both implementations use the same sized datatypes. OCaml is an exception, as non-machine-sized ints are boxed, so machine-sized ints are faster.
 
-Note that the algorithm finds the length of the longest path in the graph, but doesn't actually find all the steps in that path; this is purely laziness on my part, as the latter requires more effort to write. In my defence, most results for "longest path algorithm" on Google also seem to only give the length of the longest path, not the path itself.
+Note that the algorithm finds the length of the longest path in the graph that starts at node zero, but doesn't actually find all the steps in that path; this is purely laziness on my part, as the latter requires more effort to write. In my defence, most results for "longest path algorithm" on Google also seem to only give the length of the longest path, not the path itself.
 
 **Note**: *The x86 laptop died while running it, so the current results are on a new machine: a quad core x86-64 Pentium n3530 at 2.16 ghz.*
 

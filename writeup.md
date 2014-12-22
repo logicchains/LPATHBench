@@ -123,29 +123,29 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++Cached | 133 |
-| JavascriptWithCacheAlg | 140 |
-| C++/clang | 1626 |
-| Nim | 1730 |
-| C++/gcc | 1762 |
-| Rust | 2139 |
-| Ocaml | 2142 |
-| Lisp | 2275 |
-| RustUnsafe | 2275 |
-| OracleJava | 2666 |
-| Java | 2780 |
-| Julia | 2914 |
-| CRYSTAL | 3031 |
-| Go | 3599 |
-| GCCGo | 3623 |
-| FSharp | 3710 |
-| CSharp | 3973 |
-| Dart | 5407 |
-| Javascript | 6179 |
-| LuaJit | 6600 |
-| Racket | 7035 |
-| Haskell | 7359 |
-| D | 24042 |
+| C++Cached | 112 |
+| JavascriptWithCacheAlg | 173 |
+| C++/clang | 1618 |
+| Nim | 1866 |
+| C++/gcc | 1894 |
+| Rust | 2262 |
+| D | 2299 |
+| RustUnsafe | 2312 |
+| Ocaml | 2378 |
+| Lisp | 2410 |
+| OracleJava | 2658 |
+| Java | 2725 |
+| Julia | 3088 |
+| CRYSTAL | 3436 |
+| Go | 3700 |
+| FSharp | 3749 |
+| CSharp | 3875 |
+| GCCGo | 4032 |
+| Dart | 5635 |
+| Javascript | 6463 |
+| Racket | 6947 |
+| LuaJit | 7310 |
+| Haskell | 8298 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.

@@ -16,17 +16,15 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 75.0789 |
-| LuaJit | 66.4262 |
-| Perl | 66.0241 |
-| CSharp | 64.4493 |
-| Racket | 58.2012 |
-| GCCGo | 51.2695 |
-| Go | 43.6286 |
-| Java | 31.8599 |
-| Ocaml | 23.0446 |
-| OracleJava | 21.2832 |
-| Lisp | 5.65094 |
+| C++ | 77.9412 |
+| CSharp | 66.5103 |
+| Perl | 64.9412 |
+| LuaJit | 63.873 |
+| Racket | 54.036 |
+| FSharp | 52.9149 |
+| Nim | 51.825 |
+| Java | 31.2537 |
+| Lisp | 30.9156 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -95,23 +93,40 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 2219 |
-| NIM | 4808 |
-| CSharp | 5502 |
-| GCCGo | 6538 |
-| FSharp | 6982 |
-| Go | 7722 |
-| Java | 8393 |
-| Ocaml | 9052 |
-| LuaJit | 10398 |
-| OracleJava | 13560 |
-| Racket | 15010 |
-| Lisp | 38206 |
-| Perl | 415000 |
+| C++ | 2244 |
+| Nim | 3178 |
+| CSharp | 5542 |
+| FSharp | 7153 |
+| Lisp | 7252 |
+| Java | 8527 |
+| LuaJit | 10333 |
+| Racket | 15238 |
+| Perl | 425000 |
 
 
 **x86-64**
 
+| Language | Runtime (ms) |
+| :------- | -----------: |
+| Nim | 1647 |
+| C++ | 1749 |
+| Rust | 2020 |
+| Ocaml | 2093 |
+| D | 2170 |
+| Lisp | 2242 |
+| Java | 2665 |
+| Julia | 2796 |
+| OracleJava | 2819 |
+| CRYSTAL | 3019 |
+| Go | 3404 |
+| GCCGo | 3543 |
+| CSharp | 3686 |
+| FSharp | 3785 |
+| Dart | 5427 |
+| LuaJit | 6600 |
+| Haskell | 6933 |
+| Racket | 8234 |
+| Perl | 276000 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.

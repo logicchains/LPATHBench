@@ -90,7 +90,7 @@ Note though that the latter is still pretty imperative, in the sense that it use
 
 Anyway, here's the numbers you probably came here for. The x86-64 device is an Intel dual core i5 M430 2.27GHz laptop, running the latest Arch Linux, and the ARMv7 device is a Galaxy S3 with 2GB of ram and a quad-core 1.3ghz processor, runing the latest Arch Linux in a chroot.
 
-**Note:** *The jscached version here uses a slightly different algorithm, so it's not fair to directly compare it to other implementations, but I include it here to show how important algorithm choice is; a better algorithm can make Javascript faster than optimised C++.*
+**Note:** *The jscached and c++cached versions here uses a slightly different algorithm, so it's not fair to directly compare them to other implementations, but I include it here to show how important algorithm choice is.*
 
 **ARMv7**
 

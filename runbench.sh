@@ -9,6 +9,7 @@ make buildall
 runners=( "mono fs.exe"\
 	"./cpp_gcc"\
 	"./cpp_clang"\
+	"./cpp_cached"\
 	"./rkt"\
 	"mono -O=all ./cs.exe"\
 	"java jv"\

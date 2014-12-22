@@ -13,6 +13,9 @@ cpp-gcc: cpp.cpp
 cpp-clang: cpp.cpp
 	clang++ cpp.cpp -std=c++11 -Wall -O2 -march=native -DCOMPILER='"clang"' -o cpp_clang
 
+cpp-cached: cpp_cached.cpp
+	clang++ cpp_cached.cpp -std=c++14 -Wall -O2 -march=native -o cpp_cached
+
 racket: rkt.rkt
 	raco exe rkt.rkt
 

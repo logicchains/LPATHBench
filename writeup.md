@@ -16,15 +16,16 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 
 | Language | % x86 |
 | :------- | ----: |
-| C++ | 77.9412 |
-| CSharp | 66.5103 |
-| Perl | 64.9412 |
-| LuaJit | 63.873 |
-| Racket | 54.036 |
-| FSharp | 52.9149 |
-| Nim | 51.825 |
-| Java | 31.2537 |
-| Lisp | 30.9156 |
+| C++ | 74.1041 |
+| LuaJit | 72.4231 |
+| CSharp | 66.6489 |
+| Perl | 61.3583 |
+| Nim | 54.2453 |
+| Racket | 51.3128 |
+| FSharp | 48.3028 |
+| OracleJava | 40.9373 |
+| Lisp | 32.5181 |
+| Java | 29.8728 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -93,40 +94,41 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++ | 2244 |
-| Nim | 3178 |
-| CSharp | 5542 |
-| FSharp | 7153 |
-| Lisp | 7252 |
-| Java | 8527 |
-| LuaJit | 10333 |
-| Racket | 15238 |
-| Perl | 425000 |
+| C++ | 2344 |
+| Nim | 3180 |
+| CSharp | 5622 |
+| OracleJava | 6124 |
+| Lisp | 7033 |
+| FSharp | 7159 |
+| Java | 8650 |
+| LuaJit | 10342 |
+| Racket | 15653 |
+| Perl | 427000 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| Nim | 1647 |
-| C++ | 1749 |
-| Rust | 2020 |
-| Ocaml | 2093 |
-| D | 2170 |
-| Lisp | 2242 |
-| Java | 2665 |
-| Julia | 2796 |
-| OracleJava | 2819 |
-| CRYSTAL | 3019 |
-| Go | 3404 |
-| GCCGo | 3543 |
-| CSharp | 3686 |
-| FSharp | 3785 |
-| Dart | 5427 |
-| LuaJit | 6600 |
-| Haskell | 6933 |
-| Racket | 8234 |
-| Perl | 276000 |
+| Nim | 1725 |
+| C++ | 1737 |
+| D | 2148 |
+| Rust | 2240 |
+| Ocaml | 2252 |
+| Lisp | 2287 |
+| OracleJava | 2507 |
+| Java | 2584 |
+| Julia | 3012 |
+| CRYSTAL | 3360 |
+| FSharp | 3458 |
+| Go | 3551 |
+| GCCGo | 3569 |
+| CSharp | 3747 |
+| Dart | 5181 |
+| Haskell | 7476 |
+| LuaJit | 7490 |
+| Racket | 8032 |
+| Perl | 262000 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.

@@ -59,6 +59,6 @@ fn main() {
     let startTime = precise_time_ns();
     let path = get_longest_path(&nodes, 0, &mut visited);
     let duration = (precise_time_ns() - startTime) / 1000000;
-    println!("{} LANGUAGE Rust {}", path, duration);
+    println!("{} LANGUAGE RustUnsafe {}", path, duration);
 }
 

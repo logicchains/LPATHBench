@@ -182,14 +182,14 @@ int main(void) {
     gettimeofday(&timeStart, NULL);
 
 #if defined USE_BITMAP
-    char *suffix = "-bitset";
+    char *suffix = "/bitset";
     bitmap_t *visited = calloc(BITSET_NODES / 8, 1);
     uint32_t max = max_distance_bitmap(nodeTable, 0, visited);
 #elif defined USE_HIGHBIT
-    char *suffix = "-simple";
+    char *suffix = "/simple";
     uint32_t max = max_distance_simple(nodeTable, nodeTable[0]);
 #elif defined USE_BRANCHLESS
-    char *suffix = "-branchless";
+    char *suffix = "/branchless";
     uint32_t max = max_distance_branchless(nodeTable, nodeTable[0]);
 #else // default to branchless but without suffix
     char *suffix = "";

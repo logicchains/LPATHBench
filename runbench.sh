@@ -29,7 +29,8 @@ runners=( "mono fs.exe"\
 	"/usr/bin/oraclejava ojv"\
 	"node js.js"\
 	"node jscache.js"\
-	"php php.php")
+	"php php.php"\
+	"./c")
 	#"perl perl.pl")
 
 echo "Running..."

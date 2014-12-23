@@ -2,7 +2,7 @@ NUM_NODES = 10
 WORLD_SIZE = 1000
 
 
-buildall: fsharp cpp-gcc cpp-clang racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal
+buildall: fsharp cpp-gcc cpp-clang racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal c
 
 fsharp: fs.fs
 	fsharpc fs.fs
@@ -15,6 +15,9 @@ cpp-clang: cpp.cpp
 
 cpp-cached: cpp_cached.cpp
 	clang++ cpp_cached.cpp -std=c++14 -Wall -O2 -march=native -o cpp_cached
+
+c: c.c
+	gcc -g -std=gnu99 -Wall -Wextra c.c  -O2 -march=native -o c -DUSE_HIGHBIT
 
 racket: rkt.rkt
 	raco exe rkt.rkt

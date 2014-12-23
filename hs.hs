@@ -189,7 +189,7 @@ main = do
   let !nodes2 = V.map UV.fromList nodes
   --lPathFun nodes 0 visited >>= print
   !start <- getPOSIXTime
-  !len <- getLongestPath4 nodes2 0 visited
+  !len <- getLongestPath6 nodes2 0 visited
   !end <- getPOSIXTime
   printf "%d LANGUAGE Haskell %d\n" len (round $ 1000 * (end - start)::Int)
   --let (cost, _) = getLongestPath5 nodes2 0 (UV.replicate (fromIntegral numNodes) False)

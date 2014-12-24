@@ -27,10 +27,11 @@ runners=( "mono fs.exe"\
 	"./crystal"\
 	"luajit lj.lua"\
 	"/usr/bin/oraclejava ojv"\
-	"node js.js"\
-	"node jscache.js"\
-	"php php.php"\
-	"./c")
+	"/usr/bin/node js.js"\
+	"/usr/bin/node jscache.js"\
+	"./f03"
+	"./c"
+	"hhvm php.php"\)
 	#"perl perl.pl")
 
 echo "Running..."

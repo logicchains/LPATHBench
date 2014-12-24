@@ -43,4 +43,4 @@ $start = microtime(true);
 
 $length = getLongestPath(0);
 
-echo $length . ' LANGUAGE PHP ' . (microtime(true) - $start) * 1000;
+echo $length . ' LANGUAGE PHP ' . round((microtime(true) - $start) * 1000) . "\n";

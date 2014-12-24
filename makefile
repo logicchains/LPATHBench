@@ -5,22 +5,22 @@ WORLD_SIZE = 1000
 buildall: f03 fsharp cpp-gcc cpp-clang racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal
 
 f03:    f03.f03
-	gfortran -O2 -march=native f03.f03 -o f03
+	gfortran -O2 -mcpu=native f03.f03 -o f03
 
 fsharp: fs.fs
 	fsharpc fs.fs
 
 cpp-gcc: cpp.cpp
-	g++ cpp.cpp -std=c++14 -Wall -O2 -march=native -DCOMPILER='"gcc"' -o cpp_gcc
+	g++ cpp.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"gcc"' -o cpp_gcc
 
 cpp-clang: cpp.cpp
-	clang++ cpp.cpp -std=c++14 -Wall -O2 -march=native -DCOMPILER='"clang"' -o cpp_clang
+	clang++ cpp.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"clang"' -o cpp_clang
 
 cpp-cached: cpp_cached.cpp
-	clang++ cpp_cached.cpp -std=c++14 -Wall -O2 -march=native -o cpp_cached
+	clang++ cpp_cached.cpp -std=c++14 -Wall -O2 -mcpu=native -o cpp_cached
 
 c: c.c
-	gcc -g -std=gnu99 -Wall -Wextra c.c  -O2 -march=native -o c -DUSE_HIGHBIT
+	gcc -g -std=gnu99 -Wall -Wextra c.c  -O2 -mcpu=native -o c -DUSE_HIGHBIT
 
 racket: rkt.rkt
 	raco exe rkt.rkt
@@ -65,7 +65,7 @@ crystal: crystal.cr
 	crystal build crystal.cr --release
 
 nim: nim.nim
-	nim c --cc:clang --passC:-march=native -d:release nim.nim
+	nim c --cc:clang --passC:-mcpu=native -d:release nim.nim
 
 graphbuilder: mkgraph.go
 	go build mkgraph.go

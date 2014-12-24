@@ -172,9 +172,10 @@ in the function type signature, which is rather gangly, especially if the signat
 
 The C++ implementation was pleasant to write; I think people give modern C++ far too little credit. If you're wondering why it appeared slightly slower than the D on x86, I suspect it's because C++ stores standard vectors of bools as bit vectors, for legacy reasons, which are generally less efficient to read and write than proper bool vectors. It could also be because of some optimisations made possible in the D compiler by the immutability and purity guarantees used in the getLongestPath function.
 
-Also, input streams are hilarious. I wonder people unfamiliar with C++ would think of the following while loop:
-
 **Edit:** someone updated it to use proper fixed-size bitsets, and wow is it fast!
+
+Also, input streams can make for awesomely concise code. I wonder people unfamiliar with C++ would think of the following while loop:
+
 
 ```c
   while (text >> nodeS >> neighbourS >> costS){

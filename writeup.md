@@ -16,21 +16,24 @@ Just to clarify: I'm not comparing ARM and x86, I'm comparing language implement
 
 | Language | % x86 |
 | :------- | ----: |
-| C++Cached | 111.504 |
-| C++/gcc | 82.3402 |
-| GCCGo | 79.6324 |
-| LuaJit | 71.5848 |
-| CSharp | 70.5211 |
-| C++/clang | 64.4135 |
-| Racket | 56.6383 |
-| Nim | 56.5901 |
-| Go | 55.4851 |
-| FSharp | 51.5975 |
-| OracleJava | 48.8876 |
-| Ocaml | 39.6667 |
-| Lisp | 33.2077 |
-| Java | 32.1714 |
-| D | 8.26277 |
+| C++Cached | 94.2857 |
+| C++/gcc | 74.2653 |
+| GCCGo | 73.6774 |
+| C++/clang | 66.9876 |
+| LuaJit | 66.0405 |
+| CSharp | 64.7391 |
+| JavascriptWithCacheAlg | 62.2807 |
+| Fortran_2003 | 59.6778 |
+| Nim | 57.971 |
+| Javascript | 56.3116 |
+| Go | 52.9802 |
+| Racket | 52.4602 |
+| FSharp | 50.4699 |
+| OracleJava | 49.2483 |
+| Ocaml | 40.4296 |
+| Lisp | 31.2914 |
+| Java | 30.1921 |
+| D | 7.57514 |
 
 
 The % x86 column refers to the speed of a language on ARM as a percentage of its speed on x86. So if an implementation's % x86 is 50%, then it runs at half the speed on ARM as it does on x86.
@@ -103,52 +106,57 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++Cached | 113 |
-| C++/gcc | 2316 |
-| C++/clang | 2515 |
-| Nim | 3179 |
-| C-simple | 3244 |
-| GCCGo | 4625 |
-| OracleJava | 5259 |
-| CSharp | 5431 |
-| Ocaml | 5700 |
-| Go | 6153 |
-| Lisp | 6896 |
+| C++Cached | 105 |
+| JavascriptWithCacheAlg | 228 |
+| C++/gcc | 2382 |
+| C++/clang | 2493 |
+| Nim | 3174 |
+| C-simple | 3242 |
+| Fortran_2003 | 4345 |
+| GCCGo | 4631 |
+| OracleJava | 5255 |
+| CSharp | 5482 |
+| Ocaml | 5726 |
+| Go | 6174 |
 | FSharp | 6917 |
-| Java | 8377 |
-| LuaJit | 10336 |
-| Racket | 12345 |
-| D | 23969 |
+| Lisp | 6938 |
+| Java | 8383 |
+| LuaJit | 10327 |
+| Javascript | 11463 |
+| Racket | 12377 |
+| D | 24488 |
 
 
 **x86-64**
 
 | Language | Runtime (ms) |
 | :------- | -----------: |
-| C++Cached | 114 |
+| C++Cached | 99 |
 | JavascriptWithCacheAlg | 142 |
-| C++/clang | 1663 |
-| Nim | 1727 |
-| C++/gcc | 1922 |
-| D | 1977 |
-| Rust | 2126 |
-| Ocaml | 2206 |
-| RustUnsafe | 2216 |
-| Lisp | 2346 |
-| Java | 2630 |
-| OracleJava | 2810 |
-| Julia | 3029 |
-| CRYSTAL | 3244 |
-| Go | 3436 |
-| GCCGo | 3573 |
-| CSharp | 3747 |
-| FSharp | 4108 |
-| Dart | 5320 |
-| Javascript | 6272 |
-| Racket | 6975 |
-| LuaJit | 6977 |
-| Haskell | 7126 |
-| PHP | 155113.749980938981 |
+| C++/clang | 1670 |
+| C++/gcc | 1769 |
+| Nim | 1840 |
+| D | 1855 |
+| C/simple | 1989 |
+| Lisp | 2171 |
+| Rust | 2265 |
+| RustUnsafe | 2270 |
+| Ocaml | 2315 |
+| Java | 2531 |
+| OracleJava | 2588 |
+| Fortran_2003 | 2593 |
+| Julia | 2992 |
+| CRYSTAL | 3257 |
+| Go | 3271 |
+| GCCGo | 3412 |
+| FSharp | 3491 |
+| CSharp | 3549 |
+| Dart | 5574 |
+| Haskell | 6322 |
+| Javascript | 6455 |
+| Racket | 6493 |
+| LuaJit | 6820 |
+| PHP | 15798 |
 
 
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.

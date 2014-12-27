@@ -93,6 +93,31 @@ $x86results
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.
 
 
+**Update:**Someone ran the benchmark on a superior x86 processor, a Haswell i7-4770 CPU @ 3.40GHz, so I thought I'd also include them here for comparison. The speedup is more than double, even though the processor isn't twice as fast, so it shows that clock speed isn't the sole factor determining performance.
+
+| Language | Runtime (ms) |
+| :------- | -----------: |
+| C++Cached | 18 |
+| C/branchless | 618 |
+| C/highbit | 749 |
+| C++/gcc | 755 |
+| C++/clang | 735 |
+| Nim | 756 |
+| Rust | 877 |
+| RustUnsafe | 869 |
+| C/bitmap | 899 |
+| Java | 909 |
+| Fortran_2003 | 986 |
+| Ocaml | 997 |
+| Lisp | 1004 |
+| Go | 1021 |
+| FSharp | 1088 |
+| D | 1203 |
+| GCCGo | 1502 |
+| LuaJit | 2088 |
+
+
+
 **Discussion**
 
 *Lua*

@@ -93,7 +93,7 @@ $x86results
 Feel free to submit improvements to the implementations! Just one rule: the graph must be read in at runtime; reading it in and generating the result at compile-time is not allowed.
 
 
-**Update:**Someone ran the benchmark on a superior x86 processor, a Haswell i7-4770 CPU @ 3.40GHz, so I thought I'd also include them here for comparison. The speedup is more than double, even though the processor isn't twice as fast, so it shows that clock speed isn't the sole factor determining performance.
+**Update:** Someone ran the benchmark on a superior x86 processor, a Haswell i7-4770 CPU @ 3.40GHz, so I thought I'd also include them here for comparison. The speedup is more than double, even though the processor isn't twice as fast, so it shows that clock speed isn't the sole factor determining performance.
 
 | Language | Runtime (ms) |
 | :------- | -----------: |

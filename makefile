@@ -2,7 +2,10 @@ NUM_NODES = 10
 WORLD_SIZE = 1000
 
 
-buildall: f03 fsharp cpp-gcc cpp-clang racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal
+buildall: c_arm f03 fsharp cpp-gcc cpp-clang racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal
+
+c_arm: c_arm.c
+	gcc -falign-functions=16 -marm -g -std=gnu99 -O2 -mcpu=native -fomit-frame-pointer c_arm.c -o ./c_arm
 
 f03:    f03.f03
 	gfortran -O2 -mcpu=native f03.f03 -o f03

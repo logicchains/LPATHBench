@@ -70,6 +70,9 @@ crystal: crystal.cr
 nim: nim.nim
 	nim c --cc:clang --passC:-mcpu=native -d:release nim.nim
 
+scala: scala.scala
+	scalac scala.scala 
+
 graphbuilder: mkgraph.go
 	go build mkgraph.go
 

@@ -1,0 +1,20 @@
+gcc 4.9.2
+clang 3.5.0
+go 1.4
+rust 0.13.0nightly (99d6956c3 2014-12-18 20:32:07 +0000)
+Nim 0.10.1
+ldc 0.15.1
+ocaml 4.02.1
+ghc 7.8.3
+mono 3.10.0.0
+dart 1.8.3
+racket 6.1.1
+kuajit 2.0.3
+node.js 0.10.34
+julia 0.3.3
+hhvm 3.4.1
+sbcl 1.2.2
+crystal 0.5.5
+scala 2.11.4
+openjdk 1.8.0_25
+oraclejava 1.8.0_25

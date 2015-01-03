@@ -19,6 +19,9 @@ cpp-gcc: cpp.cpp
 cpp-clang: cpp.cpp
 	clang++ cpp.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"clang"' -o cpp_clang
 
+cpp-plain: cpp_plain.cpp
+	clang++ cpp.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"clang"' -o cpp_plain
+
 cpp-cached: cpp_cached.cpp
 	clang++ cpp_cached.cpp -std=c++14 -Wall -O2 -mcpu=native -o cpp_cached
 
@@ -63,6 +66,9 @@ gccgo: gccgo.go
 
 d: d.d
 	ldc2 d.d -ofd -O3 -release -inline -boundscheck=off
+
+dmem: dmem.d
+	ldc2 dmem.d -ofdmem -O3 -release -inline -boundscheck=off
 
 crystal: crystal.cr
 	crystal build crystal.cr --release

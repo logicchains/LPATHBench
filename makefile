@@ -20,7 +20,7 @@ cpp-clang: cpp.cpp
 	clang++ cpp.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"clang"' -o cpp_clang
 
 cpp-plain: cpp_plain.cpp
-	clang++ cpp.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"clang"' -o cpp_plain
+	clang++ cpp_plain.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"clang"' -o cpp_plain
 
 cpp-cached: cpp_cached.cpp
 	clang++ cpp_cached.cpp -std=c++14 -Wall -O2 -mcpu=native -o cpp_cached

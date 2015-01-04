@@ -137,9 +137,9 @@ Anyway, here's the numbers you probably came here for. The x86-64 device is an I
 | C++/clang | 1722 |
 | C++/gcc | 1852 |
 | Nim | 1852 |
+| Rust | 1874 |
 | C/simple | 1888 |
 | D | 1908 |
-| Rust | 2165 |
 | RustUnsafe | 2219 |
 | Ocaml | 2281 |
 | Lisp | 2430 |

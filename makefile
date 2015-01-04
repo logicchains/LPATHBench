@@ -53,7 +53,7 @@ lisp: lisp.lisp
 	sbcl --core /usr/local/lib/sbcl/sbcl.core --load lisp.lisp --non-interactive
 
 rust: rs.rs
-	rustc rs.rs --opt-level=3
+	rustc rs.rs --opt-level=3 -C no-stack-check
 
 rust_unsafe: rs_unsafe.rs
 	rustc rs_unsafe.rs --opt-level=3	

@@ -174,6 +174,6 @@ int main() {
   
   timersub(&end, &start, &duration);
   ms = duration.tv_sec*1000 + duration.tv_usec/1000;
-  printf("%d LANGUAGE C-arm %llu\n", result, ms);
+  printf("%d LANGUAGE C-fast %llu\n", result, ms);
 }
 

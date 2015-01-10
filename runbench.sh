@@ -10,7 +10,8 @@ runners=( "mono fs.exe"\
 	"./cpp_gcc"\
 	"./cpp_clang"\
 	"./cpp_cached"\
-	"./c_arm"\
+	"./c_fast"\
+	"./c_fast_arm"\
 	"./rkt"\
 	"mono -O=all ./cs.exe"\
 	"java jv"\

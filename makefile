@@ -2,12 +2,12 @@ NUM_NODES = 10
 WORLD_SIZE = 1000
 
 
-buildall: c-fast c-fast-arm f03 c fsharp cpp-gcc cpp-clang cpp_cached racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal
+buildall: c_fast c_fast_arm f03 c fsharp cpp_gcc cpp_clang cpp_cached racket csharp java haskell ocaml lisp rust rust_unsafe go gccgo d nim oraclejava crystal
 
-c-fast-arm: c_fast.c
+c_fast_arm: c_fast.c
 	gcc -marm -falign-functions=32 -g -std=gnu99 -O2 -mcpu=native -fomit-frame-pointer c_fast.c -o ./c_fast_arm
 	
-c-fast: c_fast.c
+c_fast: c_fast.c
 	gcc -falign-functions=32 -g -std=gnu99 -O2 -mcpu=native -fomit-frame-pointer c_fast.c -o ./c_fast
 
 f03:    f03.f03
@@ -16,16 +16,16 @@ f03:    f03.f03
 fsharp: fs.fs
 	fsharpc fs.fs
 
-cpp-gcc: cpp.cpp
+cpp_gcc: cpp.cpp
 	g++ cpp.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"gcc"' -o cpp_gcc
 
-cpp-clang: cpp.cpp
+cpp_clang: cpp.cpp
 	clang++ cpp.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"clang"' -o cpp_clang
 
-cpp-plain: cpp_plain.cpp
+cpp_plain: cpp_plain.cpp
 	clang++ cpp_plain.cpp -std=c++14 -Wall -O2 -mcpu=native -DCOMPILER='"clang"' -o cpp_plain
 
-cpp-cached: cpp_cached.cpp
+cpp_cached: cpp_cached.cpp
 	clang++ cpp_cached.cpp -std=c++14 -Wall -O2 -mcpu=native -o cpp_cached
 
 c: c.c

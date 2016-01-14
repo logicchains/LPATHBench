@@ -43,24 +43,20 @@ parse hnd = do
                  return v
   return (numNodes,graph)
 
-longestPath::MV.IOVector Bool->Int->Graph->IO Int
+longestPath :: MV.IOVector Bool -> Int -> Graph -> IO Int
 longestPath visited start graph =
     do
-      MV.write visited start True
-      let neigh = graph BV.! start
-      ans <- findBest 0 neigh 0 (V.length neigh)
-      MV.write visited start False
+      MV.unsafeWrite visited start True
+      let neigh = graph `BV.unsafeIndex` start
+      ans <- V.foldM' findBest 0 neigh
+      MV.unsafeWrite visited start False
       return ans
     where
-      findBest !cur neigh i len =
-          if i==len then
-              return cur
-          else do
-            let (t,c) = neigh `V.unsafeIndex` i
+      findBest cur (t,c) = do
             v <- MV.unsafeRead visited t
             if v then 
-                findBest cur neigh (i+1) len
+              return cur
             else do
               d <- longestPath visited t graph
-              findBest (max cur (c+d)) neigh (i+1) len
+              return (max cur (c+d))
              

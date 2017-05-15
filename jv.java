@@ -5,11 +5,11 @@ import java.util.Scanner;
 public class jv {
 	private static int numNodes = -1;
 	private static final int[][] nodes;
-	private static final boolean[] visited;
+	private static final byte[] visited;
 	
 	static {
 		nodes = readPlaces();
-		visited = new boolean[numNodes];
+		visited = new byte[numNodes];
 	}
 	
 	public static void main(final String[] args) {
@@ -25,7 +25,7 @@ public class jv {
 	}
 	
 	/**
-	 * int[node][dest|cost|...]
+	 * int[node][cost|dest|...]
 	 */
 	private static int[][] readPlaces() {
 		try (Scanner in = new Scanner(new File("agraph"))) {
@@ -40,8 +40,8 @@ public class jv {
 				int cost = in.nextInt();
 				int index = nodes[node].length;
 				int[] replacement = Arrays.copyOf(nodes[node], index + 2);
-				replacement[index] = neighbour;
-				replacement[index + 1] = cost;
+				replacement[index] = cost;
+				replacement[index + 1] = neighbour;
 				nodes[node] = replacement;
 			}
 			// reduce any fragmentation
@@ -55,21 +55,18 @@ public class jv {
 		}
 	}
 	
-	private static int getLongestPath(int nodeID, int[] row, boolean[] visited) {
-		visited[nodeID] = true;
+	private static int getLongestPath(final int nodeID, final int[] row, final byte[] visited) {
+		visited[nodeID] = 1;
 		int max = 0;
 		
-		for (int i = 0; i < row.length; i += 2) {
+		for (int i = 1; i < row.length; i += 2) {
 			final int dest = row[i];
-			if (!visited[dest]) {
-				final int dist = row[i + 1] + getLongestPath(dest, nodes[dest], visited);
-				if (dist > max) {
-					max = dist;
-				}
+			if (visited[dest] == 0) {
+				max = Math.max(row[i - 1] + getLongestPath(dest, nodes[dest], visited), max);
 			}
 		}
 		
-		visited[nodeID] = false;
+		visited[nodeID] = 0;
 		return max;
 	}
 }
